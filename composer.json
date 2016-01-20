@@ -2,7 +2,7 @@
 	"name": "sgoendoer/sonic",
 	"description": "SOcial Network InterConnect SDK",
 	"version": "0.1.5",
-	"license": "TBD",
+	"license": "MIT",
 	"require":
 	{
 		"php": "^5.6 || ^7.0",
