@@ -1,0 +1,21 @@
+{
+	"name": "sgoendoer/Sonic",
+	"description": "SOcial Network InterConnect SDK",
+	"version": "0.1.5",
+	"license": "TBD",
+	"require":
+	{
+		"php": "^5.6 || ^7.0",
+		"geraintluff/jsv4": "1.*",
+		"lcobucci/jwt": "^3.0",
+		"sgoendoer/json": "0.2.*",
+		"monolog/monolog": "1.*"
+	},
+	"autoload":
+	{
+		"psr-4":
+		{
+			"sgoendoer\\Sonic\\": "src/"
+		}
+	}
+}

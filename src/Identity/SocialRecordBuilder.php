@@ -1,0 +1,261 @@
+<?php namespace sgoendoer\Sonic\Identity;
+
+use sgoendoer\Sonic\Crypt\KeyPair;
+use sgoendoer\Sonic\Crypt\PublicKey;
+use sgoendoer\Sonic\Crypt\Random;
+use sgoendoer\Sonic\Date\XSDDateTime;
+use sgoendoer\Sonic\Identity\GID;
+use sgoendoer\Sonic\Identity\SocialRecord;
+use sgoendoer\Sonic\Identity\KeyRevocationCertificateBuilder;
+
+/**
+ * SocialRecordBuilder
+ * version 20160111
+ *
+ * author: Sebastian Goendoer
+ * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ */
+class SocialRecordBuilder
+{
+	private $type				= NULL;
+	private $globalID			= NULL;	// global id
+	private $platformGID		= NULL;
+	private $displayName		= NULL;	// human readable name
+	private $profileLocation	= NULL;	// URL
+	private $personalPublicKey	= NULL; // PEM PHP compatible format!!!
+	private $accountPublicKey	= NULL; // PEM PHP compatible format!!!
+	private $salt				= NULL;	// length MUST be 16 chars
+	private $datetime			= NULL;	// XSD datetime format e.g. 2015-01-01T11:11:11Z
+	private $active				= NULL;
+	private $keyRevocationList	= NULL;
+	
+	public function __construct()
+	{}
+	
+	// from json string
+	public static function buildFromJSON($json)
+	{
+		$jsonObject = json_decode($json);
+		
+		if(!property_exists($jsonObject, 'platformGID'))
+			throw new SocialRecordFormatException('SocialRecord: Property platformGID missing!');
+		if(!property_exists($jsonObject, 'globalID'))
+			throw new SocialRecordFormatException('SocialRecord: Property globalID missing!');
+		if(!property_exists($jsonObject, 'type'))
+			throw new SocialRecordFormatException('SocialRecord: Property type missing!');
+		if(!property_exists($jsonObject, 'displayName'))
+			throw new SocialRecordFormatException('SocialRecord: Property displayName missing!');
+		if(!property_exists($jsonObject, 'profileLocation'))
+			throw new SocialRecordFormatException('SocialRecord: Property profileLocation missing!');
+		if(!property_exists($jsonObject, 'personalPublicKey'))
+			throw new SocialRecordFormatException('SocialRecord: Property personalPublicKey missing!');
+		if(!property_exists($jsonObject, 'accountPublicKey'))
+			throw new SocialRecordFormatException('SocialRecord: Property accountPublicKey missing!');
+		if(!property_exists($jsonObject, 'salt'))
+			throw new SocialRecordFormatException('SocialRecord: Property salt missing!');
+		if(!property_exists($jsonObject, 'datetime'))
+			throw new SocialRecordFormatException('SocialRecord: Property datetime missing!');
+		if(!property_exists($jsonObject, 'active'))
+			throw new SocialRecordFormatException('SocialRecord: Property active missing!');
+		if(!property_exists($jsonObject, 'keyRevocationList'))
+			throw new SocialRecordFormatException('SocialRecord: Property keyRevocationList missing!');
+		
+		$krl = array();
+		
+		foreach($jsonObject->keyRevocationList as $krc)
+		{
+			$krl[] = KeyRevocationCertificateBuilder::buildFromJSON($krc);
+		}
+		
+		return (new SocialRecordBuilder())
+				->type($jsonObject->type)
+				->globalID($jsonObject->globalID)
+				->platformGID($jsonObject->platformGID)
+				->displayName($jsonObject->displayName)
+				->profileLocation($jsonObject->profileLocation)
+				->personalPublicKey(PublicKey::formatPEM($jsonObject->personalPublicKey))
+				->accountPublicKey(PublicKey::formatPEM($jsonObject->accountPublicKey))
+				->salt($jsonObject->salt)
+				->datetime($jsonObject->datetime)
+				->active($jsonObject->active)
+				->keyRevocationList($krl)
+				->build();
+	}
+	
+	public function type($type)
+	{
+		$this->type = $type;
+		
+		return $this;
+	}
+	
+	public function globalID($gid)
+	{
+		$this->globalID = $gid;
+		
+		return $this;
+	}
+	
+	public function platformGID($pid)
+	{
+		$this->platformGID = $pid;
+		
+		return $this;
+	}
+	
+	public function displayName($displayName)
+	{
+		$this->displayName = $displayName;
+		
+		return $this;
+	}
+	
+	public function profileLocation($profileLocation)
+	{
+		$this->profileLocation = $profileLocation;
+		
+		return $this;
+	}
+	
+	public function personalPublicKey($personalPublicKey)
+	{
+		$this->personalPublicKey = $personalPublicKey;
+		
+		return $this;
+	}
+	
+	public function accountPublicKey($accountPublicKey)
+	{
+		$this->accountPublicKey = $accountPublicKey;
+		
+		return $this;
+	}
+	
+	public function salt($salt)
+	{
+		$this->salt = $salt;
+		
+		return $this;
+	}
+	
+	public function active($active)
+	{
+		$this->active = $active;
+		
+		return $this;
+	}
+	
+	public function keyRevocationList($krl = NULL)
+	{
+		if($krl == NULL)
+			$this->keyRevocationList = array();
+		else
+			$this->keyRevocationList = $krl;
+		
+		return $this;
+	}
+	
+	public function datetime($date)
+	{
+		$this->datetime = $date;
+		
+		return $this;
+	}
+	
+	public function getType()
+	{
+		return $this->type;
+	}
+	
+	public function getGlobalID()
+	{
+		return $this->globalID;
+	}
+	
+	public function getPlatformGID()
+	{
+		return $this->platformGID;
+	}
+	
+	public function getDisplayName()
+	{
+		return $this->displayName;
+	}
+	
+	public function getProfileLocation()
+	{
+		return $this->profileLocation;
+	}
+	
+	public function getPersonalPublicKey()
+	{
+		return $this->personalPublicKey;
+	}
+	
+	public function getAccountPublicKey()
+	{
+		return $this->accountPublicKey;
+	}
+	
+	public function getSalt()
+	{
+		return $this->salt;
+	}
+	
+	public function getDatetime()
+	{
+		return $this->datetime;
+	}
+	
+	public function getActive()
+	{
+		return $this->active;
+	}
+	
+	public function getKeyRevocationList()
+	{
+		return $this->keyRevocationList;
+	}
+	
+	public function build()
+	{
+		if($this->displayName == NULL)
+			throw new \Exception('SocialRecord: displayName must be specified for instantiation');
+		if($this->profileLocation == NULL)
+			throw new \Exception('SocialRecord: profileLocation must be specified for instantiation');
+		if($this->personalPublicKey == NULL)
+			throw new \Exception('SocialRecord: personalPublicKey must be specified for instantiation');
+		if($this->accountPublicKey == NULL)
+			throw new \Exception('SocialRecord: accountPublicKey must be specified for instantiation');
+		if($this->type == NULL)
+			throw new \Exception('SocialRecord: type must be specified for instantiation');
+		
+		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER)
+			throw new \Exception('SocialRecord: Invalid type value [' . $this->type . ']');
+		
+		if($this->salt == NULL)
+			$this->salt = Random::getRandom();
+		if($this->datetime == NULL)
+			$this->datetime = XSDDateTime::getXSDDateTime();
+		if($this->globalID == NULL)
+			$this->globalID = GID::createGID($this->personalPublicKey, $this->salt);
+		if(!GID::isValid($this->globalID))
+			throw new \Exception('SocialRecord: Invalid globalID value [' . $this->globalID . ']');
+			
+		if($this->platformGID == NULL && $this->type == SocialRecord::TYPE_PLATFORM)
+			$this->platformGID = $this->globalID;
+		if($this->platformGID == NULL)
+			throw new \Exception('SocialRecord: platformID must be specified for instantiation');
+		if(!GID::isValid($this->platformGID))
+			throw new \Exception('SocialRecord: Invalid platformGID value [' . $this->platformGID . ']');
+		
+		if($this->keyRevocationList == NULL)
+			$this->keyRevocationList = array();
+		if($this->active == NULL)
+			$this->active = 1;
+		
+		return new SocialRecord($this);
+	}
+}
+
+?>
