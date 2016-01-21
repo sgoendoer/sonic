@@ -20,7 +20,7 @@ if(!function_exists('curl_version'))
 	die('SONIC SDK requires cURL to be installed.'."\n\n");
 }
 
-date_default_timezone_set(Config::getTimezone());
+date_default_timezone_set(Config::timezone());
 
 define('SONIC_HEADER__TARGET_API',		'SonicTargetAPI');
 define('SONIC_HEADER__DATE',			'SonicResourceDate');

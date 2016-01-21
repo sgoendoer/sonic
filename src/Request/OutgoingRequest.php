@@ -90,7 +90,7 @@ class OutgoingRequest extends AbstractRequest
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			}
 			
-			curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			if(Config::verbose() == 1) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			
 			$response = curl_exec($ch);

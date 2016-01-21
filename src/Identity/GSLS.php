@@ -16,7 +16,7 @@ use Lcobucci\JWT\Parser;
 
 /**
  * GSLS API
- * version 20160104
+ * version 20160121
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -25,8 +25,8 @@ class GSLS
 {
 	public static function getSocialRecord($gid, $raw = false)
 	{
-		$ch = curl_init(Config::GSLS_ADDRESS . ':' . Config::GSLS_PORT . '/' . $gid);
-		//curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		$ch = curl_init(Config::primaryGSLSNode() . '/' . $gid);
+		if(Config::verbose() == 1) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HTTPGET, 1);
 		$result = curl_exec($ch);
@@ -88,8 +88,8 @@ class GSLS
 			->sign($signer, $personalPrivateKey)
 			->getToken();
 		
-		$ch = curl_init(Config::GSLS_ADDRESS . ':' . Config::GSLS_PORT);
-		//curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		$ch = curl_init(Config::primaryGSLSNode());
+		if(Config::verbose() == 1) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(	'Content-type: application/json', 
@@ -131,8 +131,8 @@ class GSLS
 			->sign($signer, $personalPrivateKey)
 			->getToken();
 		
-		$ch = curl_init(Config::GSLS_ADDRESS . ':' . Config::GSLS_PORT);
-		//curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		$ch = curl_init(Config::primaryGSLSNode());
+		if(Config::verbose() == 1) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");

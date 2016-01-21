@@ -15,6 +15,7 @@ class Config
 	private $secondaryGSLSNode;
 	private $APIPath;
 	private $timezone;
+	private $verbose;
 	
 	public function __construct(ConfigBuilder $builder)
 	{
@@ -24,7 +25,7 @@ class Config
 		$this->APIPath = $builder->getAPIPath();
 	}
 	
-	public static function getPrimaryGSLSNode()
+	public static function primaryGSLSNode()
 	{
 		return Config::getInstance()->primaryGSLSNode;
 	}
@@ -35,7 +36,7 @@ class Config
 		return $this;
 	}
 	
-	public static function getSecondaryGSLSNode()
+	public static function secondaryGSLSNode()
 	{
 		return Config::getInstance()->GSLSAddress;
 	}
@@ -46,7 +47,7 @@ class Config
 		return $this;
 	}
 	
-	public static function getAPIPath()
+	public static function APIPath()
 	{
 		return Config::getInstance()->APIPath;
 	}
@@ -57,7 +58,7 @@ class Config
 		return $this;
 	}
 	
-	public static function getTimezone()
+	public static function timezone()
 	{
 		return Config::getInstance()->APIPath;
 	}
@@ -65,6 +66,17 @@ class Config
 	public function setTimezone($tz)
 	{
 		$this->timezone = $tz;
+		return $this;
+	}
+	
+	public function verbose()
+	{
+		return $this->verbose;
+	}
+	
+	public function setVerbose($verbose)
+	{
+		$this->verbose = $verbose;
 		return $this;
 	}
 }

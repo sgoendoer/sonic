@@ -1,5 +1,7 @@
 <?php namespace sgoendoer\Sonic\Config;
 
+use sgoendoer\Sonic\Config\Config;
+
 /**
  * Config
  * version 20160121
@@ -7,7 +9,7 @@
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class Config
+class ConfigBuilder
 {
 	const DEFAULT_PRIMARY_GSLS_ADDRESS	= '130.149.22.135:4002';
 	const DEFAULT_SECONDARY_GSLS_ADDRESS	= '130.149.22.135:4002';
@@ -16,6 +18,7 @@ class Config
 	private $secondaryGSLSNode;
 	private $APIPath;
 	private $timezone;
+	private $verbose;
 	
 	public function __construct()
 	{
@@ -23,6 +26,7 @@ class Config
 		$this->secondaryGSLSNode = $builder->getSecondaryGSLSNode();
 		$this->timezone = $builder->getTimezone();
 		$this->APIPath = $builder->getAPIPath();
+		$this->verbose = $builder->getVerbose();
 	}
 	
 	public function getPrimaryGSLSNode()
@@ -66,6 +70,17 @@ class Config
 	public function timezone($tz)
 	{
 		$this->timezone = $tz;
+		return $this;
+	}
+	
+	public function getVerbose()
+	{
+		return $this->verbose;
+	}
+	
+	public function verbose($verbose)
+	{
+		$this->verbose = $verbose;
 		return $this;
 	}
 	
