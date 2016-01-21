@@ -23,6 +23,7 @@ class Config
 		$this->secondaryGSLSNode = $builder->getSecondaryGSLSNode();
 		$this->timezone = $builder->getTimezone();
 		$this->APIPath = $builder->getAPIPath();
+		$this->verbose = $builder->getVerbose();
 	}
 	
 	public static function primaryGSLSNode()
