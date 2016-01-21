@@ -17,7 +17,7 @@ use Monolog\Logger;
 /**
  * Main class of the SONIC SDK
  * 
- * version 20160108
+ * version 20160121
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -28,6 +28,8 @@ class Sonic
 	const CONTEXT_USER					= 1;
 	
 	protected static $_instance			= NULL;
+	
+	private $configuration				= MULL;
 	private $context					= NULL;
 	
 	private $userAuthData				= NULL;
@@ -65,11 +67,12 @@ class Sonic
 	/**
 	 * initializes the Sonic SDK using EntityAuthData of the platform
 	 * 
+	 * @param $config Config object
 	 * @param $platform EntityAuthData object of the platform
 	 * 
 	 * @return The Sonic instance
 	 */
-	public static function initInstance(EntityAuthData $platform)
+	public static function initInstance(Config $config, EntityAuthData $platform)
 	{
 		if(self::$_instance === NULL)
 		{
@@ -77,6 +80,7 @@ class Sonic
 		}
 		
 		self::$_instance->platformAuthData = $platform;
+		self::$_instance->configuration = $config;
 		
 		self::$_instance->setContext(Sonic::CONTEXT_PLATFORM); // needs to be explicitly set to "user"
 		
@@ -443,6 +447,19 @@ class Sonic
 			throw new SonicRuntimeException('Sonic instance not initialized');
 		
 		return self::$_instance->getContext()->getSocialRecord();
+	}
+	
+	/**
+	 * return the configuration object
+	 * 
+	 * @return the configuration
+	 */
+	public static function getConfig()
+	{
+		if(self::$_instance === NULL)
+			throw new SonicRuntimeException('Sonic instance not initialized');
+		
+		return self::$_instance->configuration;
 	}
 }
 
