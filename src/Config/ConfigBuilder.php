@@ -9,14 +9,15 @@
  */
 class Config
 {
-	private static $_instance = NULL;
+	const DEFAULT_PRIMARY_GSLS_ADDRESS	= '130.149.22.135:4002';
+	const DEFAULT_SECONDARY_GSLS_ADDRESS	= '130.149.22.135:4002';
 	
 	private $primaryGSLSNode;
 	private $secondaryGSLSNode;
 	private $APIPath;
 	private $timezone;
 	
-	public function __construct(ConfigBuilder $builder)
+	public function __construct()
 	{
 		$this->primaryGSLSNode = $builder->getPrimaryGSLSNode();
 		$this->secondaryGSLSNode = $builder->getSecondaryGSLSNode();
@@ -24,48 +25,53 @@ class Config
 		$this->APIPath = $builder->getAPIPath();
 	}
 	
-	public static function getPrimaryGSLSNode()
+	public function getPrimaryGSLSNode()
 	{
-		return Config::getInstance()->primaryGSLSNode;
+		return $this->primaryGSLSNode;
 	}
 	
-	public function setPrimaryGSLSNode($ipAddress)
+	public function primaryGSLSNode($ipAddress)
 	{
 		$this->primaryGSLSNode = $ipAddress;
 		return $this;
 	}
 	
-	public static function getSecondaryGSLSNode()
+	public function getSecondaryGSLSNode()
 	{
-		return Config::getInstance()->GSLSAddress;
+		return $this->GSLSAddress;
 	}
 	
-	public function setSecondaryGSLSNode($ipAddress)
+	public function secondaryGSLSNode($ipAddress)
 	{
 		$this->SecondaryGSLSNode = $ipAddress;
 		return $this;
 	}
 	
-	public static function getAPIPath()
+	public function getAPIPath()
 	{
-		return Config::getInstance()->APIPath;
+		return $this->APIPath;
 	}
 	
-	public function setAPIPath($path)
+	public function APIPath($path)
 	{
 		$this->APIPath = $path;
 		return $this;
 	}
 	
-	public static function getTimezone()
+	public function getTimezone()
 	{
-		return Config::getInstance()->APIPath;
+		return $this->APIPath;
 	}
 	
-	public function setTimezone($tz)
+	public function timezone($tz)
 	{
 		$this->timezone = $tz;
 		return $this;
+	}
+	
+	public function build()
+	{
+		return new Config($this);
 	}
 }
 

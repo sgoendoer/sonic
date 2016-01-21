@@ -1,5 +1,7 @@
 <?php namespace sgoendoer\Sonic;
 
+use sgoendoer\Sonic\Config\Config;
+
 if(version_compare(PHP_VERSION, '5.6.0') < 0)
 {
 	// 5.5 introduced hash_pbkdf2(). 5.5 for some reason still incompatible
@@ -17,6 +19,8 @@ if(!function_exists('curl_version'))
 	// we need the curl extension
 	die('SONIC SDK requires cURL to be installed.'."\n\n");
 }
+
+date_default_timezone_set(Config::getTimezone());
 
 define('SONIC_HEADER__TARGET_API',		'SonicTargetAPI');
 define('SONIC_HEADER__DATE',			'SonicResourceDate');
