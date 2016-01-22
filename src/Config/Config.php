@@ -1,5 +1,7 @@
 <?php namespace sgoendoer\Sonic\Config;
 
+use sgoendoer\Sonic\Config\ConfigBuilder;
+
 /**
  * Config
  * version 20160122
@@ -28,6 +30,14 @@ class Config
 		$this->logfile = $builder->getLogfile();
 	}
 	
+	public static function getInstance()
+	{
+		if(self::$_instance === NULL)
+			self::$_instance = (new ConfigBuilder())->build();
+		
+		return self::$_instance;
+	}
+	
 	public static function primaryGSLSNode()
 	{
 		return Config::getInstance()->primaryGSLSNode;
@@ -41,7 +51,7 @@ class Config
 	
 	public static function secondaryGSLSNode()
 	{
-		return Config::getInstance()->GSLSAddress;
+		return Config::getInstance()->secondaryGSLSNode;
 	}
 	
 	public function setSecondaryGSLSNode($ipAddress)
@@ -63,7 +73,7 @@ class Config
 	
 	public static function timezone()
 	{
-		return Config::getInstance()->APIPath;
+		return Config::getInstance()->timezone;
 	}
 	
 	public function setTimezone($tz)
@@ -72,9 +82,9 @@ class Config
 		return $this;
 	}
 	
-	public function verbose()
+	public static function verbose()
 	{
-		return $this->verbose;
+		return Config::getInstance()->verbose;
 	}
 	
 	public function setVerbose($verbose)

@@ -14,18 +14,18 @@ class ConfigBuilder
 	private $defaults = array(
 		'primaryGSLSNode' => '130.149.22.135:4002',
 		'secondaryGSLSNode' => '130.149.22.133:4002',
-		'timezone' => 'Berlin/Germany',
+		'timezone' => 'Europe/Berlin',
 		'APIPath' => '/api/',
 		'verbose' => 0,
 		'logfile' => 'sonic.log'
 	);
 	
-	private $primaryGSLSNode = NULL;
-	private $secondaryGSLSNode = NULL;
-	private $APIPath = NULL;
-	private $timezone = NULL;
-	private $verbose = NULL;
-	private $logfile = NULL;
+	private $primaryGSLSNode	= NULL;
+	private $secondaryGSLSNode	= NULL;
+	private $APIPath			= NULL;
+	private $timezone			= NULL;
+	private $verbose			= NULL;
+	private $logfile			= NULL;
 	
 	public function __construct()
 	{
@@ -45,7 +45,7 @@ class ConfigBuilder
 	
 	public function getSecondaryGSLSNode()
 	{
-		return $this->GSLSAddress;
+		return $this->secondaryGSLSNode;
 	}
 	
 	public function secondaryGSLSNode($ipAddress)
@@ -67,7 +67,7 @@ class ConfigBuilder
 	
 	public function getTimezone()
 	{
-		return $this->APIPath;
+		return $this->timezone;
 	}
 	
 	public function timezone($tz)
@@ -101,17 +101,17 @@ class ConfigBuilder
 	public function build()
 	{
 		if($this->primaryGSLSNode === NULL)
-			$this->primaryGSLSNode = $defaults['primaryGSLSNode'];
+			$this->primaryGSLSNode = $this->defaults['primaryGSLSNode'];
 		if($this->secondaryGSLSNode === NULL)
-			$this->secondaryGSLSNode = $defaults['secondaryGSLSNode'];
+			$this->secondaryGSLSNode = $this->defaults['secondaryGSLSNode'];
 		if($this->timezone === NULL)
-			$this->timezone = $defaults['timezone'];
+			$this->timezone = $this->defaults['timezone'];
 		if($this->APIPath === NULL)
-			$this->APIPath = $defaults['APIPath'];
+			$this->APIPath = $this->defaults['APIPath'];
 		if($this->verbose === NULL)
-			$this->verbose = $defaults['verbose'];
+			$this->verbose = $this->defaults['verbose'];
 		if($this->logfile === NULL)
-			$this->logfile = $defaults['logfile'];
+			$this->logfile = $this->defaults['logfile'];
 		
 		return new Config($this);
 	}
