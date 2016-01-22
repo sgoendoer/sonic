@@ -30,7 +30,7 @@ class Sonic
 	
 	protected static $_instance			= NULL;
 	
-	private $configuration				= MULL;
+	private $configuration				= NULL;
 	private $Logger						= NULL;
 	private $context					= NULL;
 	
@@ -84,8 +84,8 @@ class Sonic
 		self::$_instance->platformAuthData = $platform;
 		self::$_instance->configuration = $config;
 		
-		$this->logger = new Logger('sonic');
-		$this->logger->pushHandler(new StreamHandler(Config::logfile()));
+		self::$_instance->logger = new Logger('sonic');
+		self::$_instance->logger->pushHandler(new StreamHandler(Config::logfile()));
 		
 		self::$_instance->setContext(Sonic::CONTEXT_PLATFORM); // needs to be explicitly set to "user"
 		
