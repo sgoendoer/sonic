@@ -1,7 +1,5 @@
 <?php namespace sgoendoer\Sonic;
 
-require_once(__DIR__ . '/../vendor/autoload.php');
-
 require_once(__DIR__ . "/init.inc.php");
 
 use sgoendoer\Sonic\Config\Config;
