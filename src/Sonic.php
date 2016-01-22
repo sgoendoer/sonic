@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . '/../vendor/autoload.php');
 
-require_once(__DIR__ . "/Config/init.inc.php");
+require_once(__DIR__ . "/init.inc.php");
 
 use sgoendoer\Sonic\Config\Config;
 use sgoendoer\Sonic\Identity\SocialRecord;
@@ -13,11 +13,12 @@ use sgoendoer\Sonic\Crypt\IUniqueIDManager;
 use sgoendoer\Sonic\SonicRuntimeException;
 
 use Monolog\Logger;
+use Monolog\Handler\StreamHandler;
 
 /**
  * Main class of the SONIC SDK
  * 
- * version 20160121
+ * version 20160122
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -30,6 +31,7 @@ class Sonic
 	protected static $_instance			= NULL;
 	
 	private $configuration				= MULL;
+	private $Logger						= NULL;
 	private $context					= NULL;
 	
 	private $userAuthData				= NULL;
@@ -82,29 +84,13 @@ class Sonic
 		self::$_instance->platformAuthData = $platform;
 		self::$_instance->configuration = $config;
 		
+		$this->logger = new Logger('sonic');
+		$this->logger->pushHandler(new StreamHandler(Config::logfile()));
+		
 		self::$_instance->setContext(Sonic::CONTEXT_PLATFORM); // needs to be explicitly set to "user"
 		
 		return self::$_instance;
 	}
-	
-	/**
-	 * Sets the EntityAuthData for user context
-	 * 
-	 * @param $user EntityAuthData object of the user
-	 * 
-	 * @return The Sonic instance
-	 */
-	/*public static function setUserEntityAuthData(EntityAuthData $user)
-	{
-		if(self::$_instance == NULL)
-			throw new SonicRuntimeException('Sonic instance not initialized');
-		
-		self::$_instance->userAuthData = $user;
-		
-		self::$_instance->setContext(Sonic::CONTEXT_USER);
-		
-		return self::$_instance;
-	}*/
 	
 	public static function getContext()
 	{
@@ -128,8 +114,10 @@ class Sonic
 			else
 				self::$_instance->context = self::$_instance->userAuthData;
 		}
-		else
+		elseif($context == Sonic::CONTEXT_PLATFORM)
 			self::$_instance->context = self::$_instance->platformAuthData;
+		else
+			throw new SonicRuntimeException('Invalid context');
 		
 		return self::$_instance;
 	}
@@ -460,6 +448,19 @@ class Sonic
 			throw new SonicRuntimeException('Sonic instance not initialized');
 		
 		return self::$_instance->configuration;
+	}
+	
+	/**
+	 * return the monolog logger instance
+	 * 
+	 * @return the logger instance
+	 */
+	public static function getLogger()
+	{
+		if(self::$_instance === NULL)
+			throw new SonicRuntimeException('Sonic instance not initialized');
+		
+		return self::$_instance->logger;
 	}
 }
 
