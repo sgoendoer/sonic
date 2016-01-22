@@ -2,20 +2,21 @@
 
 /**
  * Config
- * version 20160121
+ * version 20160122
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
 class Config
 {
-	private static $_instance = NULL;
+	private static $_instance	= NULL;
 	
-	private $primaryGSLSNode;
-	private $secondaryGSLSNode;
-	private $APIPath;
-	private $timezone;
-	private $verbose;
+	private $primaryGSLSNode	= NULL;
+	private $secondaryGSLSNode	= NULL;
+	private $APIPath			= NULL;
+	private $timezone			= NULL;
+	private $verbose			= NULL; // 0: log nothing, 1: log errors, 2: log info, 3: log everything
+	private $logfile			= NULL;
 	
 	public function __construct(ConfigBuilder $builder)
 	{
@@ -24,6 +25,7 @@ class Config
 		$this->timezone = $builder->getTimezone();
 		$this->APIPath = $builder->getAPIPath();
 		$this->verbose = $builder->getVerbose();
+		$this->logfile = $builder->getLogfile();
 	}
 	
 	public static function primaryGSLSNode()
@@ -78,6 +80,17 @@ class Config
 	public function setVerbose($verbose)
 	{
 		$this->verbose = $verbose;
+		return $this;
+	}
+	
+	public static function logfile()
+	{
+		return Config::getInstance()->logfile;
+	}
+	
+	public function setLogfile($logfile)
+	{
+		$this->logfile = $logfile;
 		return $this;
 	}
 }

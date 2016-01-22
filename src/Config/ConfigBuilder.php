@@ -4,29 +4,32 @@ use sgoendoer\Sonic\Config\Config;
 
 /**
  * Config
- * version 20160121
+ * version 20160122
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
 class ConfigBuilder
 {
-	const DEFAULT_PRIMARY_GSLS_ADDRESS	= '130.149.22.135:4002';
-	const DEFAULT_SECONDARY_GSLS_ADDRESS	= '130.149.22.135:4002';
+	private $defaults = array(
+		'primaryGSLSNode' => '130.149.22.135:4002',
+		'secondaryGSLSNode' => '130.149.22.133:4002',
+		'timezone' => 'Berlin/Germany',
+		'APIPath' => '/api/',
+		'verbose' => 0,
+		'logfile' => 'sonic.log'
+	);
 	
-	private $primaryGSLSNode;
-	private $secondaryGSLSNode;
-	private $APIPath;
-	private $timezone;
-	private $verbose;
+	private $primaryGSLSNode = NULL;
+	private $secondaryGSLSNode = NULL;
+	private $APIPath = NULL;
+	private $timezone = NULL;
+	private $verbose = NULL;
+	private $logfile = NULL;
 	
 	public function __construct()
 	{
-		$this->primaryGSLSNode = $builder->getPrimaryGSLSNode();
-		$this->secondaryGSLSNode = $builder->getSecondaryGSLSNode();
-		$this->timezone = $builder->getTimezone();
-		$this->APIPath = $builder->getAPIPath();
-		$this->verbose = $builder->getVerbose();
+		
 	}
 	
 	public function getPrimaryGSLSNode()
@@ -84,8 +87,32 @@ class ConfigBuilder
 		return $this;
 	}
 	
+	public function getLogfile()
+	{
+		return $this->logfile;
+	}
+	
+	public function logfile($logfile)
+	{
+		$this->logfile = $logfile;
+		return $this;
+	}
+	
 	public function build()
 	{
+		if($this->primaryGSLSNode === NULL)
+			$this->primaryGSLSNode = $defaults['primaryGSLSNode'];
+		if($this->secondaryGSLSNode === NULL)
+			$this->secondaryGSLSNode = $defaults['secondaryGSLSNode'];
+		if($this->timezone === NULL)
+			$this->timezone = $defaults['timezone'];
+		if($this->APIPath === NULL)
+			$this->APIPath = $defaults['APIPath'];
+		if($this->verbose === NULL)
+			$this->verbose = $defaults['verbose'];
+		if($this->logfile === NULL)
+			$this->logfile = $defaults['logfile'];
+		
 		return new Config($this);
 	}
 }
