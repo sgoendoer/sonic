@@ -23,12 +23,12 @@ use Lcobucci\JWT\Parser;
  */
 class GSLS
 {
-	private $curl_verbose = false;
+	private static $curl_verbose = false;
 	
 	public static function getSocialRecord($gid, $raw = false)
 	{
 		$ch = curl_init(Config::primaryGSLSNode() . '/' . $gid);
-		if($this->curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HTTPGET, 1);
 		$result = curl_exec($ch);
@@ -91,7 +91,7 @@ class GSLS
 			->getToken();
 		
 		$ch = curl_init(Config::primaryGSLSNode());
-		if($this->curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, array(	'Content-type: application/json', 
@@ -134,7 +134,7 @@ class GSLS
 			->getToken();
 		
 		$ch = curl_init(Config::primaryGSLSNode());
-		if($this->curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+		if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
 		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");

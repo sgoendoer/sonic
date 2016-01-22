@@ -15,6 +15,8 @@ use sgoendoer\Sonic\Request\AbstractRequest;
  */
 class OutgoingRequest extends AbstractRequest
 {
+	private static $curl_verbose = false;
+	
 	public function __construct()
 	{
 		$this->headers = array();
@@ -90,7 +92,7 @@ class OutgoingRequest extends AbstractRequest
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			}
 			
-			if(Config::verbose() == 1) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			
 			$response = curl_exec($ch);
