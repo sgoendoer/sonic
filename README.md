@@ -20,11 +20,11 @@ Install via composer:
 composer install sgoendoer/sonic
 ````
 
-or configure your composer.json like this:
+or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-   "sgoendoer/sonic": "^0.1.5"
+   "sgoendoer/sonic": "0.1.7"
 }
 ```
 
@@ -36,7 +36,7 @@ composer update
 
 ## Configuration
 
-On initialization of the Sonic class, a \Sonic\Config\Config instance must be passed. While a Config instance must be built using a ConfigBuilder, values can be left unset as they are set to default values.
+On initialization of the Sonic class, a ```sgoendoer\Sonic\Config\Config``` instance must be passed. While a Config instance must be built using a ```sgoendoer\Sonic\Config\ConfigBuilder```, values can be left unset as they are set to default values.
 
 ```php
 $configuration = (new ConfigBuilder)
