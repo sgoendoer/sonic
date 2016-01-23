@@ -80,5 +80,5 @@ $importedSR = SocialRecordManager::importSocialRecord($exported);
 $entityAuthData = new EntityAuthData($socialRecord, $accountKeyPair, $personalKeyPair);
 
 // Now the result can be published via the GSLS
-SocialRecordManager::pushToGSLS($pntityAuthData);
+SocialRecordManager::pushToGSLS($entityAuthData);
 ```
