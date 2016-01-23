@@ -2,7 +2,6 @@
 
 use sgoendoer\Sonic\Request\AbstractResponse;
 
-
 /**
  * IncomingResponse
  * version 20160104
@@ -40,7 +39,7 @@ class IncomingResponse extends AbstractResponse
 		
 		$this->body = $response['body'];
 		
-		$this->verify(); // TODO <- re-enable this for platformAPI branch!
+		$this->verify();
 	}
 }
 
