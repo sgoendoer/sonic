@@ -1,9 +1,7 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-// require_once(__DIR__ . '/../Object.abstract.class.php');
-
 /**
- * Represents a PROFILE object
+ * Represents a PERSON object
  * version 20151020
  *
  * author: Sebastian Goendoer
