@@ -9,7 +9,7 @@ class MalformedResponseHeaderException extends \Exception
 	{
 		parent::__construct($message, $code, $previous);
 		
-		if(Config::verbose() <= 1)
+		if(Config::verbose() >= 1)
 			Sonic::getLogger()->addError($message);
 	}
 }
