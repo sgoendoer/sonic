@@ -1,7 +1,7 @@
 <?php namespace sgoendoer\Sonic\Request;
 
+use sgoendoer\Sonic\Config\Config;
 use sgoendoer\Sonic\Request\AbstractRequest;
-
 
 /**
  * IncomingRequest
@@ -32,16 +32,13 @@ class IncomingRequest extends AbstractRequest
 	 */
 	public function getTargetedGID()
 	{
-		// we assume that the API root is known
-		$api_root = '/path/to/api';// <-- should be configured somewhere
-
-		return explode('/', str_replace($APIRoot, '', $this->path))[0];
+		return explode('/', str_replace(Config::APIPath(), '', $this->path))[0];
 	}
 
 	/**
 	 * extracts the API call from the path
 	 */
-	public function getAPICall()
+	/*public function getAPICall()
 	{
 		// we assume that the API root is known
 		$api_root = '/path/to/api/';// <-- should be configured somewhere
@@ -51,7 +48,7 @@ class IncomingRequest extends AbstractRequest
 		unset($tmp[0]);
 
 		return implode('/', $tmp);
-	}
+	}*/
 }
 
 ?>
