@@ -3,11 +3,13 @@
 use sgoendoer\Sonic\Sonic;
 use sgoendoer\Sonic\Crypt\Random;
 use sgoendoer\Sonic\Date\XSDDateTime;
-use sgoendoer\Sonic\Tools\JSONTools;
+//use sgoendoer\Sonic\Tools\JSONTools;
+
+use sgoendoer\json\JSONObject;
 
 /**
  * Creates and verifies signatures
- * version 20150727
+ * version 20160123
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -42,33 +44,33 @@ class Signature
 	
 	public static function createSignatureObject($message, $targetID, $accountPrivateKey)
 	{
-		$signatureObject = JSONTools::createJSONObject();
+		$signatureObject = new JSONObject();
 		
-		$signatureObject->targetID = $targetID;
-		$signatureObject->creatorGID = Sonic::getUserGlobalID();
-		$signatureObject->timeSigned = XSDDateTime::getXSDDateTime();
-		$signatureObject->random = Random::getRandom();
+		$signatureObject->put("targetID", $targetID);
+		$signatureObject->put("creatorGID", Sonic::getUserGlobalID());
+		$signatureObject->put("timeSigned", XSDDateTime::getXSDDateTime());
+		$signatureObject->put("random", Random::getRandom());
 		
-		$sigmessage = $message . $signatureObject->targetID . $signatureObject->creatorGID . $signatureObject->timeSigned . $signatureObject->random;
+		$sigmessage = $message . $signatureObject->get("targetID") . $signatureObject->get("creatorGID") . $signatureObject->get("timeSigned") . $signatureObject->get("random");
 		
-		$signatureObject->signature = self::createSignature($sigmessage, $accountPrivateKey);
+		$signatureObject->put("signature", self::createSignature($sigmessage, $accountPrivateKey));
 		
 		return $signatureObject;
 	}
 	
 	public static function verifySignatureObject($message, $signatureObject, $accountPublicKey)
 	{
-		$signatureObject = JSONTools::coerceToJSON($signatureObject); // necessary?
+		$signatureObject = new JSONObject($signatureObject);
 		
-		$sigmessage = $message . $signatureObject->targetID . $signatureObject->creatorGID . $signatureObject->timeSigned . $signatureObject->random;
+		$sigmessage = $message . $signatureObject->get("targetID") . $signatureObject->get("creatorGID") . $signatureObject->get("timeSigned") . $signatureObject->get("random");
 		
-		return self::verifySignature($sigmessage, $accountPublicKey, $signatureObject->signature);
+		return self::verifySignature($sigmessage, $accountPublicKey, $signatureObject->get("signature"));
 	}
 	
 	/*
 	 * creates a signature for a Sonic Object 
 	 */
-	public static function signJSON($jsonToSign, $accountPrivateKey)
+	/*public static function signJSON($jsonToSign, $accountPrivateKey)
 	{
 		if(gettype($jsonToSign) != 'string')
 			$jsonToSign = json_encode($jsonToSign);
@@ -93,9 +95,9 @@ class Signature
 		$signedJSON->object = $jsonToSign;
 		
 		return $signedJSON;
-	}
+	}*/
 	
-	public static function verifyJSONSignature($jsonObject, $accountPublicKey)
+	/*public static function verifyJSONSignature($jsonObject, $accountPublicKey)
 	{
 		$jsonObject = JSONTools::coerceToJSON($jsonObject); // necessary?
 		
@@ -107,7 +109,7 @@ class Signature
 		$message = $jsonObject->object . $signatureObject->targetID . $signatureObject->creatorGID . $signatureObject->timeSigned . $signatureObject->random;
 		
 		return self::verifySignature($message, $accountPublicKey, $signatureObject->signature);
-	}
+	}*/
 }
 
 ?>
