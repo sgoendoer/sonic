@@ -4,7 +4,7 @@ use sgoendoer\Sonic\Crypt\PublicKey;
 
 /**
  * Creates a SONIC GlobalID from a given key and salt
- * version 20150815
+ * version 20160125
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -19,6 +19,7 @@ class GID
 	 * 
 	 * @param $key the publicKey
 	 * @param $salt the salt
+	 * 
 	 * @return the GlobalID
 	 */
 	public static function createGID($key, $salt)
@@ -36,12 +37,20 @@ class GID
 	 * Determines if the format of a given GlobalID is valid.
 	 * 
 	 * @param $gid the GlobalID to check
+	 * 
 	 * @return true if the format of $gid is a valid, else false
 	 */
 	public static function isValid($gid)
 	{
-		// TODO check format
-		return true;
+		if(preg_match("/^[A-Z0-9]+$/", $gid))
+		{
+			if(strlen($gid) == 50)
+			{
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -50,6 +59,7 @@ class GID
 	 * @param $key the publicKey
 	 * @param $salt the salt
 	 * @param $gid the GlobalID to check
+	 *
 	 * @return true if the $gid is correct, else false
 	 */
 	public static function verifyGID($key, $salt, $gid)
@@ -66,6 +76,7 @@ class GID
 	 * @param $inputNumber
 	 * @param $fromBaseInput
 	 * @param $toBaseInput
+	 * 
 	 * @return the converted value
 	 */
 	private static function convBase($numberInput, $fromBaseInput, $toBaseInput)
