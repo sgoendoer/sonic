@@ -127,6 +127,8 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 		
 		if(!UOID::isValid($this->objectID))
 			throw new IllegalModelStateException('Invalid objectID');
+		if($this->initiatingGID == NULL)
+			throw new IllegalModelStateException('InitiatingGID must be set');
 		if(!GID::isValid($this->initiatingGID))
 			throw new IllegalModelStateException('Invalid initiatingGID');
 		if(!is_numeric($this->hopCount) || $this->hopCount > 3)
