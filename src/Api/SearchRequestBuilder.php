@@ -22,9 +22,6 @@ class SearchRequestBuilder extends AbstractRequestBuilder
 	{
 		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
 		
-		if($socialRecord->getType() != SocialRecord::TYPE_PLATFORM)
-			throw \Exception('Request cannot be targeted at a user');
-		
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
