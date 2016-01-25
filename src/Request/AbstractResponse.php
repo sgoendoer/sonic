@@ -17,6 +17,7 @@ use sgoendoer\Sonic\Model\ResponseObjectBuilder;
  */
 abstract class AbstractResponse
 {
+	protected $expectedGID		= NULL;
 	protected $statusCode		= NULL;
 	protected $statusMessage	= NULL;
 	protected $headers			= NULL;
@@ -67,12 +68,25 @@ abstract class AbstractResponse
 	
 	protected function verifySignature()
 	{
-		$publicAccountKey = SocialRecordManager::retrieveSocialRecord($this->headers[SONIC_HEADER__SOURCE_GID])->getAccountPublicKey();
-		//die($this->headers[SONIC_HEADER__SOURCE_GID] . "ää");
-		//echo "verifying response with key from GID ".$this->headers[SONIC_HEADER__SOURCE_GID];
-		if(!Signature::verifySignature($this->getStringForResponseSignature(), $publicAccountKey, $this->headers[SONIC_HEADER__SIGNATURE]))
+		$socialRecord = SocialRecordManager::retrieveSocialRecord($this->headers[SONIC_HEADER__SOURCE_GID]);
+		
+		if($this->expectedGID !== NULL)
+		{
+			if($this->headers[SONIC_HEADER__SOURCE_GID] != $this->expectedGID && $this->headers[SONIC_HEADER__SOURCE_GID] != $socialRecord->getPlatformGlobalID())
+			{
+				throw new MalformedRequestHeaderException("Request signature from unexpected source GID");
+			}
+		}
+		
+		if(!Signature::verifySignature($this->getStringForResponseSignature(), $socialRecord->getAccountPublicKey(), $this->headers[SONIC_HEADER__SIGNATURE]))
 			throw new MalformedRequestHeaderException("Invalid response signature");
-		else return true;
+		else
+			return true;
+	}
+	
+	public function getExpectedGID()
+	{
+		return $this->expectedGID;
 	}
 	
 	public function getHeaderDate()

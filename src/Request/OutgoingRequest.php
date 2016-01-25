@@ -17,7 +17,7 @@ class OutgoingRequest extends AbstractRequest
 {
 	private static $curl_verbose = false;
 	
-	public function __construct()
+	public function __construct($expectedGID = NULL)
 	{
 		$this->headers = array();
 		$this->headers[SONIC_HEADER__RANDOM]		= Random::getRandom();

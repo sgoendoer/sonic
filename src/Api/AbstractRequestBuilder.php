@@ -23,8 +23,7 @@ abstract class AbstractRequestBuilder
 		$this->request->setServer($host);
 		$this->request->setPath($path);
 		$this->request->setRequestMethod('GET');
-		//die($body);
-		//echo $this->request->toString();die();
+		
 		return $this;
 	}
 	
@@ -36,8 +35,7 @@ abstract class AbstractRequestBuilder
 		$this->request->setPath($path);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($body);
-		//die($body);
-		//echo $this->request->toString();die();
+		
 		return $this;
 	}
 	
@@ -49,8 +47,7 @@ abstract class AbstractRequestBuilder
 		$this->request->setPath($path);
 		$this->request->setRequestMethod('PUT');
 		$this->request->setRequestBody($body);
-		//die($body);
-		//echo $this->request->toString();die();
+		
 		return $this;
 	}
 	
@@ -61,8 +58,7 @@ abstract class AbstractRequestBuilder
 		$this->request->setServer($host);
 		$this->request->setPath($path);
 		$this->request->setRequestMethod('DELETE');
-		//die($body);
-		//echo $this->request->toString();die();
+		
 		return $this;
 	}
 	
@@ -90,7 +86,7 @@ abstract class AbstractRequestBuilder
 	public function dispatch()
 	{
 		$this->request->signRequest(Sonic::getContextAccountKeyPair()->getPrivateKey());
-		$this->response = new IncomingResponse($this->request->send());
+		$this->response = new IncomingResponse($this->request->send(), Sonic::getContextGlobalID());
 		
 		return $this->response;
 	}

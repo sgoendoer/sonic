@@ -74,7 +74,7 @@ abstract class AbstractRequest
 			throw new MalformedRequestHeaderException("Invalid request signature!");
 		else return true;
 	}
-
+	
 	public function getHeaderDate()
 	{
 		return $this->headers[SONIC_HEADER__DATE];

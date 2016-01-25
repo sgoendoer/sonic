@@ -11,8 +11,10 @@ use sgoendoer\Sonic\Request\AbstractResponse;
  */
 class IncomingResponse extends AbstractResponse
 {
-	public function __construct($response = NULL)
+	public function __construct($response = NULL, $expectedGID = NULL)
 	{
+		$this->expectedGID = $expectedGID;
+		
 		// read data from response
 		$response['headers'] = explode("\r\n", $response['headers']);
 		
