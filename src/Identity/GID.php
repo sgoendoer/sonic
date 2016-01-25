@@ -44,7 +44,7 @@ class GID
 	{
 		if(preg_match("/^[A-Z0-9]+$/", $gid))
 		{
-			if(strlen($gid) == 50)
+			if(strlen($gid) >= 50 || strlen($gid) <= 48)
 			{
 				return true;
 			}
