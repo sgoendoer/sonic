@@ -3,6 +3,16 @@
 	"description": "SOcial Network InterConnect SDK",
 	"version": "0.1.7",
 	"license": "MIT",
+	"homepage": "http://sonic-project.net",
+	"authors":
+	[
+		{
+			"name": "Sebastian Göndör",
+			"email": "sebastian.goendoer@rwth-aachen.de",
+			"homepage": "http://sebastian.goendoer.net",
+			"role": "Project lead, Developer"
+		}
+	],
 	"require":
 	{
 		"php": "^5.6 || ^7.0",
