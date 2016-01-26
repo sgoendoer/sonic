@@ -44,7 +44,8 @@ class GID
 	{
 		if(preg_match("/^[A-Z0-9]+$/", $gid))
 		{
-			if(strlen($gid) >= 50 || strlen($gid) <= 48)
+			// approx 85% of GIDs are 50 chars long, 14% 49, and 1% 48.
+			if(strlen($gid) <= 50 && strlen($gid) >= 48)
 			{
 				return true;
 			}
