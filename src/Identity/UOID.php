@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Identity\GID;
 
 /**
  * Creates and verifies Unique Object IDs (UOID)
- * version 20160105
+ * version 20160126
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -36,9 +36,11 @@ class UOID
 		if(!GID::isValid($uoid[0]))
 			return false;
 		
-		// check id // TODO
-		if(false)
+		// check id
+		if(!preg_match("/^[a-zA-Z0-9]+$/", $uoid[1]) || strlen($uoid[1]) <= 16)
+		{
 			return false;
+		}
 		
 		return true;
 	}
