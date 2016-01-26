@@ -2,7 +2,7 @@
 
 /**
  * URL helper class
- * version 20160125
+ * version 20160126
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -64,6 +64,23 @@ class URL
 		if($path == '') return '/';
 		
 		return $path;
+	}
+	
+	/**
+	 * Extracts the protocol from a URL
+	 * 
+	 * @param $url string The URL
+	 * 
+	 * @return string The protocol
+	 */
+	public static function getProtocolFromURL($url)
+	{
+		$protocol = explode('://', $url);
+		
+		if(count($protocol) != 2)
+			return 'http';
+		else
+			return $protocol[0];
 	}
 }
 
