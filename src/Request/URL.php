@@ -18,7 +18,7 @@ class URL
 	 */
 	public static function getPortFromURL($url)
 	{
-		$url = self::getDomainFromProfileLocation($url);
+		$url = self::getDomainFromURL($url);
 		$url = explode(':', $url);
 		
 		if(count($url) == 1)
@@ -39,7 +39,7 @@ class URL
 	 * 
 	 * @param $url string The URL
 	 * 
-	 * @return string The domain
+	 * @return string The domain (with port)
 	 */
 	public static function getDomainFromURL($url)
 	{
@@ -56,7 +56,7 @@ class URL
 	 */
 	public static function getPathFromURL($url)
 	{
-		$domain = self::getDomainFromProfileLocation($url);
+		$domain = self::getDomainFromURL($url);
 		
 		$path = str_replace($domain, '', $url);
 		$path = str_replace(array('http://', 'https://'), '', $path);

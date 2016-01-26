@@ -37,7 +37,7 @@ class UOID
 			return false;
 		
 		// check id
-		if(!preg_match("/^[a-zA-Z0-9]+$/", $uoid[1]) || strlen($uoid[1]) <= 16)
+		if(!preg_match("/^[a-zA-Z0-9]+$/", $uoid[1]) || strlen($uoid[1]) != 16)
 		{
 			return false;
 		}
