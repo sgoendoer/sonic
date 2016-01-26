@@ -12,11 +12,36 @@ class IdentityUnitTest extends PHPUnit_Framework_TestCase
 		
 		$salt = "0b9357af0b74e6a4";
 		
-		$gid = '3Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T5';
+		$gid1 = '3Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T5';
+		$gid2 = '2Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T5';
+		$gid3 = '2Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0';
+		$gid4 = '2-Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T';
 		
-		$this->assertEquals($gid, GID::createGID($key, $salt));
-		$this->assertEquals(true, GID::isValid($key, $salt));
-		$this->assertEquals(true, GID::verifyGID($key, $salt, $gid));
+		$this->assertEquals($gid1, GID::createGID($key, $salt));
+		$this->assertEquals(true, GID::isValid($gid1));
+		$this->assertEquals(true, GID::verifyGID($key, $salt, $gid1));
+		
+		$this->assertNotEquals($gid2, GID::createGID($key, $salt));
+		$this->assertTrue(GID::isValid($gid2));
+		$this->assertFalse(GID::verifyGID($key, $salt, $gid2));
+		
+		$this->assertFalse(GID::isValid($gid3));
+		$this->assertFalse(GID::isValid($gid4));
+	}
+	
+	public function testUOID()
+	{
+		$uoid1 = '3Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T5:0b9357af0b74e6a4'; // ok
+		$uoid2 = '2Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0:0b9357af0b74e6a4'; // invalid GID
+		$uoid3 = '2-Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T:0b9357af0b74e6a4'; // invalid GID
+		$uoid4 = '3Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T5:0b94357af0b74e6a4'; // invalid id
+		$uoid5 = '3Z51OUSP4UPXTEOOKSDXVZQLMYGNJQVY0SKYUKKGVT8QWD78T5:0b94357_0b74e6a4'; // invalid id
+		
+		$this->assertTrue(UOID::isValid($uoid1));
+		$this->assertFalse(UOID::isValid($uoid2));
+		$this->assertFalse(UOID::isValid($uoid3));
+		$this->assertFalse(UOID::isValid($uoid4));
+		$this->assertFalse(UOID::isValid($uoid5));
 	}
 }
 
