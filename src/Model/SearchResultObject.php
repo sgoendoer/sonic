@@ -26,7 +26,7 @@ class SearchResultObject extends ReferencingObject
 	{
 		parent::__construct($builder->getObjectID(), $builder->getTargetID());
 		
-		$resultOwnerGID = $builder->getOwnerGID();
+		$this->resultOwnerGID = $builder->getOwnerGID();
 		$this->resultObjectID = $builder->getResultObjectID();
 		$this->resultType = $builder->getResultType();
 		$this->displayName = $builder->getDisplayName();
@@ -120,43 +120,43 @@ class SearchResultObject extends ReferencingObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/tag,
+		"id": "http://jsonschema.net/sonic/searchResult,
 		"type": "object",
 		"properties":
 		{
 			"objectID":
 			{
-				"id": "http://jsonschema.net/sonic/tag/objectID",
+				"id": "http://jsonschema.net/sonic/searchResult/objectID",
 				"type": "string"
 			},
 			"targetID":
 			{
-				"id": "http://jsonschema.net/sonic/tag/targetID",
+				"id": "http://jsonschema.net/sonic/searchResult/targetID",
 				"type": "string"
 			},
 			"resultOwnerGID":
 			{
-				"id": "http://jsonschema.net/sonic/tag/resultOwnerGID",
+				"id": "http://jsonschema.net/sonic/searchResult/resultOwnerGID",
 				"type": "string"
 			},
 			"resultObjectID":
 			{
-				"id": "http://jsonschema.net/sonic/tag/resultObjectID",
+				"id": "http://jsonschema.net/sonic/searchResult/resultObjectID",
 				"type": "string"
 			},
 			"resultType":
 			{
-				"id": "http://jsonschema.net/sonic/tag/resultResultType",
+				"id": "http://jsonschema.net/sonic/searchResult/resultResultType",
 				"type": "string"
 			},
 			"displayName":
 			{
-				"id": "http://jsonschema.net/sonic/tag/displayName",
+				"id": "http://jsonschema.net/sonic/searchResult/displayName",
 				"type": "string"
 			},
 			"datetime":
 			{
-				"id": "http://jsonschema.net/sonic/tag/datetime,
+				"id": "http://jsonschema.net/sonic/searchResult/datetime,
 				"type": "string"
 			}
 		},
