@@ -24,7 +24,7 @@ or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-   "sgoendoer/sonic": "0.1.7"
+   "sgoendoer/sonic": "0.1.8"
 }
 ```
 
@@ -36,13 +36,11 @@ composer update
 
 ## Configuration
 
-On initialization of the Sonic class, a ```sgoendoer\Sonic\Config\Config``` instance must be passed. While a Config instance must be built using a ```sgoendoer\Sonic\Config\ConfigBuilder```, values can be left unset as they are set to default values.
+For the configuration of the Sonic class, the ```sgoendoer\Sonic\Config\Configuration``` can be populated with the desired values. Values, which are not set explicitly will stay at their default values.
 
 ```php
-$configuration = (new ConfigBuilder)
-	->timezone('Europe/Berlin')
-	->verbose(1)
-	->build();
+Configuration::setTimezone('Europe/Berlin')
+Configuration::setVerbose(1);
 ```
 
 ### Configuration values
@@ -63,7 +61,7 @@ require_once(__DIR__ . '/vendor/autoload.php');
 
 use sgoendoer\Sonic\Sonic;
 
-use sgoendoer\Sonic\Config\Config;
+use sgoendoer\Sonic\Config\Configuration;
 
 use sgoendoer\Sonic\Identity\EntityAuthData;
 use sgoendoer\Sonic\Identity\SocialRecord;
@@ -93,18 +91,16 @@ try {
 	// Before we can initialize the Sonic SDK, we need to pass a few configuration parameters.
 	// Parameters we don't set explicitly will be set to default values.
 	
-	$configuration = (new ConfigBuilder)
-						->timezone('Europe/Berlin')
-						->verbose(1)
-						->build();
+	Configuration::setTimezone('Europe/Berlin')
+	Configuration::setVerbose(1);
 	
 	// Now, we can initialize the Sonic SDK. The SDK's context will be set to "platform" 
 	// automatically
 	
-	$sonic = Sonic::initInstance($configuration, new EntityAuthData(
-													$platformSocialRecord,
-													$platformAccountKeyPair,
-													$platformPersonalKeyPair));
+	$sonic = Sonic::initInstance(new EntityAuthData(
+									$platformSocialRecord,
+									$platformAccountKeyPair,
+									$platformPersonalKeyPair));
 											
 	// From this point on, the Sonic SDK is fully initialized. Anyhow, the context must be
 	// set to "user" in order to perform requests in the context of a user:

@@ -28,7 +28,6 @@ class Sonic
 	
 	protected static $_instance			= NULL;
 	
-	private $configuration				= NULL;
 	private $logger						= NULL;
 	private $context					= NULL;
 	
@@ -77,7 +76,7 @@ class Sonic
 	 * 
 	 * @return The Sonic instance
 	 */
-	public static function initInstance(Configuration $config, EntityAuthData $platform)
+	public static function initInstance(EntityAuthData $platform)
 	{
 		if(self::$_instance === NULL)
 		{
@@ -85,7 +84,6 @@ class Sonic
 		}
 		
 		self::$_instance->platformAuthData = $platform;
-		self::$_instance->configuration = $config;
 		
 		self::$_instance->logger = new Logger('sonic');
 		self::$_instance->logger->pushHandler(new StreamHandler(Config::logfile()));
@@ -438,19 +436,6 @@ class Sonic
 			throw new SonicRuntimeException('Sonic instance not initialized');
 		
 		return self::$_instance->getContext()->getSocialRecord();
-	}
-	
-	/**
-	 * return the configuration object
-	 * 
-	 * @return Configuration the configuration
-	 */
-	public static function getConfig()
-	{
-		if(self::$_instance === NULL)
-			throw new SonicRuntimeException('Sonic instance not initialized');
-		
-		return self::$_instance->configuration;
 	}
 	
 	/**

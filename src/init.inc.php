@@ -30,8 +30,8 @@ define('SONIC_HEADER__SIGNATURE',		'SonicSignature');
 define('SONIC_HEADER__RANDOM',			'SonicRandom');
 
 define('SONIC_SDK__APP_NAME',			'SonicSDK');
-define('SONIC_SDK__APP_VERSION',		'0.1.5');
-define('SONIC_SDK__APP_VERSION_NAME',	'pre-beta2');
+define('SONIC_SDK__APP_VERSION',		'0.1.8');
+define('SONIC_SDK__APP_VERSION_NAME',	'beta3');
 define('SONIC_SDK__API_VERSION',		'0.1.2');
 
 define('SONIC_REQUEST__USERAGENT',		SONIC_SDK__APP_NAME . '/' . SONIC_SDK__APP_VERSION);
