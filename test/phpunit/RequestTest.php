@@ -12,22 +12,22 @@ class RequestUnitTest extends PHPUnit_Framework_TestCase
 		
 		$this->assertEquals('http', URL::getProtocolFromURL($url));
 		$this->assertEquals(123, URL::getPortFromURL($url));
-		$this->assertEquals('/a/b/c', getPathFromURL($url));
-		$this->assertEquals('domain.com', getDomainFromURL($url));
+		$this->assertEquals('/a/b/c', URL::getPathFromURL($url));
+		$this->assertEquals('domain.com:123', URL::getDomainFromURL($url));
 		
 		$url = 'https://sub.domain.com';
 		
 		$this->assertEquals('https', URL::getProtocolFromURL($url));
 		$this->assertEquals(80, URL::getPortFromURL($url));
-		$this->assertEquals('/', getPathFromURL($url));
-		$this->assertEquals('sub.domain.com', getDomainFromURL($url));
+		$this->assertEquals('/', URL::getPathFromURL($url));
+		$this->assertEquals('sub.domain.com', URL::getDomainFromURL($url));
 		
 		$url = 'http://domain.com:123/';
 		
 		$this->assertEquals('http', URL::getProtocolFromURL($url));
 		$this->assertEquals(123, URL::getPortFromURL($url));
-		$this->assertEquals('/', getPathFromURL($url));
-		$this->assertEquals('domain.com', getDomainFromURL($url));
+		$this->assertEquals('/', URL::getPathFromURL($url));
+		$this->assertEquals('domain.com:123', URL::getDomainFromURL($url));
 	}
 }
 

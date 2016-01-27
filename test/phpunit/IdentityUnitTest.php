@@ -3,6 +3,7 @@
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
 use sgoendoer\Sonic\Identity\GID;
+use sgoendoer\Sonic\Identity\UOID;
 
 class IdentityUnitTest extends PHPUnit_Framework_TestCase
 {
