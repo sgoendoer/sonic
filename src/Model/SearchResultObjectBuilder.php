@@ -101,6 +101,9 @@ class SearchResultObjectBuilder extends ReferencingObjectBuilder
 	
 	public function build()
 	{
+		if($this->objectID == NULL)
+			$this->objectID = UOID::createUOID();
+		
 		if(!UOID::isValid($this->objectID))
 			throw new IllegalModelStateException('Invalid objectID');
 		if(!UOID::isValid($this->targetID))
