@@ -1,9 +1,12 @@
 <?php namespace sgoendoer\Sonic\Identity;
 
 use sgoendoer\Sonic\Crypt\KeyPair;
+use sgoendoer\Sonic\Crypt\PrivateKey;
+
 use sgoendoer\Sonic\Identity\SocialRecord;
 
-use sgoendoer\json\JSONObject;
+use Lcobucci\JWT\Builder;
+use Lcobucci\JWT\Signer\Rsa\Sha512;
 
 /**
  * EntityAuthData container class
@@ -38,36 +41,71 @@ class EntityAuthData
 		$this->accountKeyPair	= $accountKeyPair;
 	}
 	
+	/**
+	 * Returns the GlobalID
+	 * 
+	 * @return String The GlobalID
+	 */
 	public function getGlobalID()
 	{
 		return $this->globalID;
 	}
 	
+	/**
+	 * Returns the SocialRecord
+	 * 
+	 * @return SocialRecord The SocialRecord
+	 */
 	public function getSocialRecord()
 	{
 		return $this->socialRecord;
 	}
 	
+	/**
+	 * Sets the SocialRecord
+	 * 
+	 * @param $socialRecord SocialRecord The SocialRecord
+	 */
 	public function setSocialRecord(SocialRecord $socialRecord)
 	{
 		$this->socialRecord = $socialRecord;
 	}
 	
+	/**
+	 * Returns the personal keypair
+	 * 
+	 * @return KeyPair The personal keypair
+	 */
 	public function getPersonalKeyPair()
 	{
 		return $this->personalKeyPair;
 	}
 	
+	/**
+	 * Sets the personal keypair
+	 * 
+	 * @param $personalKeyPair The personal keypair
+	 */
 	public function setPersonalKeyPair(KeyPair $personalKeyPair)
 	{
 		$this->personalKeyPair = $personalKeyPair;
 	}
 	
+	/**
+	 * Returns the account keypair
+	 * 
+	 * @return KeyPair The account keypair
+	 */
 	public function getAccountKeyPair()
 	{
 		return $this->accountKeyPair;
 	}
 	
+	/**
+	 * Sets the account key pair
+	 * 
+	 * @param $accountKeyPair KeyPair The account keypair
+	 */
 	public function setAccountKeyPair(KeyPair $accountKeyPair)
 	{
 		$this->accountKeyPair = $accountKeyPair;
