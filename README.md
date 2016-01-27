@@ -51,7 +51,8 @@ $configuration = (new ConfigBuilder)
 | ---- | ---- | ----------- | ------------- |
 | timezone | String | Timezone of the platform | "Europe/Berlin" |
 | verbose | Integer | Level of verbosity in the logs (0: nothing, 5: everything) | 0 |
-| APIPath | String | Path to the API endpoint | "/api/" |
+| logfile | String | filename to write logs to | "sonic.log" |
+| apiPath | String | Path to the API endpoint | "/sonic/" |
 | primaryGSLSNode | String | IP address of the primary GSLS node | "130.149.22.135:4002" |
 | secondaryGSLSNode | String | IP address of the secondary GSLS node | "130.149.22.133:4002" |
 

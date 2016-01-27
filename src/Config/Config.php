@@ -4,7 +4,7 @@ use sgoendoer\Sonic\Config\ConfigBuilder;
 
 /**
  * Config
- * version 20160122
+ * version 20160127
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -15,7 +15,7 @@ class Config
 	
 	private $primaryGSLSNode	= NULL;
 	private $secondaryGSLSNode	= NULL;
-	private $APIPath			= NULL;
+	private $apiPath			= NULL;
 	private $timezone			= NULL;
 	private $verbose			= NULL; // 0: log nothing, 1: log errors, 2: log info, 3: log everything
 	private $logfile			= NULL;
@@ -25,7 +25,7 @@ class Config
 		$this->primaryGSLSNode = $builder->getPrimaryGSLSNode();
 		$this->secondaryGSLSNode = $builder->getSecondaryGSLSNode();
 		$this->timezone = $builder->getTimezone();
-		$this->APIPath = $builder->getAPIPath();
+		$this->apiPath = $builder->getApiPath();
 		$this->verbose = $builder->getVerbose();
 		$this->logfile = $builder->getLogfile();
 	}
@@ -56,18 +56,18 @@ class Config
 	
 	public function setSecondaryGSLSNode($ipAddress)
 	{
-		$this->SecondaryGSLSNode = $ipAddress;
+		$this->secondaryGSLSNode = $ipAddress;
 		return $this;
 	}
 	
-	public static function APIPath()
+	public static function apiPath()
 	{
-		return Config::getInstance()->APIPath;
+		return Config::getInstance()->apiPath;
 	}
 	
-	public function setAPIPath($path)
+	public function setApiPath($path)
 	{
-		$this->APIPath = $path;
+		$this->apiPath = $path;
 		return $this;
 	}
 	

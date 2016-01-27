@@ -4,7 +4,7 @@ use sgoendoer\Sonic\Config\Config;
 
 /**
  * Config
- * version 20160122
+ * version 20160127
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -15,14 +15,14 @@ class ConfigBuilder
 		'primaryGSLSNode' => '130.149.22.135:4002',
 		'secondaryGSLSNode' => '130.149.22.133:4002',
 		'timezone' => 'Europe/Berlin',
-		'APIPath' => '/api/',
+		'apiPath' => '/sonic/',
 		'verbose' => 0,
 		'logfile' => 'sonic.log'
 	);
 	
 	private $primaryGSLSNode	= NULL;
 	private $secondaryGSLSNode	= NULL;
-	private $APIPath			= NULL;
+	private $apiPath			= NULL;
 	private $timezone			= NULL;
 	private $verbose			= NULL;
 	private $logfile			= NULL;
@@ -50,18 +50,18 @@ class ConfigBuilder
 	
 	public function secondaryGSLSNode($ipAddress)
 	{
-		$this->SecondaryGSLSNode = $ipAddress;
+		$this->secondaryGSLSNode = $ipAddress;
 		return $this;
 	}
 	
-	public function getAPIPath()
+	public function getApiPath()
 	{
-		return $this->APIPath;
+		return $this->apiPath;
 	}
 	
-	public function APIPath($path)
+	public function ApiPath($path)
 	{
-		$this->APIPath = $path;
+		$this->apiPath = $path;
 		return $this;
 	}
 	
@@ -106,8 +106,8 @@ class ConfigBuilder
 			$this->secondaryGSLSNode = $this->defaults['secondaryGSLSNode'];
 		if($this->timezone === NULL)
 			$this->timezone = $this->defaults['timezone'];
-		if($this->APIPath === NULL)
-			$this->APIPath = $this->defaults['APIPath'];
+		if($this->apiPath === NULL)
+			$this->apiPath = $this->defaults['apiPath'];
 		if($this->verbose === NULL)
 			$this->verbose = $this->defaults['verbose'];
 		if($this->logfile === NULL)
