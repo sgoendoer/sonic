@@ -59,7 +59,7 @@ class ConfigBuilder
 		return $this->apiPath;
 	}
 	
-	public function ApiPath($path)
+	public function apiPath($path)
 	{
 		$this->apiPath = $path;
 		return $this;

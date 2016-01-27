@@ -29,7 +29,7 @@ class Sonic
 	protected static $_instance			= NULL;
 	
 	private $configuration				= NULL;
-	private $Logger						= NULL;
+	private $logger						= NULL;
 	private $context					= NULL;
 	
 	private $userAuthData				= NULL;
