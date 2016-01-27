@@ -16,7 +16,7 @@ use Monolog\Handler\StreamHandler;
 /**
  * Main class of the SONIC SDK
  * 
- * version 20160122
+ * version 20160127
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -42,6 +42,11 @@ class Sonic
 	 * private/hidden constructor
 	 */
 	private function __construct() {}
+	
+	/**
+	 * private/hidden destructor
+	 */
+	private function __destruct() {}
 	
 	/**
 	 * disable cloning
