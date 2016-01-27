@@ -27,7 +27,7 @@ class GSLS
 	
 	public static function getSocialRecord($gid, $raw = false)
 	{
-		$ch = curl_init(Config::primaryGSLSNode() . '/' . $gid);
+		$ch = curl_init(Configuration::getPrimaryGSLSNode() . '/' . $gid);
 		if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_HTTPGET, 1);
@@ -90,7 +90,7 @@ class GSLS
 			->sign($signer, $personalPrivateKey)
 			->getToken();
 		
-		$ch = curl_init(Config::primaryGSLSNode());
+		$ch = curl_init(Configuration::getPrimaryGSLSNode());
 		if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);
@@ -133,7 +133,7 @@ class GSLS
 			->sign($signer, $personalPrivateKey)
 			->getToken();
 		
-		$ch = curl_init(Config::primaryGSLSNode());
+		$ch = curl_init(Configuration::getPrimaryGSLSNode());
 		if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 		curl_setopt($ch, CURLOPT_POST, true);

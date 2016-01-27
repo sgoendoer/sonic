@@ -2,7 +2,7 @@
 
 require_once(__DIR__ . "/init.inc.php");
 
-use sgoendoer\Sonic\Config\Config;
+use sgoendoer\Sonic\Config\Configuration;
 use sgoendoer\Sonic\Identity\SocialRecord;
 use sgoendoer\Sonic\Crypt\KeyPair;
 use sgoendoer\Sonic\Identity\EntityAuthData;
@@ -72,12 +72,12 @@ class Sonic
 	/**
 	 * initializes the Sonic SDK using EntityAuthData of the platform
 	 * 
-	 * @param $config Config object
+	 * @param $config Configuration object
 	 * @param $platform EntityAuthData object of the platform
 	 * 
 	 * @return The Sonic instance
 	 */
-	public static function initInstance(Config $config, EntityAuthData $platform)
+	public static function initInstance(Configuration $config, EntityAuthData $platform)
 	{
 		if(self::$_instance === NULL)
 		{
