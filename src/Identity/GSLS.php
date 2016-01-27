@@ -1,7 +1,7 @@
 <?php namespace sgoendoer\Sonic\Identity;
 
 use sgoendoer\Sonic\Sonic;
-use sgoendoer\Sonic\Config\Config;
+use sgoendoer\Sonic\Config\Configuration;
 use sgoendoer\Sonic\Crypt\PublicKey;
 use sgoendoer\Sonic\Crypt\PrivateKey;
 

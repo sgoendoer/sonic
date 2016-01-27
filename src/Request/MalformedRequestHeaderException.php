@@ -1,7 +1,7 @@
 <?php namespace sgoendoer\Sonic\Request;
 
 use sgoendoer\Sonic\Sonic;
-use sgoendoer\Sonic\Config\Config;
+use sgoendoer\Sonic\Config\Configuration;
 
 class MalformedRequestHeaderException extends \Exception
 {
@@ -9,7 +9,7 @@ class MalformedRequestHeaderException extends \Exception
 	{
 		parent::__construct($message, $code, $previous);
 		
-		if(Config::verbose() >= 1)
+		if(Configuration::getVerbose() >= 1)
 			Sonic::getLogger()->addError($message);
 	}
 }

@@ -1,7 +1,7 @@
 <?php namespace sgoendoer\Sonic\Identity;
 
 use sgoendoer\Sonic\Sonic;
-use sgoendoer\Sonic\Config\Config;
+use sgoendoer\Sonic\Config\Configuration;
 
 class SocialRecordFormatException extends \Exception
 {
@@ -9,7 +9,7 @@ class SocialRecordFormatException extends \Exception
 	{
 		parent::__construct($message, $code, $previous);
 		
-		if(Config::verbose() >= 1)
+		if(Configuration::getVerbose() >= 1)
 			Sonic::getLogger()->addError($message);
 	}
 }

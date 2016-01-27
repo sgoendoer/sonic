@@ -443,7 +443,7 @@ class Sonic
 	/**
 	 * return the configuration object
 	 * 
-	 * @return the configuration
+	 * @return Configuration the configuration
 	 */
 	public static function getConfig()
 	{

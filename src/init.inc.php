@@ -1,6 +1,6 @@
 <?php namespace sgoendoer\Sonic;
 
-use sgoendoer\Sonic\Config\Config;
+use sgoendoer\Sonic\Config\Configuration;
 
 if(version_compare(PHP_VERSION, '5.6.0') < 0)
 {
@@ -20,7 +20,7 @@ if(!function_exists('curl_version'))
 	die('SONIC SDK requires cURL to be installed.'."\n\n");
 }
 
-date_default_timezone_set(Config::timezone());
+date_default_timezone_set(Configuration::getTimezone());
 
 define('SONIC_HEADER__TARGET_API',		'SonicTargetAPI');
 define('SONIC_HEADER__DATE',			'SonicResourceDate');
