@@ -1,10 +1,8 @@
 <?php namespace sgoendoer\Sonic\Config;
 
-use sgoendoer\Sonic\Config\ConfigBuilder;
-
 /**
  * Config
- * version 20160127
+ * version 20160128
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -46,7 +44,6 @@ class Configuration
 	public static function setPrimaryGSLSNode($ipAddress)
 	{
 		self::$primaryGSLSNode = $ipAddress;
-		return self;
 	}
 	
 	public static function getSecondaryGSLSNode()
@@ -57,7 +54,6 @@ class Configuration
 	public static function setSecondaryGSLSNode($ipAddress)
 	{
 		self::$secondaryGSLSNode = $ipAddress;
-		return self;
 	}
 	
 	public static function getApiPath()
@@ -68,7 +64,6 @@ class Configuration
 	public static function setApiPath($path)
 	{
 		self::$apiPath = $path;
-		return self;
 	}
 	
 	public static function getTimezone()
@@ -79,7 +74,6 @@ class Configuration
 	public static function setTimezone($tz)
 	{
 		self::$timezone = $tz;
-		return self;
 	}
 	
 	public static function getVerbose()
@@ -90,7 +84,6 @@ class Configuration
 	public static function setVerbose($verbose)
 	{
 		self::$verbose = $verbose;
-		return self;
 	}
 	
 	public static function getLogfile()
@@ -101,7 +94,6 @@ class Configuration
 	public static function setLogfile($logfile)
 	{
 		self::$logfile = $logfile;
-		return self;
 	}
 }
 

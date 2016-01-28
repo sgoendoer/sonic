@@ -4,7 +4,7 @@ In SONIC, every user and every platform is identified by a globally unique ident
 
 # GlobalID
 
-In SONIC, every user and every platform is identified by a globally unique identifier, the GlobalID. GlobalIDs are domain and platform independent and remain unchanged even when a user account is moved to a new domain. This way, user accounts can be addressed regardless of where it is actually hosted.
+In SONIC, every user and every platform is identified by a globally unique identifier, the [GlobalID](UserIdentification.md#globalid). GlobalIDs are domain and platform independent and remain unchanged even when a user account is moved to a new domain. This way, user accounts can be addressed regardless of where it is actually hosted.
 
 ## GlobalID creation
 
@@ -36,4 +36,4 @@ A SocialRecord comprises the following information:
 
 # GSLS
 
-SocialRecords in Sonic are published in a global distributed directory, the Global Social Lookup System (GSLS). The GSLS stores SocialRecords as signed JSON Web Token (JWT) files using RSA + SHA512 (RS512). Similar to a DNS server, a GSLS node needs to be configured on initialization of the Sonic SDK.
+SocialRecords in Sonic are published in a global distributed directory, the [Global Social Lookup System (GSLS)](UserIdentification.md#gsls). The GSLS stores SocialRecords as signed JSON Web Token (JWT) files using RSA + SHA512 (RS512). Similar to a DNS server, a GSLS node needs to be configured on initialization of the Sonic SDK.
