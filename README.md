@@ -1,12 +1,11 @@
 # Sonic
 
-SOcial Network InterConnect
-
-## System requirements
+### SOcial Network InterConnect
 
 The Sonic SDK provides a complete toolset to ease the integration of the Sonic protocol into new and existing Online Social Network (OSN) platforms. It is written in PHP 5.6 and is fully compatible with PHP 7.0. The Sonic SDK can be installed via Composer or fetched directly from GitHub.
 
-- system requirements
+## System requirements
+
 - PHP 5.6+ or PHP 7.0+
 - OpenSSL 1.0.0+
 - cURL 7.20.0+
@@ -14,10 +13,10 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 
 ## Installation
 
-Install via composer:
+Install via composer with
 
 ```bash
-composer install sgoendoer/sonic
+$ composer install sgoendoer/sonic
 ````
 
 or configure your ```composer.json``` like this:
@@ -31,7 +30,7 @@ or configure your ```composer.json``` like this:
 and run
 
 ```bash
-composer update
+$ composer update
 ```
 
 ## Configuration
@@ -57,6 +56,8 @@ Configuration::setVerbose(1);
 ## Initialization
 
 ```php
+<?php
+
 require_once(__DIR__ . '/vendor/autoload.php');
 
 use sgoendoer\Sonic\Sonic;
@@ -91,7 +92,7 @@ try {
 	// Before we can initialize the Sonic SDK, we need to pass a few configuration parameters.
 	// Parameters we don't set explicitly will be set to default values.
 	
-	Configuration::setTimezone('Europe/Berlin')
+	Configuration::setTimezone('Europe/Berlin');
 	Configuration::setVerbose(1);
 	
 	// Now, we can initialize the Sonic SDK. The SDK's context will be set to "platform" 
@@ -112,10 +113,24 @@ try {
 	// Now we can perform a request to another user's profile using a GlobalID
 	
 	$globalID = '28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF';
+	
 	$response = (new ProfileRequestBuilder())
 		->$profileRequest->createGETProfile($globalID)->dispatch();
 	$profile = ProfileObjectBuilder::buildFromJSON($response->getPayload());
 	
 	echo $profile->getJSONString() . "\n\n";
-} catch (\Exception $e) {}
+} catch (\Exception $e)
+{}
+?>
 ```
+
+## Documentation
+
+- [Sonic introduction](docs/Sonic.md)
+- [Sonic architecture](docs/Architecture.md)
+- [User identification](docs/UserIdentification.md)
+- [Sonic content model](docs/ContentModel.md)
+
+## Submitting bugs and feature requests
+
+Bugs and feature request are tracked on [GitHub](https://github.com/sgoendoer/sonic/issues)
