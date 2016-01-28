@@ -86,7 +86,7 @@ class Sonic
 		self::$_instance->platformAuthData = $platform;
 		
 		self::$_instance->logger = new Logger('sonic');
-		self::$_instance->logger->pushHandler(new StreamHandler(Config::logfile()));
+		self::$_instance->logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
 		
 		self::$_instance->setContext(Sonic::CONTEXT_PLATFORM); // needs to be explicitly set to "user"
 		
