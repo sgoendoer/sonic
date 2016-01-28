@@ -1,7 +1,7 @@
 <?php namespace sgoendoer\Sonic\Config;
 
 /**
- * Config
+ * Configuration
  * version 20160128
  *
  * author: Sebastian Goendoer
@@ -33,8 +33,6 @@ class Configuration
 		if(array_key_exists('verbose')) self::$verbose = $config['verbose'];
 		if(array_key_exists('curlVerbose')) self::$curlVerbose = $config['curlVerbose'];
 		if(array_key_exists('logfile')) self::$logfile = $config['logfile'];
-		
-		return self;
 	}
 	
 	public static function getPrimaryGSLSNode()

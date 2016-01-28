@@ -1,7 +1,7 @@
 <?php namespace sgoendoer\Sonic\Request;
 
 use sgoendoer\Sonic\Sonic;
-use sgoenoder\Sonic\Config\Configuration;
+use sgoendoer\Sonic\Config\Configuration;
 use sgoendoer\Sonic\Crypt\Random;
 use sgoendoer\Sonic\Crypt\Signature;
 use sgoendoer\Sonic\Date\XSDDateTime;
