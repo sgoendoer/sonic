@@ -16,7 +16,7 @@ use Monolog\Handler\StreamHandler;
 /**
  * Main class of the SONIC SDK
  * 
- * version 20160127
+ * version 20160128
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -38,9 +38,9 @@ class Sonic
 	private $uniqueIDManager			= NULL;
 	
 	/**
-	 * private/hidden constructor
+	 * protected/hidden constructor
 	 */
-	private function __construct() {}
+	protected function __construct() {}
 	
 	/**
 	 * disable cloning
@@ -54,10 +54,10 @@ class Sonic
 	 * 
 	 * @param The Sonic instance
 	 */
-	public static function getInstance()
+	public static function &getInstance()
 	{
 		// TODO check if user and platform are correctly initialized
-		if(self::$_instance === NULL)
+		if(NULL === self::$_instance)
 			throw new SonicRuntimeException('Sonic instance not initialized');
 		
 		return self::$_instance;
@@ -71,17 +71,17 @@ class Sonic
 	 * 
 	 * @return The Sonic instance
 	 */
-	public static function initInstance(EntityAuthData $platform)
+	public static function &initInstance(EntityAuthData $platform)
 	{
-		if(self::$_instance === NULL)
+		if(NULL === self::$_instance)
 		{
 			self::$_instance = new Sonic();
 		}
 		
 		self::$_instance->platformAuthData = $platform;
 		
-		self::$_instance->logger = new Logger('sonic');
-		self::$_instance->logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
+		//self::$_instance->logger = new Logger('sonic');
+		//self::$_instance->logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
 		
 		self::$_instance->setContext(Sonic::CONTEXT_PLATFORM); // needs to be explicitly set to "user"
 		
