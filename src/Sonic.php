@@ -43,11 +43,6 @@ class Sonic
 	private function __construct() {}
 	
 	/**
-	 * private/hidden destructor
-	 */
-	private function __destruct() {}
-	
-	/**
 	 * disable cloning
 	 */
 	private function __clone() {}

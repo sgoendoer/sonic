@@ -14,10 +14,10 @@ class Configuration
 	private static $apiPath				= '/sonic/';
 	private static $timezone			= 'Europe/Berlin';
 	private static $verbose				= 0; // 0: log nothing, 1: log errors, 2: log info, 3: log everything
+	private static $curlVerbose			= 0;
 	private static $logfile				= 'sonic.log';
 	
 	private function __construct() {}
-	private function __destruct() {}
 	private function __clone() {}
 	
 	public static function setConfiguration($config)
@@ -31,6 +31,7 @@ class Configuration
 		if(array_key_exists('apiPath')) self::$apiPath = $config['apiPath'];
 		if(array_key_exists('timezone')) self::$timezone = $config['timezone'];
 		if(array_key_exists('verbose')) self::$verbose = $config['verbose'];
+		if(array_key_exists('curlVerbose')) self::$curlVerbose = $config['curlVerbose'];
 		if(array_key_exists('logfile')) self::$logfile = $config['logfile'];
 		
 		return self;
@@ -84,6 +85,16 @@ class Configuration
 	public static function setVerbose($verbose)
 	{
 		self::$verbose = $verbose;
+	}
+	
+	public static function getCurlVerbose()
+	{
+		return self::$curlVerbose;
+	}
+	
+	public static function setCurlVerbose($curlVerbose)
+	{
+		self::$curlVerbose = $curlVerbose;
 	}
 	
 	public static function getLogfile()

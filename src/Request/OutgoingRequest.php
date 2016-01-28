@@ -1,6 +1,7 @@
 <?php namespace sgoendoer\Sonic\Request;
 
 use sgoendoer\Sonic\Sonic;
+use sgoenoder\Sonic\Config\Configuration;
 use sgoendoer\Sonic\Crypt\Random;
 use sgoendoer\Sonic\Crypt\Signature;
 use sgoendoer\Sonic\Date\XSDDateTime;
@@ -15,8 +16,6 @@ use sgoendoer\Sonic\Request\AbstractRequest;
  */
 class OutgoingRequest extends AbstractRequest
 {
-	private static $curl_verbose = false;
-	
 	public function __construct($expectedGID = NULL)
 	{
 		$this->headers = array();
@@ -92,7 +91,7 @@ class OutgoingRequest extends AbstractRequest
 				curl_setopt($ch, CURLOPT_HTTPHEADER, $header);
 			}
 			
-			if(self::$curl_verbose == true) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			if(Configuration::getCurlVerbose() >= 1) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_HEADER, true);
 			
 			$response = curl_exec($ch);
