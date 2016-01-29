@@ -23,7 +23,7 @@ or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-   "sgoendoer/sonic": "0.1.8"
+   "sgoendoer/sonic": "0.1.9"
 }
 ```
 
@@ -48,6 +48,7 @@ Configuration::setVerbose(1);
 | ---- | ---- | ----------- | ------------- |
 | timezone | String | Timezone of the platform | "Europe/Berlin" |
 | verbose | Integer | Level of verbosity in the logs (0: nothing, 5: everything) | 0 |
+| curlVerbose | Integer | Level of verbosity for curl requests (0: nothing, 1: everything, 2: also connections to third party services) | 0 |
 | logfile | String | filename to write logs to | "sonic.log" |
 | apiPath | String | Path to the API endpoint | "/sonic/" |
 | primaryGSLSNode | String | IP address of the primary GSLS node | "130.149.22.135:4002" |
@@ -114,8 +115,8 @@ try {
 	
 	$globalID = '28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF';
 	
-	$response = (new ProfileRequestBuilder())
-		->$profileRequest->createGETProfile($globalID)->dispatch();
+	$response = (new ProfileRequestBuilder($globalID))
+		->$profileRequest->createGETProfile()->dispatch();
 	$profile = ProfileObjectBuilder::buildFromJSON($response->getPayload());
 	
 	echo $profile->getJSONString() . "\n\n";
