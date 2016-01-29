@@ -2,11 +2,10 @@
 
 use sgoendoer\Sonic\Request\OutgoingRequest;
 use sgoendoer\Sonic\Api\AbstractRequestBuilder;
-use sgoendoer\Sonic\Identity\SocialRecordManager;
 
 /**
  * Creates PERSON requests
- * version 20150915
+ * version 20160129
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -15,14 +14,12 @@ class PersonRequestBuilder extends AbstractRequestBuilder
 {
 	const RESOURCE_NAME_PERSON = 'PERSON';
 	
-	public function createGETPerson($toGID)
+	public function createGETPerson()
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_PERSON);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_PERSON);
 		$this->request->setRequestMethod('GET');
 		$this->request->setRequestBody('');
 		

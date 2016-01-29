@@ -2,7 +2,6 @@
 
 use sgoendoer\Sonic\Request\OutgoingRequest;
 use sgoendoer\Sonic\Api\AbstractRequestBuilder;
-use sgoendoer\Sonic\Identity\SocialRecordManager;
 use sgoendoer\Sonic\Model\ConversationObject;
 use sgoendoer\Sonic\Model\ConversationStatusObject;
 use sgoendoer\Sonic\Model\ConversationMessageObject;
@@ -10,7 +9,7 @@ use sgoendoer\Sonic\Model\ConversationMessageStatusObject;
 
 /**
  * Creates CONVERSATION requests
- * version 20151207
+ * version 20160129
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -21,84 +20,72 @@ class ConversationRequestBuilder extends AbstractRequestBuilder
 	const RESOURCE_NAME_CONVERSATION = 'CONVERSATION';
 	const RESOURCE_NAME_MESSAGE = 'MESSAGE';
 	
-	public function createPOSTConversation($toGID, ConversationObject $conversationObject)
+	public function createPOSTConversation(ConversationObject $conversationObject)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($conversationObject->getJSONString());
 		
 		return $this;
 	}
 	
-	public function createPUTConversation($toGID, ConversationObject $conversationObject)
+	public function createPUTConversation(ConversationObject $conversationObject)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $conversationObject->getObjectID());
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $conversationObject->getObjectID());
 		$this->request->setRequestMethod('PUT');
 		$this->request->setRequestBody($conversationObject->getJSONString());
 		
 		return $this;
 	}
 	
-	public function createPOSTConversationStatus($toGID, ConversationStatusObject $statusObject)
+	public function createPOSTConversationStatus(ConversationStatusObject $statusObject)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $statusObject->getTargetID() . '/' . self::RESOURCE_NAME_STATUS);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $statusObject->getTargetID() . '/' . self::RESOURCE_NAME_STATUS);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($statusObject->getJSONString());
 		
 		return $this;
 	}
 	
-	public function createPOSTConversationMessage($toGID, ConversationMessageObject $messageObject)
+	public function createPOSTConversationMessage(ConversationMessageObject $messageObject)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $messageObject->getTargetID() . '/' . self::RESOURCE_NAME_MESSAGE);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $messageObject->getTargetID() . '/' . self::RESOURCE_NAME_MESSAGE);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($messageObject->getJSONString());
 		
 		return $this;
 	}
 	
-	public function createPUTConversationMessage($toGID, ConversationMessageObject $messageObject)
+	public function createPUTConversationMessage(ConversationMessageObject $messageObject)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $messageObject->getTargetID() . '/' . self::RESOURCE_NAME_MESSAGE . '/' . $messageObject->getObjectID());
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $messageObject->getTargetID() . '/' . self::RESOURCE_NAME_MESSAGE . '/' . $messageObject->getObjectID());
 		$this->request->setRequestMethod('PUT');
 		$this->request->setRequestBody($messageObject->getJSONString());
 		
 		return $this;
 	}
 	
-	public function createPOSTConversationMessageStatus($toGID, ConversationMessageStatusObject $messageStatusObject)
+	public function createPOSTConversationMessageStatus(ConversationMessageStatusObject $messageStatusObject)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $messageStatusObject->getConversationID() . '/' . self::RESOURCE_NAME_MESSAGE . '/' . $messageStatusObject->getTargetID() . '/' . self::RESOURCE_NAME_STATUS);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_CONVERSATION . '/' . $messageStatusObject->getConversationID() . '/' . self::RESOURCE_NAME_MESSAGE . '/' . $messageStatusObject->getTargetID() . '/' . self::RESOURCE_NAME_STATUS);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($messageStatusObject->getJSONString());
 		

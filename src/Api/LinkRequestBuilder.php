@@ -2,13 +2,12 @@
 
 use sgoendoer\Sonic\Request\OutgoingRequest;
 use sgoendoer\Sonic\Api\AbstractRequestBuilder;
-use sgoendoer\Sonic\Identity\SocialRecordManager;
 use sgoendoer\Sonic\Model\LinkRequestObject;
 use sgoendoer\Sonic\Model\LinkResponseObject;
 
 /**
  * Creates LINK requests
- * version 20150901
+ * version 20160129
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -17,58 +16,49 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 {
 	const RESOURCE_NAME_LINK = 'LINK';
 	
-	public function createGETLink($toGID)
+	public function createGETLink()
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
 		$this->request->setRequestMethod('GET');
 		
 		return $this;
 	}
 	
-	public function createPOSTLink($toGID, LinkRequestObject $linkRequest)
+	public function createPOSTLink(LinkRequestObject $linkRequest)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($linkRequest->getJSONString());
-		//die($body);
-		//echo $this->request->toString();die();
+		
 		return $this;
 	}
 	
-	public function createPUTLink($toGID, LinkResponseObject $linkResponse)
+	public function createPUTLink(LinkResponseObject $linkResponse)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkResponse->getTargetID());
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkResponse->getTargetID());
 		$this->request->setRequestMethod('PUT');
 		$this->request->setRequestBody($linkResponse->getJSONString());
-		//die($body);
+		
 		return $this;
 	}
 	
-	public function createDELETELink($toGID, $linkUOID)
+	public function createDELETELink($linkUOID)
 	{
-		$socialRecord = SocialRecordManager::retrieveSocialRecord($toGID);
-		
 		$this->request = new OutgoingRequest();
 		
-		$this->request->setServer($this->getDomainFromProfileLocation($socialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($socialRecord->getProfileLocation()) . $socialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkUOID);
+		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkUOID);
 		$this->request->setRequestMethod('DELETE');
-		//die($body);
+		
 		return $this;
 	}
 }

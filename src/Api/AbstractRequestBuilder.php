@@ -1,20 +1,43 @@
 <?php namespace sgoendoer\Sonic\Api;
 
 use sgoendoer\Sonic\Sonic;
+use sgoendoer\Sonic\Identity\GID;
+use sgoendoer\Sonic\Identity\SocialRecordManager;
 use sgoendoer\Sonic\Request\OutgoingRequest;
+use sgoendoer\Sonic\Request\MalformedRequestException;
 use sgoendoer\Sonic\Request\IncomingResponse;
 
 /**
  * Creates and verifies signatures
- * version 20150818
+ * version 20160129
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
 abstract class AbstractRequestBuilder
 {
+	protected $targetGID = NULL;
+	protected $targetSocialRecord = NULL;
+	
 	protected $request = NULL;
 	protected $response = NULL;
+	
+	public function __construct($targetGID)
+	{
+		if(!GID::isValid($targetGID))
+			throw new MalformedRequestException('Invalid GlobalID: [' . $targetGID . ']');
+		
+		$this->targetGID = $targetGID;
+		
+		try
+		{
+			$this->targetSocialRecord = SocialRecordManager::retrieveSocialRecord($this->argetGID);
+		}
+		catch (\Exception $e)
+		{
+			throw new MalformedRequestException('Could not resolve GlobalID: [' . $this->targetGID . ']');
+		}
+	}
 	
 	protected function sendHttpGETRequest($host, $path, $headers = NULL)
 	{
@@ -86,7 +109,7 @@ abstract class AbstractRequestBuilder
 	public function dispatch()
 	{
 		$this->request->signRequest(Sonic::getContextAccountKeyPair()->getPrivateKey());
-		$this->response = new IncomingResponse($this->request->send(), Sonic::getContextGlobalID());
+		$this->response = new IncomingResponse($this->request->send(), $this->targetGID);
 		
 		return $this->response;
 	}
