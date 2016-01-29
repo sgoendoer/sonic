@@ -31,7 +31,7 @@ abstract class AbstractRequestBuilder
 		
 		try
 		{
-			$this->targetSocialRecord = SocialRecordManager::retrieveSocialRecord($this->argetGID);
+			$this->targetSocialRecord = SocialRecordManager::retrieveSocialRecord($this->targetGID);
 		}
 		catch (\Exception $e)
 		{
