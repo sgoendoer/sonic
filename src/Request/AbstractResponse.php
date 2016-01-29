@@ -10,7 +10,7 @@ use sgoendoer\Sonic\Model\ResponseObjectBuilder;
 
 /**
  * AbstractResponse
- * version 20160111
+ * version 20160129
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -72,7 +72,7 @@ abstract class AbstractResponse
 		
 		if($this->expectedGID !== NULL)
 		{
-			if($this->headers[SONIC_HEADER__SOURCE_GID] != $this->expectedGID && $this->headers[SONIC_HEADER__SOURCE_GID] != $socialRecord->getPlatformGlobalID())
+			if($this->headers[SONIC_HEADER__SOURCE_GID] != $this->expectedGID && $this->headers[SONIC_HEADER__SOURCE_GID] != $socialRecord->getPlatformGID())
 			{
 				throw new MalformedRequestHeaderException("Request signature from unexpected source GID");
 			}
