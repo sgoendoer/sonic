@@ -74,7 +74,7 @@ abstract class AbstractResponse
 		{
 			if($this->headers[SONIC_HEADER__SOURCE_GID] != $this->expectedGID && $this->headers[SONIC_HEADER__SOURCE_GID] != $socialRecord->getPlatformGID())
 			{
-				throw new MalformedRequestHeaderException("Request signature from unexpected source GID");
+				throw new MalformedRequestHeaderException('Request signature from unexpected source GID. Expected [' . $this->expectedGID . '] found [' . $this->headers[SONIC_HEADER__SOURCE_GID] . ']');
 			}
 		}
 		
