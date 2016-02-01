@@ -116,7 +116,8 @@ try {
 	$globalID = '28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF';
 	
 	$response = (new ProfileRequestBuilder($globalID))
-		->$profileRequest->createGETProfile()->dispatch();
+				->createGETProfile()
+				->dispatch();
 	$profile = ProfileObjectBuilder::buildFromJSON($response->getPayload());
 	
 	echo $profile->getJSONString() . "\n\n";
