@@ -16,7 +16,7 @@ use Monolog\Handler\StreamHandler;
 /**
  * Main class of the SONIC SDK
  * 
- * version 20160128
+ * version 20160201
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -28,7 +28,7 @@ class Sonic
 	
 	protected static $_instance			= NULL;
 	
-	private $logger						= NULL;
+	private static $logger				= NULL;
 	private $context					= NULL;
 	
 	private $userAuthData				= NULL;
@@ -80,8 +80,8 @@ class Sonic
 		
 		self::$_instance->platformAuthData = $platform;
 		
-		//self::$_instance->logger = new Logger('sonic');
-		//self::$_instance->logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
+		self::$logger = new Logger('sonic');
+		self::$logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
 		
 		self::$_instance->setContext(Sonic::CONTEXT_PLATFORM); // needs to be explicitly set to "user"
 		
@@ -440,10 +440,13 @@ class Sonic
 	 */
 	public static function getLogger()
 	{
-		if(self::$_instance === NULL)
-			throw new SonicRuntimeException('Sonic instance not initialized');
+		if(self::$logger === NULL)
+		{
+			self::$logger = new Logger('sonic');
+			self::$logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
+		}
 		
-		return self::$_instance->logger;
+		return self::$logger;
 	}
 }
 
