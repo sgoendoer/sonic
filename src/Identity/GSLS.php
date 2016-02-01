@@ -34,7 +34,17 @@ class GSLS
 		
 		if(curl_errno($ch) != CURLE_OK)
 		{
-			throw new \Exception('Connection error: ' . curl_error($ch));
+			$ch = curl_init(Configuration::getSecondaryGSLSNode() . '/' . $gid);
+			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HTTPGET, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getGSLSTimeout());
+			$result = curl_exec($ch);
+			
+			if(curl_errno($ch) != CURLE_OK)
+			{
+				throw new \Exception('Connection error: ' . curl_error($ch));
+			}
 		}
 		
 		$result = json_decode($result);
@@ -102,7 +112,17 @@ class GSLS
 		
 		if(curl_errno($ch) != CURLE_OK)
 		{
-			throw new \Exception('Connection error: ' . curl_error($ch));
+			$ch = curl_init(Configuration::getSecondaryGSLSNode() . '/' . $gid);
+			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HTTPGET, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getGSLSTimeout());
+			$result = curl_exec($ch);
+			
+			if(curl_errno($ch) != CURLE_OK)
+			{
+				throw new \Exception('Connection error: ' . curl_error($ch));
+			}
 		}
 		
 		$result = json_decode($result);
@@ -147,7 +167,17 @@ class GSLS
 		
 		if(curl_errno($ch) != CURLE_OK)
 		{
-			throw new \Exception('Connection error: ' . curl_error($ch));
+			$ch = curl_init(Configuration::getSecondaryGSLSNode() . '/' . $gid);
+			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+			curl_setopt($ch, CURLOPT_HTTPGET, 1);
+			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getGSLSTimeout());
+			$result = curl_exec($ch);
+			
+			if(curl_errno($ch) != CURLE_OK)
+			{
+				throw new \Exception('Connection error: ' . curl_error($ch));
+			}
 		}
 		
 		$result = json_decode($result);
