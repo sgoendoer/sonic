@@ -16,14 +16,14 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 Install via composer with
 
 ```bash
-$ composer install sgoendoer/sonic
+$ composer require sgoendoer/sonic
 ````
 
 or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-   "sgoendoer/sonic": "0.1.9"
+	"sgoendoer/sonic": "0.1.9"
 }
 ```
 
