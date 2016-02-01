@@ -2,7 +2,7 @@
 
 /**
  * Configuration
- * version 20160128
+ * version 20160201
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -15,6 +15,8 @@ class Configuration
 	private static $timezone			= 'Europe/Berlin';
 	private static $verbose				= 0; // 0: log nothing, 1: log errors, 2: log info, 3: log everything
 	private static $curlVerbose			= 0;
+	private static $requestTimeout		= 10;
+	private static $gslsTimeout			= 4;
 	private static $logfile				= 'sonic.log';
 	
 	private function __construct() {}
@@ -32,6 +34,8 @@ class Configuration
 		if(array_key_exists('timezone')) self::$timezone = $config['timezone'];
 		if(array_key_exists('verbose')) self::$verbose = $config['verbose'];
 		if(array_key_exists('curlVerbose')) self::$curlVerbose = $config['curlVerbose'];
+		if(array_key_exists('requestTimeout')) self::$requestTimeout = $config['requestTimeout'];
+		if(array_key_exists('gslsTimeout')) self::$gslsTimeout = $config['gslsTimeout'];
 		if(array_key_exists('logfile')) self::$logfile = $config['logfile'];
 	}
 	
@@ -93,6 +97,26 @@ class Configuration
 	public static function setCurlVerbose($curlVerbose)
 	{
 		self::$curlVerbose = $curlVerbose;
+	}
+	
+	public static function getRequestTimeout()
+	{
+		return self::$requestTimeout;
+	}
+	
+	public static function setRequestTimeout($requestTimeout)
+	{
+		self::$requestTimeout = $requestTimeout;
+	}
+	
+	public static function getGSLSTimeout()
+	{
+		return self::$gslsTimeout;
+	}
+	
+	public static function setGSLSTimeout($gslsTimeout)
+	{
+		self::$gslsTimeout = $gslsTimeout;
 	}
 	
 	public static function getLogfile()
