@@ -112,7 +112,7 @@ class GSLS
 		
 		if(curl_errno($ch) != CURLE_OK)
 		{
-			$ch = curl_init(Configuration::getSecondaryGSLSNode() . '/' . $gid);
+			$ch = curl_init(Configuration::getSecondaryGSLSNode());
 			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HTTPGET, 1);
@@ -167,7 +167,7 @@ class GSLS
 		
 		if(curl_errno($ch) != CURLE_OK)
 		{
-			$ch = curl_init(Configuration::getSecondaryGSLSNode() . '/' . $gid);
+			$ch = curl_init(Configuration::getSecondaryGSLSNode());
 			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HTTPGET, 1);
