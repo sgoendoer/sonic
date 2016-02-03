@@ -16,7 +16,7 @@ use Lcobucci\JWT\Parser;
 
 /**
  * GSLS API
- * version 20160122
+ * version 20160203
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -38,7 +38,6 @@ class GSLS
 			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HTTPGET, 1);
-			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getGSLSTimeout());
 			$result = curl_exec($ch);
 			
 			if(curl_errno($ch) != CURLE_OK)
@@ -116,7 +115,6 @@ class GSLS
 			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HTTPGET, 1);
-			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getGSLSTimeout());
 			$result = curl_exec($ch);
 			
 			if(curl_errno($ch) != CURLE_OK)
@@ -171,7 +169,6 @@ class GSLS
 			if(Configuration::getCurlVerbose() >= 2) curl_setopt($ch, CURLOPT_VERBOSE, 1);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 			curl_setopt($ch, CURLOPT_HTTPGET, 1);
-			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getGSLSTimeout());
 			$result = curl_exec($ch);
 			
 			if(curl_errno($ch) != CURLE_OK)
