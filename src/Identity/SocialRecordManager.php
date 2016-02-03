@@ -25,6 +25,13 @@ use sgoendoer\json\JSONObject;
  */
 class SocialRecordManager
 {
+	/**
+	 * Sends a SocialRecord to the GSLS. The SocialRecord is updated/overwritten if it already exists. Otherwise, the
+	 * new SocialRecord is stored. In case of a failed ateempt to (over-)write a SocialRecord, an Exception is thrown.
+	 * 
+	 * @param $entityAuthData EntityAuthData The EntityAuthData object for the SocialRecord to be pushed. The personal
+	 * key pair must be configured
+	 */
 	public static function pushToGSLS(EntityAuthData $entityAuthData)
 	{
 		if($entityAuthData->getPersonalKeyPair() == NULL)
@@ -59,21 +66,6 @@ class SocialRecordManager
 		}
 		
 		return GSLS::getSocialRecord($globalID);
-		
-		/*try
-		{
-			$sr = GSLS::getSocialRecord($globalID);
-			return $sr;
-		}
-		catch (SocialRecordNotFoundException $e)
-		{
-			return false;
-		}
-		catch (\Exception $e)
-		{
-			echo "error: " . $e->getMessage();
-			return false;
-		}*/
 	}
 	
 	/**
