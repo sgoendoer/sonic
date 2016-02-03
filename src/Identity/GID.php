@@ -119,9 +119,5 @@ class GID
 		return $retval;
 	}
 }
-YC5Q255RMB
-UB617DBK2G
-KBJJGZ71A0
-3JTJZDHOXN
-PQM8NQE
+
 ?>
