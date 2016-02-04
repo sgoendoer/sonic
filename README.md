@@ -16,14 +16,14 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 Install via composer with
 
 ```bash
-$ composer install sgoendoer/sonic
+$ composer require sgoendoer/sonic
 ````
 
 or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-   "sgoendoer/sonic": "0.1.9"
+	"sgoendoer/sonic": "0.1.9"
 }
 ```
 
@@ -49,6 +49,8 @@ Configuration::setVerbose(1);
 | timezone | String | Timezone of the platform | "Europe/Berlin" |
 | verbose | Integer | Level of verbosity in the logs (0: nothing, 5: everything) | 0 |
 | curlVerbose | Integer | Level of verbosity for curl requests (0: nothing, 1: everything, 2: also connections to third party services) | 0 |
+| requestTimeout | Integer | Timeout for Sonic requests in seconds | 10 |
+| gslsTimeout | Integer | Timeout for GSLS requests in seconds | 4 |
 | logfile | String | filename to write logs to | "sonic.log" |
 | apiPath | String | Path to the API endpoint | "/sonic/" |
 | primaryGSLSNode | String | IP address of the primary GSLS node | "130.149.22.135:4002" |

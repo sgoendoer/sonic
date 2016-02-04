@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Request\AbstractRequest;
 
 /**
  * OutgoingRequest
- * version 20160111
+ * version 20160201
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -38,6 +38,7 @@ class OutgoingRequest extends AbstractRequest
 				
 			$ch = curl_init('http://' . $this->server . $this->path);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_TIMEOUT, Configuration::getRequestTimeout());
 			
 			if($this->method == 'GET')
 			{
