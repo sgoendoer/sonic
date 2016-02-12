@@ -14,12 +14,12 @@ class Random
 	/**
 	 * creates a random character sequence of length $length
 	 * 
-	 * @param $length integer. Defaults to 8
+	 * @param $length integer. Defaults to 16
 	 * @return string
 	 */
-	public static function getRandom($length = 8)
+	public static function getRandom($length = 16)
 	{
-		return bin2hex(openssl_random_pseudo_bytes($length));
+		return bin2hex(openssl_random_pseudo_bytes((int) $length/2));
 	}
 	
 	/**
@@ -28,7 +28,7 @@ class Random
 	 * @param $length integer. Defaults to 8
 	 * @return string
 	 */
-	public static function getUniqueRandom($length = 8)
+	public static function getUniqueRandom($length = 16)
 	{
 		$id = self::getRandom($length);
 		

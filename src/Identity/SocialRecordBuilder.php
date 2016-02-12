@@ -24,7 +24,7 @@ class SocialRecordBuilder
 	private $profileLocation	= NULL;	// URL
 	private $personalPublicKey	= NULL; // PEM PHP compatible format!!!
 	private $accountPublicKey	= NULL; // PEM PHP compatible format!!!
-	private $salt				= NULL;	// length MUST be 16 chars
+	private $salt				= NULL;	// length MUST be 8 chars
 	private $datetime			= NULL;	// XSD datetime format e.g. 2015-01-01T11:11:11Z
 	private $active				= NULL;
 	private $keyRevocationList	= NULL;
@@ -234,7 +234,7 @@ class SocialRecordBuilder
 			throw new \Exception('SocialRecord: Invalid type value [' . $this->type . ']');
 		
 		if($this->salt == NULL)
-			$this->salt = Random::getRandom();
+			$this->salt = Random::getRandom(SocialRecord::SALT_CHARS);
 		if($this->datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
 		if($this->globalID == NULL)

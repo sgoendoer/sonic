@@ -21,6 +21,8 @@ class SocialRecord
 	const TYPE_PLATFORM			= 'platform';
 	const TYPE_USER				= 'user';
 	
+	const SALT_CHARS			= 8;
+	
 	private $type				= NULL;
 	private $globalID			= NULL;	// global id
 	private $platformGID		= NULL;
@@ -28,7 +30,7 @@ class SocialRecord
 	private $profileLocation	= NULL;	// URL
 	private $personalPublicKey	= NULL; // PEM PHP compatible string format!!!
 	private $accountPublicKey	= NULL; // PEM PHP compatible string format!!!
-	private $salt				= NULL;	// length MUST be 16 chars
+	private $salt				= NULL;	// length MUST be 8 chars
 	private $datetime			= NULL;	// XSD datetime format e.g. 2015-01-01T11:11:11Z
 	private $active				= NULL;
 	private $keyRevocationList	= array();

@@ -19,7 +19,7 @@ Sonic::getUserAuthData()->getGlobalID();
 
 # SocialRecord
 
-In SONIC, every user and every platform is identified by a globally unique identifier, the GlobalID. by resolving the GlobalID via the GSLS, the actual location of a user's account can be determined. Information about the actual profile's location, as well as other information required for verification of authenticity and integrity are stored in a dataset, the SocialRecord.
+In SONIC, every user and every platform is identified by a globally unique identifier, the GlobalID. By resolving the GlobalID via the GSLS, the actual location of a user's account can be determined. Information about the actual profile's location, as well as other information required for verification of authenticity and integrity are stored in a dataset, the SocialRecord.
 
 ## SocialRecord keys
 
