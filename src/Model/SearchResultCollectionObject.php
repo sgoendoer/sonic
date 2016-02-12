@@ -3,6 +3,7 @@
 use sgoendoer\Sonic\Model\SearchResultCollectionObjectBuilder;
 use sgoendoer\Sonic\Model\ReferencingObject;
 use sgoendoer\Sonic\Date\XSDDateTime;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Represents a SEARCH RESULT COLLECTION object
@@ -18,15 +19,15 @@ class SearchResultCollectionObject extends ReferencingObject
 
     protected $platformGID = NULL;
     protected $datetime = NULL;
-    protected $results = NULL;
+    protected $results = array();
 
     public function __construct(SearchResultCollectionObjectBuilder $builder)
     {
         parent::__construct($builder->getObjectID(), $builder->getTargetID());
 
-        $this->platformGID = $builder->getPlatformGID();
-        $this->datetime = $builder->getDatetime();
-        $this->results = $builder->getResults();
+        $this->setPlatformGID($builder->getPlatformGID());
+        $this->setDatetime($builder->getDatetime());
+        $this->addResultArray($builder->getResults());
     }
 
     public function getPlatformGID()
@@ -54,17 +55,16 @@ class SearchResultCollectionObject extends ReferencingObject
         return $this;
     }
 
-    public function setResult(SearchResultObject $result)
+    public function addResultArray($resultArray)
     {
-        $this->results[] = $result;
-        // TODO manually implement array_unique
-        return $this;
+        $this->results = array_merge($this->results, $resultArray);
+
     }
 
-    public function setResults($resultArray)
+    public function addResult(SearchResultObject $result)
     {
-        $this->results = $resultArray;
-        return $this;
+        $this->results[] = $result;
+
     }
 
     public function getResults()
@@ -75,15 +75,16 @@ class SearchResultCollectionObject extends ReferencingObject
     public function getJSONString()
     {
         $json = '{'
-            . '"@context": "' . SearchResultObject::JSONLD_CONTEXT . '",'
-            . '"@type": "' . SearchResultObject::JSONLD_TYPE . '",'
+            . '"@context": "' . SearchResultCollectionObject::JSONLD_CONTEXT . '",'
+            . '"@type": "' . SearchResultCollectionObject::JSONLD_TYPE . '",'
             . '"objectID": "' . $this->objectID . '",'
             . '"targetID": "' . $this->targetID . '",'
-            . '"resultOwnerGID": "' . $this->platformGID . '",'
+            . '"platformGID": "' . $this->platformGID . '",'
             . '"datetime": "' . $this->datetime . '",'
             . '"results": [';
 
         foreach ($this->results as $result) {
+
             $json .= $result->getJSON();
             if ($result !== end($this->results)) $json .= ',';
         }

@@ -113,7 +113,7 @@ class SearchResultObject extends ReferencingObject
 			. '"targetID": "' . $this->targetID . '",'
 			. '"resultOwnerGID": "' . $this->resultOwnerGID . '",'
 			. '"resultObjectID": "' . $this->resultObjectID . '",'
-			. '"resultType": "' . $this->resultIndex . '",'
+			. '"resultIndex": "' . $this->resultIndex . '",'
 			. '"resultType": "' . $this->resultType . '",'
 			. '"displayName": "' . $this->displayName . '",'
 			. '"datetime": "' . $this->datetime . '"'

@@ -16,7 +16,7 @@ class SearchResultCollectionObjectBuilder extends ReferencingObjectBuilder
 {
     protected $platformGID = NULL;
     protected $datetime = NULL;
-    protected $results = NULL;
+    protected $results = array();
 
     public function __construct()
     {}
@@ -65,16 +65,15 @@ class SearchResultCollectionObjectBuilder extends ReferencingObjectBuilder
         return $this;
     }
 
-    public function result(SearchResultObject $result)
+    public function result( $result)
     {
         $this->results[] = $result;
-        // TODO manually implement array_unique
         return $this;
     }
 
-    public function results($resultArray)
+    public function results($resultkArray)
     {
-        $this->results = $resultArray;
+        $this->results = $resultkArray;
         return $this;
     }
 

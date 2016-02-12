@@ -37,6 +37,7 @@ class SearchResultObjectBuilder extends ReferencingObjectBuilder
             ->targetID($jsonObject->targetID)
             ->resultOwnerGID($jsonObject->resultOwnerGID)
             ->resultObjectID($jsonObject->resultObjectID)
+            ->resultIndex($jsonObject->resultIndex)
             ->resultType($jsonObject->resultType)
             ->displayName($jsonObject->displayName)
             ->datetime($jsonObject->datetime)
