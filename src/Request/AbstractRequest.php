@@ -104,6 +104,11 @@ abstract class AbstractRequest
 	{
 		return $this->headers[SONIC_HEADER__SOURCE_GID];
 	}
+
+	public function getHeaderAuthToken()
+	{
+		return $this->headers[SONIC_HEADER__Auth_Token];
+	}
 	
 	public function getHeaders()
 	{

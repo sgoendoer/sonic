@@ -36,4 +36,6 @@ define('SONIC_SDK__API_VERSION',		'0.1.2');
 
 define('SONIC_REQUEST__USERAGENT',		SONIC_SDK__APP_NAME . '/' . SONIC_SDK__APP_VERSION);
 
+define('SONIC_HEADER__Auth_Token',			'SonicAuthToken');
+
 ?>
