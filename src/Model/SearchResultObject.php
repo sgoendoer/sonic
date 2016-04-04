@@ -22,11 +22,11 @@ class SearchResultObject extends ReferencingObject
 	protected $resultType = NULL;
 	protected $displayName = NULL;
 	protected $datetime = NULL;
-
+	
 	public function __construct(SearchResultObjectBuilder $builder)
 	{
 		parent::__construct($builder->getObjectID(), $builder->getTargetID());
-
+		
 		$this->resultOwnerGID = $builder->getOwnerGID();
 		$this->resultObjectID = $builder->getResultObjectID();
 		$this->resultIndex = $builder->getResultIndex();
@@ -34,67 +34,67 @@ class SearchResultObject extends ReferencingObject
 		$this->displayName = $builder->getDisplayName();
 		$this->datetime = $builder->getDatetime();
 	}
-
+	
 	public function getOwnerGID()
 	{
 		return $this->resultOwnerGID;
 	}
-
+	
 	public function setOwnerGID($ownerGID)
 	{
 		$this->resultOwnerGID = $ownerGID;
 		return $this;
 	}
-
+	
 	public function getResultObjectID()
 	{
 		return $this->resultObjectID;
 	}
-
+	
 	public function setResultObjectID($resultObjectID)
 	{
 		$this->resultObjectID = $resultObjectID;
 		return $this;
 	}
-
+	
 	public function getResultIndex()
 	{
 		return $this->resultIndex;
 	}
-
+	
 	public function setResultIndex($resultIndex)
 	{
 		$this->resultIndex = $resultIndex;
 		return $this;
 	}
-
+	
 	public function getResultType()
 	{
 		return $this->resultType;
 	}
-
+	
 	public function setResultType($resultType)
 	{
 		$this->resultType = $resultType;
 		return $this;
 	}
-
+	
 	public function getDisplayName()
 	{
 		return $this->displayName;
 	}
-
+	
 	public function setDisplayName($displayName)
 	{
 		$this->displayName = $displayName;
 		return $this;
 	}
-
+	
 	public function getDatetime()
 	{
 		return $this->datetime;
 	}
-
+	
 	public function setDatetime($datetime)
 	{
 		if ($datetime == NULL)
@@ -103,7 +103,7 @@ class SearchResultObject extends ReferencingObject
 			$this->datetime = $datetime;
 		return $this;
 	}
-
+	
 	public function getJSONString()
 	{
 		$json = '{'
@@ -118,20 +118,20 @@ class SearchResultObject extends ReferencingObject
 			. '"displayName": "' . $this->displayName . '",'
 			. '"datetime": "' . $this->datetime . '"'
 			. '}';
-
+		
 		return $json;
 	}
-
+	
 	public static function validateJSON($json)
 	{
 		$result = \Jsv4::validate(json_decode($json), json_decode(SearchResultObject::SCHEMA));
-
+		
 		if ($result->valid == true)
 			return true;
 		else
 			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
 	}
-
+	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"id": "http://jsonschema.net/sonic/searchResult,

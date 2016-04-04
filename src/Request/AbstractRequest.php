@@ -6,7 +6,6 @@ use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Identity\SocialRecordManager;
 use sgoendoer\Sonic\Request\MalformedRequestHeaderException;
 
-
 /**
  * AbstractRequest
  * version 20160111
@@ -22,7 +21,7 @@ abstract class AbstractRequest
 	protected $method			= NULL;
 	protected $headers			= NULL;
 	protected $body				= NULL;
-
+	
 	public function getStringForRequestSignature()
 	{
 		return $this->method
@@ -34,12 +33,12 @@ abstract class AbstractRequest
 				. $this->headers[SONIC_HEADER__RANDOM]
 				. $this->body;
 	}
-
+	
 	protected function verifyRequest()
 	{
 		return ($this->verifyHeaders() && $this->verifyDataFormat() && $this->verifySignature());
 	}
-
+	
 	protected function verifyHeaders()
 	{
 		if(!array_key_exists(SONIC_HEADER__TARGET_API, $this->headers))
@@ -56,20 +55,20 @@ abstract class AbstractRequest
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__RANDOM . " missing");
 		else return true;
 	}
-
+	
 	protected function verifyDataFormat()
 	{
 		// TODO validate data and formats
 		if(!XSDDateTime::validateXSDDateTime($this->headers[SONIC_HEADER__DATE]))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__DATE . " malformed: " . $this->headers[SONIC_HEADER__DATE]);
-
+		
 		return true;
 	}
-
+	
 	protected function verifySignature()
 	{
 		$publicAccountKey = PublicKey::formatPEM(SocialRecordManager::retrieveSocialRecord($this->headers[SONIC_HEADER__SOURCE_GID])->getAccountPublicKey());
-
+		
 		if(!Signature::verifySignature($this->getStringForRequestSignature(), $publicAccountKey, $this->headers[SONIC_HEADER__SIGNATURE]))
 			throw new MalformedRequestHeaderException("Invalid request signature!");
 		else return true;
@@ -79,17 +78,17 @@ abstract class AbstractRequest
 	{
 		return $this->headers[SONIC_HEADER__DATE];
 	}
-
+	
 	public function getHeaderTargetAPI()
 	{
 		return $this->headers[SONIC_HEADER__TARGET_API];
 	}
-
+	
 	public function getHeaderRandom()
 	{
 		return $this->headers[SONIC_HEADER__RANDOM];
 	}
-
+	
 	public function getHeaderSignature()
 	{
 		return $this->headers[SONIC_HEADER__SIGNATURE];
@@ -104,7 +103,7 @@ abstract class AbstractRequest
 	{
 		return $this->headers[SONIC_HEADER__SOURCE_GID];
 	}
-
+	
 	public function getHeaderAuthToken()
 	{
 		return $this->headers[SONIC_HEADER__Auth_Token];

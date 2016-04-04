@@ -14,97 +14,95 @@ use Illuminate\Support\Facades\Log;
  */
 class SearchResultCollectionObject extends ReferencingObject
 {
-    const JSONLD_CONTEXT = 'http://sonic-project.net/';
-    const JSONLD_TYPE = 'search-result-collection';
-
-    protected $platformGID = NULL;
-    protected $datetime = NULL;
-    protected $results = array();
-
-    public function __construct(SearchResultCollectionObjectBuilder $builder)
-    {
-        parent::__construct($builder->getObjectID(), $builder->getTargetID());
-
-        $this->setPlatformGID($builder->getPlatformGID());
-        $this->setDatetime($builder->getDatetime());
-        $this->addResultArray($builder->getResults());
-    }
-
-    public function getPlatformGID()
-    {
-        return $this->platformGID;
-    }
-
-    public function setPlatformGID($platformGID)
-    {
-        $this->platformGID = $platformGID;
-        return $this;
-    }
-
-    public function getDatetime()
-    {
-        return $this->datetime;
-    }
-
-    public function setDatetime($datetime)
-    {
-        if ($datetime == NULL)
-            $this->datetime = XSDDateTime::getXSDDateTime();
-        else
-            $this->datetime = $datetime;
-        return $this;
-    }
-
-    public function addResultArray($resultArray)
-    {
-        $this->results = array_merge($this->results, $resultArray);
-
-    }
-
-    public function addResult(SearchResultObject $result)
-    {
-        $this->results[] = $result;
-
-    }
-
-    public function getResults()
-    {
-        return $this->results;
-    }
-
-    public function getJSONString()
-    {
-        $json = '{'
-            . '"@context": "' . SearchResultCollectionObject::JSONLD_CONTEXT . '",'
-            . '"@type": "' . SearchResultCollectionObject::JSONLD_TYPE . '",'
-            . '"objectID": "' . $this->objectID . '",'
-            . '"targetID": "' . $this->targetID . '",'
-            . '"platformGID": "' . $this->platformGID . '",'
-            . '"datetime": "' . $this->datetime . '",'
-            . '"results": [';
-
-        foreach ($this->results as $result) {
-
-            $json .= $result->getJSON();
-            if ($result !== end($this->results)) $json .= ',';
-        }
-
-        $json .= ']}';
-
-        return $json;
-    }
-
-    public static function validateJSON($json)
-    {
-        $result = \Jsv4::validate(json_decode($json), json_decode(SearchResultCollectionObject::SCHEMA));
-
-        if ($result->valid == true)
-            return true;
-        else
-            throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
-    }
-
-    const SCHEMA = '{
+	const JSONLD_CONTEXT = 'http://sonic-project.net/';
+	const JSONLD_TYPE = 'search-result-collection';
+	
+	protected $platformGID = NULL;
+	protected $datetime = NULL;
+	protected $results = array();
+	
+	public function __construct(SearchResultCollectionObjectBuilder $builder)
+	{
+		parent::__construct($builder->getObjectID(), $builder->getTargetID());
+		
+		$this->setPlatformGID($builder->getPlatformGID());
+		$this->setDatetime($builder->getDatetime());
+		$this->addResultArray($builder->getResults());
+	}
+	
+	public function getPlatformGID()
+	{
+		return $this->platformGID;
+	}
+	
+	public function setPlatformGID($platformGID)
+	{
+		$this->platformGID = $platformGID;
+		return $this;
+	}
+	
+	public function getDatetime()
+	{
+		return $this->datetime;
+	}
+	
+	public function setDatetime($datetime)
+	{
+		if ($datetime == NULL)
+			$this->datetime = XSDDateTime::getXSDDateTime();
+		else
+			$this->datetime = $datetime;
+		return $this;
+	}
+	
+	public function addResultArray($resultArray)
+	{
+		$this->results = array_merge($this->results, $resultArray);
+	}
+	
+	public function addResult(SearchResultObject $result)
+	{
+		$this->results[] = $result;
+	}
+	
+	public function getResults()
+	{
+		return $this->results;
+	}
+	
+	public function getJSONString()
+	{
+		$json = '{'
+			. '"@context": "' . SearchResultCollectionObject::JSONLD_CONTEXT . '",'
+			. '"@type": "' . SearchResultCollectionObject::JSONLD_TYPE . '",'
+			. '"objectID": "' . $this->objectID . '",'
+			. '"targetID": "' . $this->targetID . '",'
+			. '"platformGID": "' . $this->platformGID . '",'
+			. '"datetime": "' . $this->datetime . '",'
+			. '"results": [';
+		
+		foreach ($this->results as $result)
+		{
+			$json .= $result->getJSON();
+			if ($result !== end($this->results)) $json .= ',';
+		}
+		
+		$json .= ']}';
+		
+		return $json;
+	}
+	
+	public static function validateJSON($json)
+	{
+		$result = \Jsv4::validate(json_decode($json), json_decode(SearchResultCollectionObject::SCHEMA));
+		
+		if ($result->valid == true)
+			return true;
+		else
+			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
+	}
+	
+	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"id": "http://jsonschema.net/sonic/searchResultCollection,
 		"type": "object",

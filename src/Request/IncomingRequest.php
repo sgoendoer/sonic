@@ -23,10 +23,10 @@ class IncomingRequest extends AbstractRequest
 		$this->headers = getallheaders();
 		//$this->body = http_get_request_body();
 		$this->body = @file_get_contents('php://input');
-
+		
 		$this->verifyRequest();
 	}
-
+	
 	/**
 	 * extracts the GID from the path
 	 */
@@ -34,7 +34,7 @@ class IncomingRequest extends AbstractRequest
 	{
 		return explode('/', str_replace(Configuration::getApiPath(), '', $this->path))[0];
 	}
-
+	
 	/**
 	 * extracts the API call from the path
 	 */

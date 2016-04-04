@@ -7,7 +7,6 @@ use sgoendoer\Sonic\Crypt\Signature;
 use sgoendoer\Sonic\Identity\SocialRecordManager;
 use sgoendoer\Sonic\Model\ResponseObjectBuilder;
 
-
 /**
  * AbstractResponse
  * version 20160129
