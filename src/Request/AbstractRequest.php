@@ -106,7 +106,7 @@ abstract class AbstractRequest
 	
 	public function getHeaderAuthToken()
 	{
-		return $this->headers[SONIC_HEADER__Auth_Token];
+		return $this->headers[SONIC_HEADER__AUTH_TOKEN];
 	}
 	
 	public function getHeaders()

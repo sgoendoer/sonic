@@ -161,7 +161,7 @@ class OutgoingRequest extends AbstractRequest
 	
 	Public function setHeaderAuthToken($token)
 	{
-		$this->headers[SONIC_HEADER__Auth_Token] = $token;
+		$this->headers[SONIC_HEADER__AUTH_TOKEN] = $token;
 	}
 }
 
