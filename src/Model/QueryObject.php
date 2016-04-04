@@ -18,6 +18,8 @@ class QueryObject extends BasicObject
 	
 	public function __construct(QueryObjectBuilder $builder)
 	{
+		parent::__construct();
+		
 		$this->index = $builder->getIndex();
 		$this->type = $builder->getType();
 		$this->query = $builder->getQuery();
