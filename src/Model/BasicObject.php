@@ -16,7 +16,10 @@ abstract class BasicObject
 	
 	public abstract function getJSONString();
 	
-	// for historical reasons ;)
+	/**
+	 * returns a JSONString for the object
+	 * @deprecated
+	 */
 	public function getJSON()
 	{
 		return $this->getJSONString();
