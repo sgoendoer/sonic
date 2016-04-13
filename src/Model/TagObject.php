@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
 
 /**
  * Represents a TAG object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -79,7 +79,7 @@ class TagObject extends ReferencingRemoteObject
 			. '"tag": "' . $this->tag . '",'
 			. '"author": "' . $this->author . '",'
 			. '"datePublished": "' . $this->datePublished . '",'
-			. '"signature": ' . $this->signature->getJSON() . ''
+			. '"signature": ' . $this->signature->getJSONString() . ''
 		 	. '}';
 		
 		return $json;
@@ -92,16 +92,6 @@ class TagObject extends ReferencingRemoteObject
 				. $this->tag
 				. $this->author
 				. $this->datePublished;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(TagObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

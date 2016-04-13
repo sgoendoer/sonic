@@ -4,7 +4,7 @@
 
 /**
  * Represents a PROFILE object
- * version 20151020
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -101,16 +101,6 @@ class PersonObject extends Object
 		$json .= '}';
 		
 		return $json;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(PersonObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for person: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

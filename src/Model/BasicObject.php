@@ -1,10 +1,11 @@
 <?php namespace sgoendoer\Sonic\Model;
 
 use sgoendoer\json\JSONObject;
+use geraintluff\jsv4\Jsv4;
 
 /**
  * Represents a basic sonic object
- * version 20150901
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -27,7 +28,17 @@ abstract class BasicObject
 		return new JSONObject($this->getJSONString());
 	}
 	
-	// TODO public abstract function validate();
+	public function validate()
+	{
+		$result = Jsv4::validate(json_decode($this->getJSONString()), json_decode(self::SCHEMA));
+		
+		if($result->valid == true)
+			return true;
+		else
+			throw new \Exception('invalid JSON format for Comment: ' . $result->errors->message);
+	}
+	
+	
 }
 
 ?>

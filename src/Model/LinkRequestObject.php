@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Model\LinkRequestObjectBuilder;
 
 /**
  * Represents a LINK REQUEST object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -87,16 +87,6 @@ class LinkRequestObject extends Object
 		$json .= '}';
 		
 		return $json;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate($json, LinkRequestObject::SCHEMA);
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for LinkRequest: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{
