@@ -7,7 +7,7 @@ use sgoendoer\Sonic\Model\ConversationStatusObject;
 
 /**
  * Represents a CONVERSATION STATUS object
- * version 20151022
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -100,7 +100,7 @@ class ConversationStatusObject extends ReferencingRemoteObject
 			. '"status": "' . $this->status . '",'
 			. '"datetime": "' . $this->datetime . '",'
 			. '"targetGID": "' . $this->targetGID . '",'
-			. '"signature": ' . $this->signature->getJSON() . ''
+			. '"signature": ' . $this->signature->getJSONString() . ''
 			. '}';
 		
 		return $json;
@@ -114,16 +114,6 @@ class ConversationStatusObject extends ReferencingRemoteObject
 				. $this->datetime
 				. $this->status
 				. $this->targetGID;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(ConversationStatusObject::SCHEMA));
-		
-		if($result->valid === true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for ConversationStatus: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
 
 /**
  * Represents a SEARCH RESULT object
- * version 20151214
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -122,6 +122,7 @@ class SearchResultObject extends ReferencingObject
 		return $json;
 	}
 	
+<<<<<<< HEAD
 	public static function validateJSON($json)
 	{
 		$result = \Jsv4::validate(json_decode($json), json_decode(SearchResultObject::SCHEMA));
@@ -132,6 +133,8 @@ class SearchResultObject extends ReferencingObject
 			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
 	}
 	
+=======
+>>>>>>> development
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"id": "http://jsonschema.net/sonic/searchResult,

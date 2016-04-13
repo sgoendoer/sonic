@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Model\ReferencingRemoteObject;
 
 /**
  * Represents a COMMENT object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -102,7 +102,7 @@ class CommentObject extends ReferencingRemoteObject implements ILikeableObject
 			if($this->dateUpdated != NULL)
 				$json .= '"dateUpdated": "' . $this->dateUpdated . '",';
 				
-			$json .= '"signature": ' . $this->signature->getJSON() . ''
+			$json .= '"signature": ' . $this->signature->getJSONString() . ''
 		 	. '}';
 		
 		return $json;
@@ -116,16 +116,6 @@ class CommentObject extends ReferencingRemoteObject implements ILikeableObject
 				. $this->comment
 				. $this->datePublished
 				. $this->dateUpdated;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(CommentObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Comment: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

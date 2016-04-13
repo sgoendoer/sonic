@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Model\LinkObjectBuilder;
 
 /**
  * Represents a LINK object
- * version 20160105
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -90,16 +90,6 @@ class LinkObject extends RemoteObject
 	protected function getStringForSignature()
 	{
 		return $this->objectID . $this->owner . $this->link . $this->datetime;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(LinkObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Link: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

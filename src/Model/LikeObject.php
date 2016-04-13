@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Model\ConversationMessageStatusObject;
 
 /**
  * Represents a LIKE object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -64,7 +64,7 @@ class LikeObject extends ReferencingRemoteObject
 			. '"targetID": "' . $this->targetID . '",'
 			. '"author": "' . $this->author . '",'
 			. '"datePublished": "' . $this->datePublished . '",'
-			. '"signature": ' . $this->signature->getJSON() . ''
+			. '"signature": ' . $this->signature->getJSONString() . ''
 		 	. '}';
 		
 		return $json;
@@ -76,16 +76,6 @@ class LikeObject extends ReferencingRemoteObject
 				. $this->targetID
 				. $this->author
 				. $this->datePublished;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(LikeObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Like: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

@@ -7,7 +7,7 @@ use sgoendoer\Sonic\Model\LinkObject;
 
 /**
  * Represents a LINK-ROSTER object
- * version 20151020
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -68,23 +68,13 @@ class LinkRosterObject extends Object
 		
 		foreach($this->roster as $link)
 		{
-			$json .= $link->getJSON();
+			$json .= $link->getJSONString();
 			if($link !== end($this->roster)) $json .= ',';
 		}
 		
 		$json .= ']}';
 		
 		return $json;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate($json, LinkRosterObject::SCHEMA);
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for link LinkRoster: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

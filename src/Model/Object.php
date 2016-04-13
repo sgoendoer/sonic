@@ -22,8 +22,6 @@ abstract class Object extends BasicObject
 	{
 		return $this->objectID;
 	}
-	
-	// TODO public abstract function validate();
 }
 
 ?>

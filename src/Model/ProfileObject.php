@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Model\ProfileObjectBuilder;
 
 /**
  * Represents a PROFILE object
- * version 20150901
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -89,16 +89,6 @@ class ProfileObject extends Object
 		$json .= '}';
 		
 		return $json;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate($json, ProfileObject::SCHEMA);
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Profile: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

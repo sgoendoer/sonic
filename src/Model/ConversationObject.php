@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Model\ConversationMessageObject;
 
 /**
  * Represents a CONVERSATION object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -133,16 +133,6 @@ class ConversationObject extends RemoteObject
 		$string .= $this->title;
 		
 		return $string;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(ConversationObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Conversation: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

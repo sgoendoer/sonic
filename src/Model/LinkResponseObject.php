@@ -7,7 +7,7 @@ use sgoendoer\Sonic\Model\LinkObject;
 
 /**
  * Represents a LINK RESPONSE object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -94,21 +94,11 @@ class LinkResponseObject extends ReferencingObject
 			$json .= ', "message": "' . $this->message . '"';
 		
 		if($this->link != NULL)
-			$json .= ', "link": ' . $this->link->getJSON();
+			$json .= ', "link": ' . $this->link->getJSONString();
 		
 		$json .= '}';
 		
 		return $json;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(LinkResponseObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for LinkResponse: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{

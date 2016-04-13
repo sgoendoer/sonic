@@ -8,7 +8,7 @@ use sgoendoer\json\JSONObject;
 
 /**
  * Represents a STREAM ITEM object
- * version 20151021
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -108,16 +108,6 @@ class StreamItemObject extends RemoteObject
 				. $this->author
 				. $this->datetime
 				. $this->activity->write();
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(StreamItemObject::SCHEMA));
-		
-		if($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for StreamItem: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{
