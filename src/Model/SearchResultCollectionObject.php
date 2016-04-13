@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Represents a SEARCH RESULT COLLECTION object
- * version 20160127
+ * version 20160413
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -83,23 +83,13 @@ class SearchResultCollectionObject extends ReferencingObject
 		
 		foreach ($this->results as $result)
 		{
-			$json .= $result->getJSON();
+			$json .= $result->getJSONString();
 			if ($result !== end($this->results)) $json .= ',';
 		}
 		
 		$json .= ']}';
 		
 		return $json;
-	}
-	
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(SearchResultCollectionObject::SCHEMA));
-		
-		if ($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
 	}
 	
 	const SCHEMA = '{
