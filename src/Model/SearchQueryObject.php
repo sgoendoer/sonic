@@ -7,11 +7,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
 
 /**
  * Represents a SEARCH QUERY object
-<<<<<<< HEAD
- * version 20160111
-=======
  * version 20160413
->>>>>>> development
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -143,19 +139,6 @@ class SearchQueryObject extends RemoteObject
 		. $this->datetime;
 	}
 	
-<<<<<<< HEAD
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(SearchQueryObject::SCHEMA));
-		
-		if ($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
-	}
-	
-=======
->>>>>>> development
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"id": "http://jsonschema.net/sonic/searchQuery,

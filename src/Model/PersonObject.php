@@ -1,13 +1,8 @@
 <?php namespace sgoendoer\Sonic\Model;
 
 /**
-<<<<<<< HEAD
  * Represents a PERSON object
- * version 20151020
-=======
- * Represents a PROFILE object
  * version 20160413
->>>>>>> development
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>

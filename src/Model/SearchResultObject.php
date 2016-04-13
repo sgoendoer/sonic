@@ -122,19 +122,6 @@ class SearchResultObject extends ReferencingObject
 		return $json;
 	}
 	
-<<<<<<< HEAD
-	public static function validateJSON($json)
-	{
-		$result = \Jsv4::validate(json_decode($json), json_decode(SearchResultObject::SCHEMA));
-		
-		if ($result->valid == true)
-			return true;
-		else
-			throw new \Exception('invalid JSON format for Tag: ' . $result->errors->message);
-	}
-	
-=======
->>>>>>> development
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"id": "http://jsonschema.net/sonic/searchResult,
