@@ -61,7 +61,7 @@ class QueryObject extends BasicObject
 	
 	public function addMatch($column, $value)
 	{
-		$this->query = '{' . '"match":' . '{' . '"' . $column . '":"' . $value . '"' . ' }' . '}';
+		$this->query = '{"match":{"' . $column . '":"' . $value . '"}}';
 		return $this;
 	}
 	

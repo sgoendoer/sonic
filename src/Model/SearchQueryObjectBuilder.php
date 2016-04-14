@@ -119,34 +119,34 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 	
 	public function build()
 	{
-		if ($this->objectID == NULL)
+		if($this->objectID == NULL)
 			$this->objectID = UOID::createUOID();
-		if ($this->hopCount == NULL)
+		if($this->hopCount == NULL)
 			$this->hopCount = 0;
-		if ($this->datetime == NULL)
+		if($this->datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
 		
-		if (!UOID::isValid($this->objectID))
+		if(!UOID::isValid($this->objectID))
 			throw new IllegalModelStateException('Invalid objectID');
-		if (!GID::isValid($this->initiatingGID))
+		if(!GID::isValid($this->initiatingGID))
 			throw new IllegalModelStateException('Invalid initiatingGID');
-		if (!is_numeric($this->hopCount) || $this->hopCount > 3)
+		if(!is_numeric($this->hopCount) || $this->hopCount > 3)
 			throw new IllegalModelStateException('Invalid value for hopCount');
-		if (!XSDDateTime::validateXSDDateTime($this->datetime))
+		if(!XSDDateTime::validateXSDDateTime($this->datetime))
 			throw new IllegalModelStateException('Invalid datetime');
-		if ($this->esIndex === NULL)
+		if($this->esIndex === NULL)
 			$this->esIndex = 'default';
-		if ($this->esType === NULL)
+		if($this->esType === NULL)
 			throw new IllegalModelStateException('Invalid value for esType');
-		if ($this->query === NULL)
+		if($this->query === NULL)
 			throw new IllegalModelStateException('Invalid value for query');
 		
 		$searchQuery = new SearchQueryObject($this);
 		
-		if ($searchQuery->getSignature() == NULL)
+		if($searchQuery->getSignature() == NULL)
 			$searchQuery->signObject();
 		
-		if (!$searchQuery->verifyObjectSignature())
+		if(!$searchQuery->verifyObjectSignature())
 			throw new IllegalModelStateException('Invalid signature');
 		
 		return $searchQuery;
