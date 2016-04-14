@@ -33,7 +33,7 @@ abstract class BasicObject
 	
 	public function validate()
 	{
-		$result = \Jsv4::validate(json_decode($this->getJSONString()), json_decode(self::SCHEMA));
+		$result = \Jsv4::validate(json_decode($this->getJSONString()), json_decode(static::SCHEMA));
 		
 		if($result->valid == true)
 			return true;
