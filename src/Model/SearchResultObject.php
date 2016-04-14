@@ -107,16 +107,16 @@ class SearchResultObject extends ReferencingObject
 	public function getJSONString()
 	{
 		$json = '{'
-			. '"@context": "' . SearchResultObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . SearchResultObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"resultOwnerGID": "' . $this->resultOwnerGID . '",'
-			. '"resultObjectID": "' . $this->resultObjectID . '",'
-			. '"resultIndex": "' . $this->resultIndex . '",'
-			. '"resultType": "' . $this->resultType . '",'
-			. '"displayName": "' . $this->displayName . '",'
-			. '"datetime": "' . $this->datetime . '"'
+			. '"@context":"' . SearchResultObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . SearchResultObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"resultOwnerGID":"' . $this->resultOwnerGID . '",'
+			. '"resultObjectID":"' . $this->resultObjectID . '",'
+			. '"resultIndex":"' . $this->resultIndex . '",'
+			. '"resultType":"' . $this->resultType . '",'
+			. '"displayName":"' . $this->displayName . '",'
+			. '"datetime":"' . $this->datetime . '"'
 			. '}';
 		
 		return $json;

@@ -72,14 +72,14 @@ class TagObject extends ReferencingRemoteObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . TagObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . TagObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"tag": "' . $this->tag . '",'
-			. '"author": "' . $this->author . '",'
-			. '"datePublished": "' . $this->datePublished . '",'
-			. '"signature": ' . $this->signature->getJSONString() . ''
+			. '"@context":"' . TagObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . TagObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"tag":"' . $this->tag . '",'
+			. '"author":"' . $this->author . '",'
+			. '"datePublished":"' . $this->datePublished . '",'
+			. '"signature":' . $this->signature->getJSONString() . ''
 		 	. '}';
 		
 		return $json;

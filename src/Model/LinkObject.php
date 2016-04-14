@@ -75,13 +75,13 @@ class LinkObject extends RemoteObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . LinkObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . 	LinkObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",' 
-			. '"owner": "' . 	$this->owner . '",' 
-			. '"link": "' .		$this->link . '",'
-			. '"datetime": "' . $this->datetime . '",'
-			. '"signature": ' . $this->signature->getJSONString()
+			. '"@context":"' . LinkObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . 	LinkObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",' 
+			. '"owner":"' . 	$this->owner . '",' 
+			. '"link":"' .		$this->link . '",'
+			. '"datetime":"' . $this->datetime . '",'
+			. '"signature":' . $this->signature->getJSONString()
 			. '}';
 		
 		return $json;

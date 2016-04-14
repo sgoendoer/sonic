@@ -74,15 +74,15 @@ class LinkRequestObject extends Object
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . LinkRequestObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . LinkRequestObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",' 
-			. '"initiatingGID": "' . $this->initiatingGID . '",' 
-			. '"targetedGID": "' . $this->targetedGID . '",'
-			. '"datetime": "' . $this->datetime . '"';
+			. '"@context":"' . LinkRequestObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . LinkRequestObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",' 
+			. '"initiatingGID":"' . $this->initiatingGID . '",' 
+			. '"targetedGID":"' . $this->targetedGID . '",'
+			. '"datetime":"' . $this->datetime . '"';
 		
 		if($this->message != NULL && $this->message != '')
-			$json .= ', "message": "' . $this->message . '"';
+			$json .= ', "message":"' . $this->message . '"';
 		
 		$json .= '}';
 		

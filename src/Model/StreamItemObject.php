@@ -88,14 +88,14 @@ class StreamItemObject extends RemoteObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . StreamItemObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . StreamItemObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"owner": "' . $this->owner . '",'
-			. '"author": "' . $this->author . '",'
-			. '"datetime": "' . $this->datetime . '",'
-			. '"activity": ' . $this->activity->write() . ','
-			. '"signature": ' . $this->signature->getJSONString() . ''
+			. '"@context":"' . StreamItemObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . StreamItemObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"owner":"' . $this->owner . '",'
+			. '"author":"' . $this->author . '",'
+			. '"datetime":"' . $this->datetime . '",'
+			. '"activity":' . $this->activity->write() . ','
+			. '"signature":' . $this->signature->getJSONString() . ''
 			. '}';
 		
 		return $json;

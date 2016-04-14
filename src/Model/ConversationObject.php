@@ -96,12 +96,12 @@ class ConversationObject extends RemoteObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . ConversationObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . ConversationObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"owner": "' . $this->owner . '",'
-			. '"datetime": "' . $this->datetime . '",'
-			. '"members": [';
+			. '"@context":"' . ConversationObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . ConversationObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"owner":"' . $this->owner . '",'
+			. '"datetime":"' . $this->datetime . '",'
+			. '"members":[';
 		
 		foreach($this->members as $member)
 		{
@@ -112,9 +112,9 @@ class ConversationObject extends RemoteObject
 		$json .= '],';
 		
 		if($this->title != NULL)
-			$json .= '"title": "' . $this->title . '",';
+			$json .= '"title":"' . $this->title . '",';
 		
-		$json .= '"signature": ' . $this->signature->getJSONString()
+		$json .= '"signature":' . $this->signature->getJSONString()
 		. '}';
 		
 		return $json;

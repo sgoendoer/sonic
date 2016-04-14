@@ -60,11 +60,11 @@ class LinkRosterObject extends Object
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . LinkRosterObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . LinkRosterObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",' 
-			. '"owner": "' . $this->owner . '",' 
-			. '"roster": [';
+			. '"@context":"' . LinkRosterObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . LinkRosterObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",' 
+			. '"owner":"' . $this->owner . '",' 
+			. '"roster":[';
 		
 		foreach($this->roster as $link)
 		{

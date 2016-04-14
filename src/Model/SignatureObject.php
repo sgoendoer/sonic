@@ -96,13 +96,13 @@ class SignatureObject extends BasicObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . SignatureObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . SignatureObject::JSONLD_TYPE . '",'
-			. '"targetID": "' . $this->targetID . '",' 
-			. '"creatorGID": "' . $this->creatorGID . '",' 
-			. '"timeSigned": "' . $this->timeSigned . '",'
-			. '"random": "' . $this->random . '",'
-			. '"signature": "' . $this->signature . '"';
+			. '"@context":"' . SignatureObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . SignatureObject::JSONLD_TYPE . '",'
+			. '"targetID":"' . $this->targetID . '",' 
+			. '"creatorGID":"' . $this->creatorGID . '",' 
+			. '"timeSigned":"' . $this->timeSigned . '",'
+			. '"random":"' . $this->random . '",'
+			. '"signature":"' . $this->signature . '"';
 		
 		$json .= '}';
 		

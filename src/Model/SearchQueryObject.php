@@ -114,16 +114,16 @@ class SearchQueryObject extends RemoteObject
 	public function getJSONString()
 	{
 		$json = '{'
-			. '"@context": "' . SearchQueryObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . SearchQueryObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"initiatingGID": "' . $this->initiatingGID . '",'
-			. '"esIndex": "' . $this->esIndex . '",'
-			. '"esType": "' . $this->esType . '",'
-			. '"query": ' . $this->query->write() . ','
-			. '"hopCount": "' . $this->hopCount . '",'
-			. '"datetime": "' . $this->datetime . '",'
-			. '"signature": ' . $this->signature->getJSONString() . ''
+			. '"@context":"' . SearchQueryObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . SearchQueryObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"initiatingGID":"' . $this->initiatingGID . '",'
+			. '"esIndex":"' . $this->esIndex . '",'
+			. '"esType":"' . $this->esType . '",'
+			. '"query":' . $this->query->write() . ','
+			. '"hopCount":"' . $this->hopCount . '",'
+			. '"datetime":"' . $this->datetime . '",'
+			. '"signature":' . $this->signature->getJSONString() . ''
 			. '}';
 			
 		return $json;

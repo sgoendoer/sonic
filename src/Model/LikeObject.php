@@ -58,13 +58,13 @@ class LikeObject extends ReferencingRemoteObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . LikeObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . LikeObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"author": "' . $this->author . '",'
-			. '"datePublished": "' . $this->datePublished . '",'
-			. '"signature": ' . $this->signature->getJSONString() . ''
+			. '"@context":"' . LikeObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . LikeObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"author":"' . $this->author . '",'
+			. '"datePublished":"' . $this->datePublished . '",'
+			. '"signature":' . $this->signature->getJSONString() . ''
 		 	. '}';
 		
 		return $json;

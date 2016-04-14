@@ -79,22 +79,22 @@ class LinkResponseObject extends ReferencingObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . LinkResponseObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . LinkResponseObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"datetime": "' . $this->datetime . '",';
+			. '"@context":"' . LinkResponseObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . LinkResponseObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"datetime":"' . $this->datetime . '",';
 		
 		if($this->accept === true)
-			$json .= '"accept": true';
+			$json .= '"accept":true';
 		else
-			$json .= '"accept": false';
+			$json .= '"accept":false';
 		
 		if($this->message != NULL && $this->message != '')
-			$json .= ', "message": "' . $this->message . '"';
+			$json .= ', "message":"' . $this->message . '"';
 		
 		if($this->link != NULL)
-			$json .= ', "link": ' . $this->link->getJSONString();
+			$json .= ', "link":' . $this->link->getJSONString();
 		
 		$json .= '}';
 		

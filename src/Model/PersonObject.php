@@ -87,14 +87,14 @@ class PersonObject extends Object
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . PersonObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . PersonObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",' 
-			. '"globalID": "' . $this->globalID . '",' 
-			. '"displayName": "' . $this->displayName . '"';
+			. '"@context":"' . PersonObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . PersonObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",' 
+			. '"globalID":"' . $this->globalID . '",' 
+			. '"displayName":"' . $this->displayName . '"';
 		
-		if($this->profilePictureThumbnail != NULL) $json .= ', "profilePictureThumbnail": "' . $this->profilePictureThumbnail . '"';
-		if($this->profilePicture != NULL) $json .= ', "profilePicture": "' . $this->profilePicture . '"';
+		if($this->profilePictureThumbnail != NULL) $json .= ',"profilePictureThumbnail":"' . $this->profilePictureThumbnail . '"';
+		if($this->profilePicture != NULL) $json .= ', "profilePicture":"' . $this->profilePicture . '"';
 		
 		$json .= '}';
 		

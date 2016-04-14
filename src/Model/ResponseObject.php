@@ -74,12 +74,12 @@ class ResponseObject extends BasicObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . ResponseObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . ResponseObject::JSONLD_TYPE . '",'
-			. '"responseCode": ' . $this->responseCode . '';
-		if($this->message != NULL) $json .= ', "message": "' . $this->message . '"';
-		if($this->errorCode != NULL) $json .= ', "errorCode": ' . $this->errorCode . '';
-		if($this->body != NULL) $json .= ', "body": ' . $this->body;
+			. '"@context":"' . ResponseObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . ResponseObject::JSONLD_TYPE . '",'
+			. '"responseCode":' . $this->responseCode . '';
+		if($this->message != NULL) $json .= ', "message":"' . $this->message . '"';
+		if($this->errorCode != NULL) $json .= ', "errorCode":' . $this->errorCode . '';
+		if($this->body != NULL) $json .= ', "body":' . $this->body;
 		$json .= '}';
 		
 		return $json;

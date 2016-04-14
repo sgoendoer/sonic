@@ -61,16 +61,16 @@ class QueryObject extends BasicObject
 	
 	public function addMatch($column, $value)
 	{
-		$this->query = '{' . '"match": ' . '{' . '"' . $column . '":"' . $value . '"' . ' }' . '}';
+		$this->query = '{' . '"match":' . '{' . '"' . $column . '":"' . $value . '"' . ' }' . '}';
 		return $this;
 	}
 	
 	public function getJSONString()
 	{
 		$json = '{'
-			. '"index": "' . $this->index . '",'
-			. '"type": "' . $this->type . '",'
-			. '"query": ' . $this->query . ''
+			. '"index":"' . $this->index . '",'
+			. '"type":"' . $this->type . '",'
+			. '"query":' . $this->query . ''
 			. '}';
 		
 		return $json;

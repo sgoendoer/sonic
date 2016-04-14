@@ -90,15 +90,15 @@ class ConversationMessageStatusObject extends ReferencingRemoteObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . ConversationMessageStatusObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . ConversationMessageStatusObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"conversationID": "' . $this->conversationID . '",'
-			. '"author": "' . $this->author . '",'
-			. '"status": "' . $this->status . '",'
-			. '"datetime": "' . $this->datetime . '",'
-			. '"signature": ' . $this->signature->getJSONString() . ''
+			. '"@context":"' . ConversationMessageStatusObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . ConversationMessageStatusObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"conversationID":"' . $this->conversationID . '",'
+			. '"author":"' . $this->author . '",'
+			. '"status":"' . $this->status . '",'
+			. '"datetime":"' . $this->datetime . '",'
+			. '"signature":' . $this->signature->getJSONString() . ''
 			. '}';
 		
 		return $json;

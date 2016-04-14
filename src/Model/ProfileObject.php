@@ -75,15 +75,15 @@ class ProfileObject extends Object
 	public function getJSONString()
 	{
 		$json =  '{'
-				. '"@context": "' . ProfileObject::JSONLD_CONTEXT . '",'
-				. '"@type": "' . ProfileObject::JSONLD_TYPE . '",'
-				. '"objectID": "' . $this->objectID . '",'
-				. '"globalID": "' . $this->globalID . '",' 
-				. '"displayName": "' . $this->displayName . '"';
+				. '"@context":"' . ProfileObject::JSONLD_CONTEXT . '",'
+				. '"@type":"' . ProfileObject::JSONLD_TYPE . '",'
+				. '"objectID":"' . $this->objectID . '",'
+				. '"globalID":"' . $this->globalID . '",' 
+				. '"displayName":"' . $this->displayName . '"';
 		
 		foreach($this->params as $key => $value)
 		{
-			$json .= ', "' . $key . '": "' . $value . '"';
+			$json .= ',"' . $key . '":"' . $value . '"';
 		}
 		
 		$json .= '}';

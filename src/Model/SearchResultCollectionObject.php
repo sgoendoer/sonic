@@ -73,13 +73,13 @@ class SearchResultCollectionObject extends ReferencingObject
 	public function getJSONString()
 	{
 		$json = '{'
-			. '"@context": "' . SearchResultCollectionObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . SearchResultCollectionObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"platformGID": "' . $this->platformGID . '",'
-			. '"datetime": "' . $this->datetime . '",'
-			. '"results": [';
+			. '"@context":"' . SearchResultCollectionObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . SearchResultCollectionObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"platformGID":"' . $this->platformGID . '",'
+			. '"datetime":"' . $this->datetime . '",'
+			. '"results":[';
 		
 		foreach ($this->results as $result)
 		{

@@ -91,13 +91,13 @@ class CommentObject extends ReferencingRemoteObject implements ILikeableObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context": "' . CommentObject::JSONLD_CONTEXT . '",'
-			. '"@type": "' . CommentObject::JSONLD_TYPE . '",'
-			. '"objectID": "' . $this->objectID . '",'
-			. '"targetID": "' . $this->targetID . '",'
-			. '"comment": "' . $this->comment . '",'
-			. '"author": "' . $this->author . '",'
-			. '"datePublished": "' . $this->datePublished . '",';
+			. '"@context":"' . CommentObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . CommentObject::JSONLD_TYPE . '",'
+			. '"objectID":"' . $this->objectID . '",'
+			. '"targetID":"' . $this->targetID . '",'
+			. '"comment":"' . $this->comment . '",'
+			. '"author":"' . $this->author . '",'
+			. '"datePublished":"' . $this->datePublished . '",';
 			
 			if($this->dateUpdated != NULL)
 				$json .= '"dateUpdated": "' . $this->dateUpdated . '",';
