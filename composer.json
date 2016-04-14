@@ -1,6 +1,7 @@
 {
 	"name": "sgoendoer/sonic",
 	"description": "SOcial Network InterConnect SDK",
+	"keywords": ["SONIC", "social"],
 	"version": "0.1.9",
 	"license": "MIT",
 	"homepage": "http://sonic-project.net",
@@ -16,7 +17,7 @@
 	"require":
 	{
 		"php": "^5.6 || ^7.0",
-		"geraintluff/jsv4": "1.*",
+		"geraintluff/jsv4": "^1.0"
 		"lcobucci/jwt": "^3.0",
 		"sgoendoer/json": "0.2.*",
 		"monolog/monolog": "1.*"

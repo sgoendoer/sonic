@@ -2,7 +2,6 @@
 
 use sgoendoer\sonic\Model\ModelFormatException;
 use sgoendoer\json\JSONObject;
-use geraintluff\jsv4\jsv4;
 
 /**
  * Represents a basic sonic object
@@ -34,12 +33,12 @@ abstract class BasicObject
 	
 	public function validate()
 	{
-		$result = Jsv4::validate(json_decode($this->getJSONString()), json_decode(self::SCHEMA));
+		$result = \Jsv4::validate(json_decode($this->getJSONString()), json_decode(self::SCHEMA));
 		
 		if($result->valid == true)
 			return true;
 		else
-			throw new ModelFormatException('invalid JSON format for Comment: ' . $result->errors->message);
+			throw new ModelFormatException('invalid JSON format: ' . $result->errors->message);
 	}
 	
 	
