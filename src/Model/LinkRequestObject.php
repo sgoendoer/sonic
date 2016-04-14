@@ -91,7 +91,7 @@ class LinkRequestObject extends Object
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/linkrequest,
+		"id": "http://jsonschema.net/sonic/linkrequest",
 		"type": "object",
 		"properties":
 		{

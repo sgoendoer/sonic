@@ -94,7 +94,7 @@ class LinkObject extends RemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/link,
+		"id": "http://jsonschema.net/sonic/link",
 		"type": "object",
 		"properties":
 		{

@@ -96,7 +96,7 @@ class TagObject extends ReferencingRemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/tag,
+		"id": "http://jsonschema.net/sonic/tag",
 		"type": "object",
 		"properties":
 		{

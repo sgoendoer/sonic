@@ -137,7 +137,7 @@ class ConversationObject extends RemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/conversation,
+		"id": "http://jsonschema.net/sonic/conversation",
 		"type": "object",
 		"properties":
 		{

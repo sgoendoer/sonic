@@ -103,7 +103,7 @@ class LinkResponseObject extends ReferencingObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/linkresponse,
+		"id": "http://jsonschema.net/sonic/linkresponse",
 		"type": "object",
 		"properties":
 		{

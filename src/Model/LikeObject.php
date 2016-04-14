@@ -80,7 +80,7 @@ class LikeObject extends ReferencingRemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/like,
+		"id": "http://jsonschema.net/sonic/like",
 		"type": "object",
 		"properties":
 		{

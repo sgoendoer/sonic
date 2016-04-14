@@ -112,7 +112,7 @@ class StreamItemObject extends RemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/stream,
+		"id": "http://jsonschema.net/sonic/stream",
 		"type": "object",
 		"properties":
 		{

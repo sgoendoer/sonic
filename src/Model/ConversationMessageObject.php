@@ -98,11 +98,6 @@ class ConversationMessageObject extends ReferencingRemoteObject
 		return $this->status;
 	}
 	
-	public function getRemoteStatusList()
-	{
-		return $this->remoteStatusList;
-	}
-	
 	public function getJSONString()
 	{
 		$json =  '{'
@@ -136,7 +131,7 @@ class ConversationMessageObject extends ReferencingRemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/conversationMessage,
+		"id": "http://jsonschema.net/sonic/conversationMessage",
 		"type": "object",
 		"properties":
 		{

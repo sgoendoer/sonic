@@ -111,7 +111,7 @@ class SignatureObject extends BasicObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/signature,
+		"id": "http://jsonschema.net/sonic/signature",
 		"type": "object",
 		"properties":
 		{

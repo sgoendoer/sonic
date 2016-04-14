@@ -94,7 +94,7 @@ class SearchResultCollectionObject extends ReferencingObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/searchResultCollection,
+		"id": "http://jsonschema.net/sonic/searchResultCollection",
 		"type": "object",
 		"properties":
 		{

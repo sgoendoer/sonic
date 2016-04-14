@@ -141,7 +141,7 @@ class SearchQueryObject extends RemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/searchQuery,
+		"id": "http://jsonschema.net/sonic/searchQuery",
 		"type": "object",
 		"properties":
 		{

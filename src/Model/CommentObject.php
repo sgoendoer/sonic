@@ -120,7 +120,7 @@ class CommentObject extends ReferencingRemoteObject implements ILikeableObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/comment,
+		"id": "http://jsonschema.net/sonic/comment",
 		"type": "object",
 		"properties":
 		{

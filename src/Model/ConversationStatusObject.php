@@ -118,7 +118,7 @@ class ConversationStatusObject extends ReferencingRemoteObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/conversationMessage,
+		"id": "http://jsonschema.net/sonic/conversationMessage",
 		"type": "object",
 		"properties":
 		{
