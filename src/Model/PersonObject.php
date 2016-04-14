@@ -103,7 +103,7 @@ class PersonObject extends Object
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/person,
+		"id": "http://jsonschema.net/sonic/person",
 		"type": "object",
 		"properties":
 		{

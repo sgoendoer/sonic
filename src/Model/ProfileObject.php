@@ -104,7 +104,7 @@ class ProfileObject extends Object
 			},
 			"globalID":
 			{
-				"id": "http://jsonschema.net/sonic/profile/ownerID",
+				"id": "http://jsonschema.net/sonic/profile/globalID",
 				"type": "string"
 			},
 			"displayName":
@@ -115,7 +115,7 @@ class ProfileObject extends Object
 		},
 		"required": [
 			"objectID",
-			"owner",
+			"globalID",
 			"displayName"
 		]
 	}';
