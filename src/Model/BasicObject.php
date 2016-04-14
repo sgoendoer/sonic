@@ -1,5 +1,6 @@
 <?php namespace sgoendoer\Sonic\Model;
 
+use sgoendoer\sonic\Model\ModelFormatException;
 use sgoendoer\json\JSONObject;
 use geraintluff\jsv4\Jsv4;
 
@@ -38,7 +39,7 @@ abstract class BasicObject
 		if($result->valid == true)
 			return true;
 		else
-			throw new \Exception('invalid JSON format for Comment: ' . $result->errors->message);
+			throw new ModelFormatException('invalid JSON format for Comment: ' . $result->errors->message);
 	}
 	
 	
