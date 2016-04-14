@@ -1,6 +1,6 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-use sgoendoer\sonic\Model\ModelFormatException;
+use sgoendoer\Sonic\Model\ModelFormatException;
 use sgoendoer\json\JSONObject;
 
 /**
