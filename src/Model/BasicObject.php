@@ -2,7 +2,7 @@
 
 use sgoendoer\sonic\Model\ModelFormatException;
 use sgoendoer\json\JSONObject;
-use geraintluff\jsv4\Jsv4;
+use geraintluff\jsv4\jsv4;
 
 /**
  * Represents a basic sonic object
