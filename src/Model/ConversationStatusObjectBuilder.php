@@ -104,7 +104,7 @@ class ConversationStatusObjectBuilder extends ReferencingRemoteObjectBuilder
 			throw new IllegalModelStateException('Invalid targetID');
 		if(!GID::isValid($this->author))
 			throw new IllegalModelStateException('Invalid author');
-		if(!GID::isValid($this->targetGID))
+		if($this->targetGID != "" && !GID::isValid($this->targetGID))
 			throw new IllegalModelStateException('Invalid targetGID: ' . $this->targetGID);
 		if($this->status == '' || $this->status == NULL)
 			throw new IllegalModelStateException('Invalid status: ' . $this->status);
