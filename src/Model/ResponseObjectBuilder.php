@@ -33,7 +33,7 @@ class ResponseObjectBuilder extends BasicObjectBuilder
 		
 		if(property_exists($jsonObject, 'message')) $builder->message($jsonObject->message);
 		if(property_exists($jsonObject, 'errorCode')) $builder->errorCode($jsonObject->errorCode);
-		if(property_exists($jsonObject, 'body')) $builder->body($jsonObject->body);
+		if(property_exists($jsonObject, 'body')) $builder->body(json_encode($jsonObject->body));
 		
 		return $builder->build();
 	}
