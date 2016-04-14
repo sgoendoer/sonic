@@ -38,7 +38,7 @@ abstract class BasicObject
 		if($result->valid == true)
 			return true;
 		else
-			throw new ModelFormatException('invalid JSON format: ' . $result->errors->message);
+			throw new ModelFormatException('invalid JSON format for ' . get_class($this) . ': ' . $result->errors[0]->dataPath . ": " . $result->errors[0]->message);
 	}
 	
 	

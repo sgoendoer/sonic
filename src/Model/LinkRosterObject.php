@@ -96,7 +96,7 @@ class LinkRosterObject extends Object
 			"roster":
 			{
 				"id": "http://jsonschema.net/sonic/linkroster/displayName",
-				"type": "object"
+				"type": "array"
 			}
 		},
 		"required": [
