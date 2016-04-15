@@ -65,7 +65,7 @@ class LikeObject extends ReferencingRemoteObject
 			. '"author":"' . $this->author . '",'
 			. '"datePublished":"' . $this->datePublished . '",'
 			. '"signature":' . $this->signature->getJSONString() . ''
-		 	. '}';
+			. '}';
 		
 		return $json;
 	}
