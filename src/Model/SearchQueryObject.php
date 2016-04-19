@@ -1,9 +1,12 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-use sgoendoer\json\JSONObject;
 use sgoendoer\Sonic\Model\SearchQueryObjectBuilder;
 use sgoendoer\Sonic\Model\RemoteObject;
 use sgoendoer\Sonic\Date\XSDDateTime;
+
+use sgoendoer\json\JSONObject;
+use sgoendoer\esquery\ESQuery;
+use sgoendoer\esquery\ESQueryBuilder;
 
 /**
  * Represents a SEARCH QUERY object
@@ -78,7 +81,7 @@ class SearchQueryObject extends RemoteObject
 		return $this->query;
 	}
 	
-	public function setQuery(JSONObject $query)
+	public function setQuery(ESQuery $query)
 	{
 		$this->query = $query;
 		$this->invalidate();
@@ -120,7 +123,7 @@ class SearchQueryObject extends RemoteObject
 			. '"initiatingGID":"' . $this->initiatingGID . '",'
 			. '"esIndex":"' . $this->esIndex . '",'
 			. '"esType":"' . $this->esType . '",'
-			. '"query":' . $this->query->write() . ','
+			. '"query":' . $this->query->getJSONString() . ','
 			. '"hopCount":"' . $this->hopCount . '",'
 			. '"datetime":"' . $this->datetime . '",'
 			. '"signature":' . $this->signature->getJSONString() . ''
@@ -135,7 +138,7 @@ class SearchQueryObject extends RemoteObject
 		. $this->initiatingGID
 		. $this->esIndex
 		. $this->esType
-		. $this->query->write()
+		. $this->query->getJSONString()
 		. $this->datetime;
 	}
 	

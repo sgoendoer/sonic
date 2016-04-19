@@ -1,6 +1,5 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-use sgoendoer\json\JSONObject;
 use sgoendoer\Sonic\Identity\UOID;
 use sgoendoer\Sonic\Identity\GID;
 use sgoendoer\Sonic\Model\SignatureObject;
@@ -9,6 +8,10 @@ use sgoendoer\Sonic\Model\ReferencingRemoteObjectBuilder;
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\IllegalModelStateException;
 use sgoendoer\Sonic\Model\SearchQueryObject;
+
+use sgoendoer\json\JSONObject;
+use sgoendoer\esquery\ESQuery;
+use sgoendoer\esquery\ESQueryBuilder;
 
 /**
  * Builder class for a SEARCH QUERY object
@@ -41,7 +44,7 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 			->initiatingGID($jsonObject->initiatingGID)
 			->esIndex($jsonObject->esIndex)
 			->esType($jsonObject->esType)
-			->query(new JSONObject($jsonObject->query))
+			->query(ESQueryBuilder::buildFromJSON(json_encode($jsonObject->query)))
 			->hopCount($jsonObject->hopCount)
 			->datetime($jsonObject->datetime)
 			->signature($signature)
@@ -86,7 +89,7 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 		return $this->query;
 	}
 	
-	public function query(JSONObject $query)
+	public function query(ESQuery $query)
 	{
 		$this->query = $query;
 		return $this;
@@ -138,7 +141,7 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 			$this->esIndex = 'default';
 		if($this->esType === NULL)
 			throw new IllegalModelStateException('Invalid value for esType');
-		if($this->query === NULL)
+		if($this->query === NULL || !($this->query instanceof ESQuery))
 			throw new IllegalModelStateException('Invalid value for query');
 		
 		$searchQuery = new SearchQueryObject($this);
