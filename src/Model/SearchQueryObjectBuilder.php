@@ -91,6 +91,7 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 	
 	public function query(ESQuery $query)
 	{
+		
 		$this->query = $query;
 		return $this;
 	}
@@ -111,9 +112,9 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 		return $this->datetime;
 	}
 	
-	public function datetime($datetime)
+	public function datetime($datetime = NULL)
 	{
-		if ($datetime == NULL)
+		if($datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
 		else
 			$this->datetime = $datetime;
