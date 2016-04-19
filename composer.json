@@ -20,7 +20,7 @@
 		"geraintluff/jsv4": "^1.0",
 		"lcobucci/jwt": "^3.0",
 		"sgoendoer/json": "^0.2.1",
-		"sgoendoer/esquery": "^0.0.1",
+		"sgoendoer/esquery": "dev-master",
 		"monolog/monolog": "1.*"
 	},
 	"autoload":
