@@ -19,7 +19,8 @@
 		"php": "^5.6 || ^7.0",
 		"geraintluff/jsv4": "^1.0",
 		"lcobucci/jwt": "^3.0",
-		"sgoendoer/json": "0.2.*",
+		"sgoendoer/json": "^0.2.1",
+		"sgoendoer/esquery": "^0.0.1",
 		"monolog/monolog": "1.*"
 	},
 	"autoload":
