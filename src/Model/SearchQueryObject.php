@@ -10,7 +10,7 @@ use sgoendoer\esquery\ESQueryBuilder;
 
 /**
  * Represents a SEARCH QUERY object
- * version 20160413
+ * version 20160419
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -21,8 +21,6 @@ class SearchQueryObject extends RemoteObject
 	const JSONLD_TYPE = 'search-query';
 	
 	protected $initiatingGID = NULL;
-	protected $esIndex = NULL;
-	protected $esType = NULL;
 	protected $query = NULL;
 	protected $hopCount = NULL;
 	protected $datetime = NULL;
@@ -32,36 +30,10 @@ class SearchQueryObject extends RemoteObject
 		parent::__construct($builder->getObjectID());
 		
 		$this->initiatingGID = $builder->getinitiatingGID();
-		$this->esIndex = $builder->getEsIndex();
-		$this->esType = $builder->getEsType();
 		$this->query = $builder->getQuery();
 		$this->hopCount = $builder->getHopCount();
 		$this->datetime = $builder->getDatetime();
 		$this->signature = $builder->getSignature();
-	}
-	
-	public function getEsIndex()
-	{
-		return $this->esIndex;
-	}
-	
-	public function setEsIndex($esIndex)
-	{
-		$this->esIndex = $esIndex;
-		$this->invalidate();
-		return $this;
-	}
-	
-	public function getEsType()
-	{
-		return $this->esType;
-	}
-	
-	public function setEsType($esType)
-	{
-		$this->esType = $esType;
-		$this->invalidate();
-		return $this;
 	}
 	
 	public function getInitiatingGID()
@@ -121,8 +93,6 @@ class SearchQueryObject extends RemoteObject
 			. '"@type":"' . SearchQueryObject::JSONLD_TYPE . '",'
 			. '"objectID":"' . $this->objectID . '",'
 			. '"initiatingGID":"' . $this->initiatingGID . '",'
-			. '"esIndex":"' . $this->esIndex . '",'
-			. '"esType":"' . $this->esType . '",'
 			. '"query":' . $this->query->getJSONString() . ','
 			. '"hopCount":"' . $this->hopCount . '",'
 			. '"datetime":"' . $this->datetime . '",'
@@ -136,8 +106,6 @@ class SearchQueryObject extends RemoteObject
 	{
 		return $this->objectID
 		. $this->initiatingGID
-		. $this->esIndex
-		. $this->esType
 		. $this->query->getJSONString()
 		. $this->datetime;
 	}
@@ -157,16 +125,6 @@ class SearchQueryObject extends RemoteObject
 			{
 				"id": "http://jsonschema.net/sonic/searchQuery/initiatingGID",
 				"type": "string"
-			},
-			"esIndex":
-			{
-				"id": "http://jsonschema.net/sonic/searchQuery/esIndex",
-				"type": "string"
- 			},
- 			"esType":
- 			{
- 				"id": "http://jsonschema.net/sonic/searchQuery/esType",
- 				"type": "string"
 			},
 			"query":
 			{
@@ -192,8 +150,6 @@ class SearchQueryObject extends RemoteObject
 		"required": [
 			"objectID",
 			"initiatingGID",
-			"esIndex",
-			"esType",
 			"query",
 			"hopCount",
 			"datetime",

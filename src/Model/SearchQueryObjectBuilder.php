@@ -15,7 +15,7 @@ use sgoendoer\esquery\ESQueryBuilder;
 
 /**
  * Builder class for a SEARCH QUERY object
- * version 20160111
+ * version 20160419
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -23,8 +23,6 @@ use sgoendoer\esquery\ESQueryBuilder;
 class SearchQueryObjectBuilder extends RemoteObjectBuilder
 {
 	protected $initiatingGID = NULL;
-	protected $esIndex = NULL;
-	protected $esType = NULL;
 	protected $query = NULL;
 	protected $hopCount = NULL;
 	protected $datetime = NULL;
@@ -42,35 +40,11 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 		return (new SearchQueryObjectBuilder())
 			->objectID($jsonObject->objectID)
 			->initiatingGID($jsonObject->initiatingGID)
-			->esIndex($jsonObject->esIndex)
-			->esType($jsonObject->esType)
 			->query(ESQueryBuilder::buildFromJSON(json_encode($jsonObject->query)))
 			->hopCount($jsonObject->hopCount)
 			->datetime($jsonObject->datetime)
 			->signature($signature)
 			->build();
-	}
-	
-	public function getEsIndex()
-	{
-		return $this->esIndex;
-	}
-	
-	public function esIndex($esIndex)
-	{
-		$this->esIndex = $esIndex;
-		return $this;
-	}
-	
-	public function getEsType()
-	{
-		return $this->esType;
-	}
-	
-	public function esType($esType)
-	{
-		$this->esType = $esType;
-		return $this;
 	}
 	
 	public function getInitiatingGID()
@@ -138,10 +112,6 @@ class SearchQueryObjectBuilder extends RemoteObjectBuilder
 			throw new IllegalModelStateException('Invalid value for hopCount');
 		if(!XSDDateTime::validateXSDDateTime($this->datetime))
 			throw new IllegalModelStateException('Invalid datetime');
-		if($this->esIndex === NULL)
-			$this->esIndex = 'default';
-		if($this->esType === NULL)
-			throw new IllegalModelStateException('Invalid value for esType');
 		if($this->query === NULL || !($this->query instanceof ESQuery))
 			throw new IllegalModelStateException('Invalid value for query');
 		
