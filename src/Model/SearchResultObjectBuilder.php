@@ -104,7 +104,7 @@ class SearchResultObjectBuilder extends ReferencingObjectBuilder
 		return $this->datetime;
 	}
 	
-	public function datetime($datetime)
+	public function datetime($datetime = NULL)
 	{
 		if ($datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
