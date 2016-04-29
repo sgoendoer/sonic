@@ -28,14 +28,13 @@ define('SONIC_HEADER__PLATFORM_GID',	'SonicPlatformGID');
 define('SONIC_HEADER__SOURCE_GID',		'SonicSourceGID');
 define('SONIC_HEADER__SIGNATURE',		'SonicSignature');
 define('SONIC_HEADER__RANDOM',			'SonicRandom');
+define('SONIC_HEADER__AUTH_TOKEN',		'SonicAuthToken');
 
 define('SONIC_SDK__APP_NAME',			'SonicSDK');
-define('SONIC_SDK__APP_VERSION',		'0.1.9');
+define('SONIC_SDK__APP_VERSION',		'0.2.0');
 define('SONIC_SDK__APP_VERSION_NAME',	'beta4');
 define('SONIC_SDK__API_VERSION',		'0.1.2');
 
 define('SONIC_REQUEST__USERAGENT',		SONIC_SDK__APP_NAME . '/' . SONIC_SDK__APP_VERSION);
-
-define('SONIC_HEADER__AUTH_TOKEN',		'SonicAuthToken');
 
 ?>

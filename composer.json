@@ -2,7 +2,7 @@
 	"name": "sgoendoer/sonic",
 	"description": "SOcial Network InterConnect SDK",
 	"keywords": ["SONIC", "social"],
-	"version": "0.1.9",
+	"version": "0.2.0",
 	"license": "MIT",
 	"homepage": "http://sonic-project.net",
 	"authors":
