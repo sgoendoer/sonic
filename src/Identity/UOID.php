@@ -6,7 +6,7 @@ use sgoendoer\Sonic\Identity\GID;
 
 /**
  * Creates and verifies Unique Object IDs (UOID)
- * version 20160127
+ * version 20160429
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -18,16 +18,20 @@ class UOID
 	/**
 	 * Creates a new UOID for the current Sonic context
 	 * 
+	 * @param $gid String The global id part of the UOID
 	 * @param $id String The local id part of the UOID
 	 * 
 	 * @return A UOID
 	 */
-	public static function createUOID($id = NULL)
+	public static function createUOID($gid = NULL, $id = NULL)
 	{
+		if($gid == NULL)
+			$gid = Sonic::getContextGlobalID();
+		
 		if($id == NULL)
 			$id = Random::getUniqueRandom();
 		
-		$uoid = Sonic::getContextGlobalID() . UOID::SEPARATOR . $id;
+		$uoid = $gid . UOID::SEPARATOR . $id;
 		
 		return $uoid;
 	}
