@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Model\IllegalModelStateException;
 
 /**
  * Builder class for a SEARCH RESULT COLLECTION object
- * version 20160127
+ * version 20160429
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -58,7 +58,7 @@ class SearchResultCollectionObjectBuilder extends ReferencingObjectBuilder
 		return $this->datetime;
 	}
 	
-	public function datetime($datetime)
+	public function datetime($datetime = NULL)
 	{
 		if($datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
@@ -67,7 +67,7 @@ class SearchResultCollectionObjectBuilder extends ReferencingObjectBuilder
 		return $this;
 	}
 	
-	public function result( $result)
+	public function result($result)
 	{
 		$this->results[] = $result;
 		return $this;

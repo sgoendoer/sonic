@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Log;
 
 /**
  * Represents a SEARCH RESULT COLLECTION object
- * version 20160413
+ * version 20160429
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -46,7 +46,7 @@ class SearchResultCollectionObject extends ReferencingObject
 		return $this->datetime;
 	}
 	
-	public function setDatetime($datetime)
+	public function setDatetime($datetime = NULL)
 	{
 		if ($datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
