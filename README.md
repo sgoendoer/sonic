@@ -23,7 +23,7 @@ or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-	"sgoendoer/sonic": "0.1.9"
+	"sgoendoer/sonic": "0.2.0"
 }
 ```
 
