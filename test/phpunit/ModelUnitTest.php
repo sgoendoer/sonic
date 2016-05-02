@@ -44,6 +44,8 @@ use sgoendoer\Sonic\Model\StreamItemObjectBuilder;
 use sgoendoer\Sonic\Model\TagObjectBuilder;
 use sgoendoer\Sonic\Model\ResponseObjectBuilder;
 
+use sgoenoder\json\JSONObject;
+
 date_default_timezone_set('Europe/Berlin');
 
 class ModelUnitTest extends PHPUnit_Framework_TestCase
@@ -97,17 +99,253 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 		Sonic::setContext(Sonic::CONTEXT_USER);
 	}
 	
+	// PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
 	public function testProfile()
 	{
 		$profile = (new ProfileObjectBuilder())
-					->globalID($this->aliceSocialRecord->getGlobalID())
+					->globalID(Sonic::getContextGlobalID())
 					->displayName($this->aliceSocialRecord->getDisplayName())
 					->param('x', 'y')
 					->build();
 		
-		$profile->validate();
-		
+		$this->assertTrue($profile->validate());
 		$this->assertEquals($profile, ProfileObjectBuilder::buildFromJSON($profile->getJSONString()));
+	}
+	
+	// PERSON //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testPerson()
+	{
+		$person = (new PersonObjectBuilder())
+			->objectID(UOID::createUOID())
+			->globalID(Sonic::getContextGlobalID())
+			->displayName($this->aliceSocialRecord->getDisplayName())
+			->build();
+		
+		$this->assertTrue($person->validate());
+		$this->assertEquals($person, PersonObjectBuilder::buildFromJSON($person->getJSONString()));
+	}
+	
+	// LINK ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testLink()
+	{
+		$link = (new LinkObjectBuilder())
+			->objectID(UOID::createUOID())
+			->link(Sonic::getContextGlobalID())
+			->owner($this->bobSocialRecord->getGlobalID())
+			->build();
+		
+		$this->assertTrue($link->validate());
+		$this->assertEquals($link, LinkObjectBuilder::buildFromJSON($link->getJSONString()));
+		
+		$linkRoster = (new LinkRosterObjectBuilder())
+			->objectID(UOID::createUOID())
+			->owner(Sonic::getContextGlobalID())
+			->roster(array($link))
+			->build();
+		
+		$this->assertTrue($linkRoster->validate());
+		$this->assertEquals($linkRoster, LinkRosterObjectBuilder::buildFromJSON($linkRoster->getJSONString()));
+		
+		$linkRequest = (new LinkRequestObjectBuilder())
+			->objectID(UOID::createUOID())
+			->initiatingGID(Sonic::getContextGlobalID())
+			->targetedGID($this->bobSocialRecord->getGlobalID())
+			->message('testMessage')
+			->build();
+			
+		$this->assertTrue($linkRequest->validate());
+		$this->assertEquals($linkRequest, LinkRequestObjectBuilder::buildFromJSON($linkRequest->getJSONString()));
+		
+		$linkResponse = (new LinkResponseObjectBuilder())
+			->objectID(UOID::createUOID())
+			->targetID(UOID::createUOID())
+			->accept(true)
+			->message('testMessage')
+			->link($link)
+			->build();
+		
+		$this->assertTrue($linkResponse->validate());
+		$this->assertEquals($linkResponse, LinkResponseObjectBuilder::buildFromJSON($linkResponse->getJSONString()));
+	}
+	
+	// LIKE ////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testLike()
+	{
+		$like = (new LikeObjectBuilder())
+			->objectID(UOID::createUOID())
+			->targetID(UOID::createUOID())
+			->author(Sonic::getContextGlobalID())
+			->build();
+		
+		$this->assertTrue($like->validate());
+		$this->assertEquals($like, LikeObjectBuilder::buildFromJSON($like->getJSONString()));
+	}
+	
+	// COMMENT /////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testComment()
+	{
+		$comment = (new CommentObjectBuilder())
+			->objectID(UOID::createUOID())
+			->targetID(UOID::createUOID())
+			->author(Sonic::getContextGlobalID())
+			->comment('test comment')
+			->build();
+	
+		$this->assertTrue($comment->validate());
+		$this->assertEquals($comment, CommentObjectBuilder::buildFromJSON($comment->getJSONString()));
+	}
+	
+	// TAG /////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testTag()
+	{
+		$tag = (new TagObjectBuilder())
+			->objectID(UOID::createUOID())
+			->targetID(UOID::createUOID())
+			->author(Sonic::getContextGlobalID())
+			->datePublished()
+			->tag($this->bobSocialRecord->getGlobalID())
+			->build();
+		
+		$this->assertTrue($tag->validate());
+		$this->assertEquals($tag, TagObjectBuilder::buildFromJSON($tag->getJSONString()));
+	}
+	
+	// STREAM //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testStream()
+	{
+		$streamItem = (new StreamItemObjectBuilder())
+			->objectID(UOID::createUOID())
+			->owner(Sonic::getContextGlobalID())
+			->author(Sonic::getContextGlobalID())
+			->datetime()
+			->activity(new JSONObject('{"@context": "http://www.w3.org/ns/activitystreams",
+				"type": "Activity",
+				"actor":
+				{
+					"type": "Person",
+					"displayName": "Alice"
+				},
+				"object":
+				{
+					"type": "Note",
+					"displayName": "A Note"
+				}
+			}'))
+			->build();
+		
+		$this->assertTrue($streamItem->validate());
+		$this->assertEquals($streamItem = StreamItemObjectBuilder::buildFromJSON($streamItem->getJSONString()));
+	}
+	
+	// CONVERSATION ////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testConversation()
+	{
+		$conversationUOID = UOID::createUOID();
+		$messageUOID = UOID::createUOID();
+		
+		$conversation = (new ConversationObjectBuilder())
+			->objectID($conversationUOID)
+			->owner(Sonic::getContextGlobalID())
+			->members(array(Sonic::getContextGlobalID(), $this->bobSocialRecord->getGlobalID()))
+			->title('conversation title')
+			->build();
+		
+		$this->assertTrue($conversation->validate());
+		$this->assertEquals($conversation, ConversationObjectBuilder::buildFromJSON($conversation->getJSONString()));
+		
+		$conversationMessage = (new ConversationMessageObjectBuilder())
+			->objectID($messageUOID)
+			->targetID($conversationUOID)
+			->title('message title')
+			->author(Sonic::getContextGlobalID())
+			->body('message text')
+			->datetime()
+			->build();
+		$conversationMessage->setStatus(ConversationMessageStatusObject::STATUS_READ);
+		
+		$this->assertTrue($conversationMessage->validate());
+		$this->assertEquals($conversationMessage = ConversationMessageObjectBuilder::buildFromJSON($conversationMessage->getJSONString()));
+		
+		$conversationStatus = (new ConversationStatusObjectBuilder())
+			->targetID($conversationUOID)
+			->status(ConversationStatusObject::STATUS_INVITED)
+			->author(Sonic::getContextGlobalID())
+			->targetGID($this->bobSocialRecord->getGlobalID())
+			->datetime()
+			->build();
+		
+		$this->assertTrue($conversationStatus->validate());
+		$this->assertEquals($conversationStatus = ConversationStatusObjectBuilder::buildFromJSON($conversationStatus->getJSONString()));
+		
+		$conversationMessageStatus = (new ConversationMessageStatusObjectBuilder())
+			->targetID($messageUOID)
+			->conversationID($conversationUOID)
+			->status(ConversationMessageStatusObject::STATUS_READ)
+			->author(Sonic::getContextGlobalID())
+			->build();
+		
+		$this->assertTrue($conversationMessageStatus->validate());
+		$this->assertEquals($conversationMessageStatus, ConversationMessageStatusObjectBuilder::buildFromJSON($conversationMessageStatus->getJSONString()));
+	}
+	
+	// SEARCH //////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testSearch()
+	{
+		$searchQuery = (new SearchQueryObjectBuilder())
+			->initiatingGID(Sonic::getContextGlobalID())
+			->query((new ESQueryBuilder())->type('profile')->match('displayName', 'alice')->build())
+			->datetime()
+			->build();
+		
+		$this->assertTrue($searchQuery->validate());
+		$this->assertEquals($searchQuery = SearchQueryObjectBuilder::buildFromJSON($searchQuery->getJSONString()));
+			
+		$searchResult = (new SearchResultObjectBuilder())
+			->targetID($searchQuery->getObjectID())
+			->resultOwnerGID($profile->getGlobalID())
+			->resultObjectID($profile->getObjectID())
+			->resultIndex($searchQuery->getQuery()->getIndex())
+			->resultType($searchQuery->getQuery()->getType())
+			->displayName($profile->getDisplayName())
+			->datetime()
+			->build();
+		
+		$this->assertTrue($searchResult->validate());
+		$this->assertEquals($searchResult = SearchResultObjectBuilder::buildFromJSON($searchResult->getJSONString()));
+		
+		$searchResultCollection = (new SearchResultCollectionObjectBuilder())
+			->objectID(UOID::createUOID($platformSocialRecord->getGlobalID()))
+			->targetID($searchQuery->getObjectID())
+			->platformGID($platformSocialRecord->getGlobalID())
+			->datetime()
+			->result($searchResult)
+			->build();
+		
+		$this->assertTrue($searchResultCollection->validate());
+		$this->assertEquals($searchResultCollection = SearchResultCollectionObjectBuilder::buildFromJSON($searchResultCollection->getJSONString()));
+	}
+	
+	// SONIC RESPONSE //////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testResponse()
+	{
+		$response = (new ResponseObjectBuilder())
+			->responseCode(12345)
+			->errorCode('12345')
+			->message('my message')
+			->body('{"message":"text"}')
+			->build();
+		
+		$this->assertEquals($response = ResponseObjectBuilder::buildFromJSON($response->getJSONString()));
 	}
 }
 
