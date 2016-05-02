@@ -26,6 +26,19 @@ abstract class BasicObject
 		return $this->getJSONString();
 	}
 	
+	/**
+	 * serializes a model object to it's JSON String representation
+	 */
+	public function serialize()
+	{
+		return $this->getJSONString();
+	}
+	
+	/**
+	 * deserializes a model object from it's JSON String representation
+	 */
+	//public abstract static function deserialize();
+	
 	public function getJSONObject()
 	{
 		return new JSONObject($this->getJSONString());
