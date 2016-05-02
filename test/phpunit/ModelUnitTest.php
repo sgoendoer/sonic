@@ -43,7 +43,11 @@ use sgoendoer\Sonic\Model\LinkRosterObjectBuilder;
 use sgoendoer\Sonic\Model\StreamItemObjectBuilder;
 use sgoendoer\Sonic\Model\TagObjectBuilder;
 use sgoendoer\Sonic\Model\ResponseObjectBuilder;
+use sgoendoer\Sonic\Model\SearchQueryObjectBuilder;
+use sgoendoer\Sonic\Model\SearchResultObjectBuilder;
+use sgoendoer\Sonic\Model\SearchResultCollectionObjectBuilder;
 
+use sgoendoer\esquery\ESQueryBuilder;
 use sgoenoder\json\JSONObject;
 
 date_default_timezone_set('Europe/Berlin');
@@ -307,7 +311,13 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 			->build();
 		
 		$this->assertTrue($searchQuery->validate());
-		$this->assertEquals($searchQuery = SearchQueryObjectBuilder::buildFromJSON($searchQuery->getJSONString()));
+		$this->assertEquals($searchQuery, SearchQueryObjectBuilder::buildFromJSON($searchQuery->getJSONString()));
+		
+		$profile = (new ProfileObjectBuilder())
+			->globalID(Sonic::getContextGlobalID())
+			->displayName($this->aliceSocialRecord->getDisplayName())
+			->param('x', 'y')
+			->build();
 			
 		$searchResult = (new SearchResultObjectBuilder())
 			->targetID($searchQuery->getObjectID())
@@ -320,18 +330,18 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 			->build();
 		
 		$this->assertTrue($searchResult->validate());
-		$this->assertEquals($searchResult = SearchResultObjectBuilder::buildFromJSON($searchResult->getJSONString()));
+		$this->assertEquals($searchResult, SearchResultObjectBuilder::buildFromJSON($searchResult->getJSONString()));
 		
 		$searchResultCollection = (new SearchResultCollectionObjectBuilder())
-			->objectID(UOID::createUOID($platformSocialRecord->getGlobalID()))
+			->objectID(UOID::createUOID($this->platformSocialRecord->getGlobalID()))
 			->targetID($searchQuery->getObjectID())
-			->platformGID($platformSocialRecord->getGlobalID())
+			->platformGID($this->platformSocialRecord->getGlobalID())
 			->datetime()
 			->result($searchResult)
 			->build();
 		
 		$this->assertTrue($searchResultCollection->validate());
-		$this->assertEquals($searchResultCollection = SearchResultCollectionObjectBuilder::buildFromJSON($searchResultCollection->getJSONString()));
+		$this->assertEquals($searchResultCollection, SearchResultCollectionObjectBuilder::buildFromJSON($searchResultCollection->getJSONString()));
 	}
 	
 	// SONIC RESPONSE //////////////////////////////////////////////////////////////////////////////////////////////////
@@ -345,7 +355,7 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 			->body('{"message":"text"}')
 			->build();
 		
-		$this->assertEquals($response = ResponseObjectBuilder::buildFromJSON($response->getJSONString()));
+		$this->assertEquals($response, ResponseObjectBuilder::buildFromJSON($response->getJSONString()));
 	}
 }
 
