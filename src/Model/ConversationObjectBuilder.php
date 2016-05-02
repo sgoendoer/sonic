@@ -46,6 +46,11 @@ class ConversationObjectBuilder extends RemoteObjectBuilder
 		{
 			$memberArray[] = $member;
 		}
+		
+		if(is_array($memberArray))
+		{
+			asort($memberArray);
+		}
 		$builder->members($memberArray);
 		
 		if(property_exists($jsonObject, 'title')) $builder->title($jsonObject->title);
