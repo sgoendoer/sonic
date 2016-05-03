@@ -1,9 +1,5 @@
 <?php namespace sgoendoer\Sonic\Crypt;
 
-use sgoendoer\Sonic\Sonic;
-use sgoendoer\Sonic\Crypt\Random;
-use sgoendoer\Sonic\Date\XSDDateTime;
-
 /**
  * Creates and verifies signatures
  * version 20160125
@@ -24,7 +20,7 @@ class Signature
 	
 	public static function createSignature($message, $privateKey)
 	{
-		$signature = null;
+		$signature = NULL;
 		
 		openssl_sign($message, $signature, $privateKey, self::$algorithm);
 		
