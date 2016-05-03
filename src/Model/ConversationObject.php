@@ -103,6 +103,8 @@ class ConversationObject extends RemoteObject
 			. '"datetime":"' . $this->datetime . '",'
 			. '"members":[';
 		
+		asort($this->members);
+		
 		foreach($this->members as $member)
 		{
 			$json .= '"' . $member . '"';
