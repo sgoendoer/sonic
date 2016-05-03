@@ -48,7 +48,7 @@ use sgoendoer\Sonic\Model\SearchResultObjectBuilder;
 use sgoendoer\Sonic\Model\SearchResultCollectionObjectBuilder;
 
 use sgoendoer\esquery\ESQueryBuilder;
-use sgoenoder\json\JSONObject;
+use sgoendoer\json\JSONObject;
 
 date_default_timezone_set('Europe/Berlin');
 
@@ -245,7 +245,7 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 			->build();
 		
 		$this->assertTrue($streamItem->validate());
-		$this->assertEquals($streamItem = StreamItemObjectBuilder::buildFromJSON($streamItem->getJSONString()));
+		$this->assertEquals($streamItem, StreamItemObjectBuilder::buildFromJSON($streamItem->getJSONString()));
 	}
 	
 	// CONVERSATION ////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -263,7 +263,7 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 			->build();
 		
 		$this->assertTrue($conversation->validate());
-		$this->assertEquals($conversation, ConversationObjectBuilder::buildFromJSON($conversation->getJSONString()));
+		$this->assertEquals($conversation, ConversationObjectBuilder::buildFromJSON($conversation->getJSONString()), "\$canonicalize = true", $delta = 0.0, $maxDepth = 10, $canonicalize = true);
 		
 		$conversationMessage = (new ConversationMessageObjectBuilder())
 			->objectID($messageUOID)
@@ -276,7 +276,7 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 		$conversationMessage->setStatus(ConversationMessageStatusObject::STATUS_READ);
 		
 		$this->assertTrue($conversationMessage->validate());
-		$this->assertEquals($conversationMessage = ConversationMessageObjectBuilder::buildFromJSON($conversationMessage->getJSONString()));
+		$this->assertEquals($conversationMessage, ConversationMessageObjectBuilder::buildFromJSON($conversationMessage->getJSONString()));
 		
 		$conversationStatus = (new ConversationStatusObjectBuilder())
 			->targetID($conversationUOID)
@@ -287,7 +287,7 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 			->build();
 		
 		$this->assertTrue($conversationStatus->validate());
-		$this->assertEquals($conversationStatus = ConversationStatusObjectBuilder::buildFromJSON($conversationStatus->getJSONString()));
+		$this->assertEquals($conversationStatus, ConversationStatusObjectBuilder::buildFromJSON($conversationStatus->getJSONString()));
 		
 		$conversationMessageStatus = (new ConversationMessageStatusObjectBuilder())
 			->targetID($messageUOID)
