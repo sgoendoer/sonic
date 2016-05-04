@@ -43,7 +43,8 @@ class URL
 	 */
 	public static function getDomainFromURL($url)
 	{
-		$url = str_replace(array('http://', 'https://'), '', $url);
+		$url = str_replace(self::getProtocolFromURL($url) . '://', '', $url);
+		
 		return explode('/', $url)[0];
 	}
 	
@@ -56,10 +57,8 @@ class URL
 	 */
 	public static function getPathFromURL($url)
 	{
-		$domain = self::getDomainFromURL($url);
-		
-		$path = str_replace($domain, '', $url);
-		$path = str_replace(array('http://', 'https://'), '', $path);
+		$path = str_replace(self::getProtocolFromURL($url) . '://', '', $url);
+		$path = str_replace(self::getDomainFromURL($url), '', $path);
 		
 		if($path == '') return '/';
 		
@@ -78,7 +77,7 @@ class URL
 		$protocol = explode('://', $url);
 		
 		if(count($protocol) != 2)
-			return 'http';
+			return '';
 		else
 			return $protocol[0];
 	}
