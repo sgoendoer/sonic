@@ -22,6 +22,11 @@ abstract class AbstractResponse
 	protected $headers			= NULL;
 	protected $body				= NULL;
 	
+	/**
+	 * returns string for response signature
+	 * 
+	 * @return string
+	 */
 	public function getStringForResponseSignature()
 	{
 		return $this->headers[SONIC_HEADER__TARGET_API]
@@ -32,11 +37,22 @@ abstract class AbstractResponse
 				. $this->body;
 	}
 	
+	/**
+	 * verifies response header and body format/content
+	 * 
+	 * @throws MalformedRequestHeaderException on error
+	 * @return true on success
+	 */
 	public function verify()
 	{
 		return ($this->verifyHeaders() && $this->verifyDataFormat() && $this->verifySignature());
 	}
 	
+	/**
+	 * verifies the format and content of the response headers
+	 * 
+	 * @throws MalformedRequestHeaderException on corrupt or missing headers
+	 */
 	protected function verifyHeaders()
 	{
 		if(!array_key_exists(SONIC_HEADER__TARGET_API, $this->headers))
@@ -54,6 +70,11 @@ abstract class AbstractResponse
 		else return true;
 	}
 	
+	/**
+	 * verifies the format and content of the response
+	 * 
+	 * @throws MalformedRequestHeaderException on corrupt data
+	 */
 	protected function verifyDataFormat()
 	{
 		// TODO validate data and formats
@@ -83,41 +104,81 @@ abstract class AbstractResponse
 			return true;
 	}
 	
+	/**
+	 * returns the value of the SonicExpectedGID header
+	 * 
+	 * returns string
+	 */
 	public function getExpectedGID()
 	{
 		return $this->expectedGID;
 	}
 	
+	/**
+	 * returns the value of the SonicDate header
+	 * 
+	 * returns string
+	 */
 	public function getHeaderDate()
 	{
 		return $this->headers[SONIC_HEADER__DATE];
 	}
 	
+	/**
+	 * returns the value of the SonictargetAPI header
+	 * 
+	 * returns string
+	 */
 	public function getHeaderTargetAPI()
 	{
 		return $this->headers[SONIC_HEADER__TARGET_API];
 	}
 	
+	/**
+	 * returns the value of the SonicRandom header
+	 * 
+	 * returns string
+	 */
 	public function getHeaderRandom()
 	{
 		return $this->headers[SONIC_HEADER__RANDOM];
 	}
 	
+	/**
+	 * returns the value of the SonicSignature header
+	 * 
+	 * returns string
+	 */
 	public function getHeaderSignature()
 	{
 		return $this->headers[SONIC_HEADER__SIGNATURE];
 	}
 	
+	/**
+	 * returns the value of the SonicPlatformGID header
+	 * 
+	 * returns string
+	 */
 	public function getHeaderPlatformGID()
 	{
 		return $this->headers[SONIC_HEADER__PLATFORM_GID];
 	}
 	
+	/**
+	 * returns the value of the SonicSourceGID header
+	 * 
+	 * returns string
+	 */
 	public function getHeaderSourceGID()
 	{
 		return $this->headers[SONIC_HEADER__SOURCE_GID];
 	}
 	
+	/**
+	 * returns an array of all headers
+	 * 
+	 * returns array
+	 */
 	public function getResponseHeaders()
 	{
 		return $this->headers;
@@ -153,11 +214,21 @@ abstract class AbstractResponse
 		return $this->getDecodedBody()->getBody();
 	}
 	
+	/**
+	 * returns the HTTP status code of the response
+	 * 
+	 * returns string
+	 */
 	public function getResponseStatusCode()
 	{
-		return $this->statusCode;
+		return (int) $this->statusCode;
 	}
 	
+	/**
+	 * returns the status message of the response
+	 * 
+	 * returns string
+	 */
 	public function getResponseStatusMessage()
 	{
 		return $this->statusMessage;
