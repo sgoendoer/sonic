@@ -26,14 +26,14 @@ abstract class RemoteObject extends Object
 	
 	public function signObject()
 	{
-		$this->signature = new SignatureObject($this->objectID, Sonic::getUserGlobalID());
+		$this->signature = new SignatureObject($this->objectID, Sonic::getContextGlobalID());
 		
 		$this->signature->setTimeSigned(XSDDateTime::getXSDDateTime());
 		$this->signature->setRandom(Random::getRandom());
 		
 		$sigmessage = $this->getStringForSignature() . $this->signature->getTargetID() . $this->signature->getCreatorGID() . $this->signature->getTimeSigned() . $this->signature->getRandom();
 		//echo "\ncreating sig for \n".$sigmessage."\n";
-		$this->signature->setSignature(Signature::createSignature($sigmessage, Sonic::getUserAccountKeyPair()->getPrivateKey()));
+		$this->signature->setSignature(Signature::createSignature($sigmessage, Sonic::getContextAccountKeyPair()->getPrivateKey()));
 	}
 	
 	public function verifyObjectSignature()
