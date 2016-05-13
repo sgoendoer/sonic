@@ -64,9 +64,7 @@ As this content is then owned by somebody other than the content's original auth
 
 ## Sonic Role Model
 
-When creating or accessing data objects in Sonic, a user assumes a certain role. 
-
-acts either of the creator of content (i.e., the author), the maintainer of content (i.e., the owner), or the 
+When creating or accessing data objects in Sonic, a user assumes a certain role. Specifically, a user acts either of the creator of content (i.e., the author), the maintainer of content (i.e., the owner), or the one accessing it (i.e., the viewer). A separate role is the one of the provider, who provides the Sonic platform.
 
 ### Author
 
