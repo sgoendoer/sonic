@@ -7,6 +7,7 @@ use sgoendoer\Sonic\Crypt\PrivateKey;
 
 use sgoendoer\Sonic\Identity\SocialRecord;
 use sgoendoer\Sonic\Identity\SocialRecordBuider;
+use sgoendoer\Sonic\Identity\SocialRecordFormatException;
 use sgoendoer\Sonic\Identity\SocialRecordNotFoundException;
 use sgoendoer\Sonic\Identity\SocialRecordIntegrityException;
 
@@ -23,6 +24,18 @@ use Lcobucci\JWT\Parser;
  */
 class GSLS
 {
+	/**
+	 * Retrieves a SocialRecord for a given GlobalID from the GSLS. The signed JWT stored in the GSLS will be retrieved, the payloads verified, and the enclosed SocialRecord object will be returned.
+	 * 
+	 * @param $gid The GlobalID to resolve
+	 * @param $raw If set to true, the signed JWT will be returned instead of the SocialRecrod
+	 * 
+	 * @throws SocialRecordNotFoundException
+	 * @throws SocialRecordIntegrityException
+	 * @throws Exception
+	 * 
+	 * @return SocialRecord object
+	 */
 	public static function getSocialRecord($gid, $raw = false)
 	{
 		$ch = curl_init(Configuration::getPrimaryGSLSNode() . '/' . $gid);
@@ -83,6 +96,16 @@ class GSLS
 		}
 	}
 	
+	/**
+	 * Pushes a new SocialRecord to the GSLS. The SocialRecord will be transformed into a signed JWT, which is then stored in the GSLS
+	 * 
+	 * @param $sr The SocialRecord
+	 * @param $personalPrivateKey The private key to sign the JWT
+	 * 
+	 * @throws Exception
+	 * 
+	 * @return result json string
+	 */
 	public static function postSocialRecord(SocialRecord $sr, $personalPrivateKey)
 	{
 		if(!$sr->verify())
@@ -136,6 +159,16 @@ class GSLS
 		}
 	}
 	
+	/**
+	 * Pushes an update for a SocialRecord to the GSLS. The SocialRecord will be transformed into a signed JWT, which is then stored in the GSLS
+	 * 
+	 * @param $sr The SocialRecord
+	 * @param $personalPrivateKey The private key to sign the JWT
+	 * 
+	 * @throws Exception
+	 * 
+	 * @return result json string
+	 */
 	public static function putSocialRecord(SocialRecord $sr, $personalPrivateKey)
 	{
 		if(!$sr->verify())
