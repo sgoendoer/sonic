@@ -8,7 +8,7 @@ use sgoendoer\json\JSONObject;
 
 /**
  * SocialRecord class
- * version 20160111
+ * version 20160513
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -50,11 +50,21 @@ class SocialRecord
 		$this->setKeyRevocationList($builder->getKeyRevocationList());
 	}
 	
+	/**
+	 * Serialization method for SocialRecord
+	 * 
+	 * @return The serialized SocialRecord (String)
+	 */
 	public function __toString()
 	{
 		return $this->getJSONString();
 	}
 	
+	/**
+	 * Serialization method for SocialRecord
+	 * 
+	 * @return The serialized SocialRecord (String)
+	 */
 	public function getJSONString()
 	{
 		$json = '{'
