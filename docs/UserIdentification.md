@@ -1,6 +1,6 @@
 # GlobalID
 
-In SONIC, every user and every platform is identified by a globally unique identifier, the GlobalID. GlobalIDs are domain and platform independent and remain unchanged even when a user account is moved to a new domain. This way, user accounts can be addressed regardless of where it is actually hosted.
+In SONIC, every user and every platform is identified by a globally unique identifier, the GlobalID. GlobalIDs are domain and platform independent and remain unchanged even when a user account is moved to a new domain. This way, user accounts can be addressed regardless of where it is actually hosted. GlobalIDs are resolved by a DHT-based directory service, the GSLS.
 
 ## GlobalID creation
 
@@ -15,6 +15,9 @@ The class ```\Sonic\Identity\GID``` manages creation and validation of GlobalIDs
 ```php
 // retrieve the current user's GlobalID
 Sonic::getUserAuthData()->getGlobalID();
+
+// retrieve the platform's PlatformGID
+Sonic::getPlatformAuthData()->getGlobalID();
 ```
 
 # SocialRecord
