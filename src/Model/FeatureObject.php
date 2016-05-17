@@ -1,128 +1,119 @@
-<?php
-namespace sgoendoer\Sonic\Model;
+<?php namespace sgoendoer\Sonic\Model;
+
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\Object;
 use sgoendoer\Sonic\Model\FeatureObjectBuilder;
 
+/**
+ * Represents a FEATURE object
+ * version 20160517
+ *
+ * author: Markus Beckmann, Senan Sharhan, Sebastian Goendoer
+ * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ */
 class FeatureObject extends Object
 {
-
-    const JSONLD_CONTEXT = 'http://sonic-project.net/';
-    const JSONLD_TYPE = 'feature';
-
-
-    protected $namespace			            = NULL;
-    protected $name     			            = NULL;
-    protected $version  			            = NULL;
-    protected $compatibility_version			= NULL;
-    protected $api_path             			= NULL;
-    
-
-    public function __construct(FeatureObjectBuilder $builder)
-    {
-
-        parent::__construct($builder->getObjectID());
-
-        $this->namespace = $builder->getFeatureNamespace();
-        $this->name = $builder->getName();
-        $this->version = $builder->getVersion();
-        $this->compatibility_version = $builder->getCompatibilityVersion();
-        $this->api_path = $builder->getApiPath();
-
-    }
-
-    public function getNamespace()
-    {
-        return $this->namespace;
-    }
-
-    public function setNamespace($namespace)
-    {
-        $this->namespace = $namespace;
-        return $this;
-    }
-
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-        return $this;
-    }
-
-    public function getVersion()
-    {
-        return $this->version;
-    }
-
-    public function setVersion($version)
-    {
-        $this->version = $version;
-        return $this;
-    }
-
-    public function getCompatibilityVersion()
-    {
-        return $this->compatibility_version;
-    }
-
-    public function setCompatibilityVersion($compatibility_version)
-    {
-        $this->compatibility_version = $compatibility_version;
-        return $this;
-    }
-
-    public function getApiPath()
-    {
-        return $this->api_path;
-    }
-
-    public function setApiPath($api_path)
-    {
-        $this->api_path = $api_path;
-        return $this;
-    }
-
-
-    public function getJSONString()
-    {
-        $json =  '{'
-            . '"@context": "' . FeatureObject::JSONLD_CONTEXT . '",'
-            . '"@type": "' . FeatureObject::JSONLD_TYPE . '",'
-            . '"objectID": "' . $this->objectID . '",'
-            . '"namespace": "' . $this->namespace . '",'
-            . '"name": "' . $this->name . '",'
-            . '"version": "' . $this->version . '",'
-            . '"compatibility_version": "' . $this->compatibility_version . '",'
-            . '"api_path": "' . $this->api_path . '"'
-            . '}';
-        return $json;
-    }
-
-    public function getStringForSignature()
-    {
-        return $this->objectID
-        . $this->namespace
-        . $this->name
-        . $this->version
-        . $this->compatibility_version
-        . $this->api_path;
-    }
-
-    public static function validateJSON($json)
-    {
-        $result = \Jsv4::validate(json_decode($json), json_decode(FeatureObject::SCHEMA));
-
-        if($result->valid == true)
-            return true;
-        else
-            throw new \Exception('invalid JSON format for Feature: ' . $result->errors->message);
-    }
-
-    const SCHEMA = '{
+	const JSONLD_CONTEXT = 'http://sonic-project.net/';
+	const JSONLD_TYPE = 'feature';
+	
+	protected $namespace = NULL;
+	protected $name = NULL;
+	protected $version = NULL;
+	protected $compatibilityVersion = NULL;
+	protected $apiPath = NULL;
+	
+	public function __construct(FeatureObjectBuilder $builder)
+	{
+		parent::__construct($builder->getObjectID());
+		
+		$this->namespace = $builder->getFeatureNamespace();
+		$this->name = $builder->getName();
+		$this->version = $builder->getVersion();
+		$this->compatibilityVersion = $builder->getCompatibilityVersion();
+		$this->apiPath = $builder->getApiPath();
+	}
+	
+	public function getNamespace()
+	{
+		return $this->namespace;
+	}
+	
+	public function setNamespace($namespace)
+	{
+		$this->namespace = $namespace;
+		return $this;
+	}
+	
+	public function getName()
+	{
+		return $this->name;
+	}
+	
+	public function setName($name)
+	{
+		$this->name = $name;
+		return $this;
+	}
+	
+	public function getVersion()
+	{
+		return $this->version;
+	}
+	
+	public function setVersion($version)
+	{
+		$this->version = $version;
+		return $this;
+	}
+	
+	public function getCompatibilityVersion()
+	{
+		return $this->compatibility_version;
+	}
+	
+	public function setCompatibilityVersion($compatibility_version)
+	{
+		$this->compatibility_version = $compatibility_version;
+		return $this;
+	}
+	
+	public function getApiPath()
+	{
+		return $this->apiPath;
+	}
+	
+	public function setApiPath($api_path)
+	{
+		$this->apiPath = $apiPath;
+		return $this;
+	}
+	
+	public function getJSONString()
+	{
+		$json =  '{'
+			. '"@context": "' . FeatureObject::JSONLD_CONTEXT . '",'
+			. '"@type": "' . FeatureObject::JSONLD_TYPE . '",'
+			. '"objectID": "' . $this->objectID . '",'
+			. '"namespace": "' . $this->namespace . '",'
+			. '"name": "' . $this->name . '",'
+			. '"version": "' . $this->version . '",'
+			. '"compatibilityVersion": "' . $this->compatibilityVersion . '",'
+			. '"apiPath": "' . $this->apiPath . '"'
+			. '}';
+		return $json;
+	}
+	
+	public function getStringForSignature()
+	{
+		return $this->objectID
+		. $this->namespace
+		. $this->name
+		. $this->version
+		. $this->compatibilityVersion
+		. $this->api_path;
+	}
+	
+	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
 		"id": "http://jsonschema.net/sonic/feature,
 		"type": "object",
@@ -148,14 +139,14 @@ class FeatureObject extends Object
 				"id": "http://jsonschema.net/feature/version",
 				"type": "string"
 			},
-			"compatibility_version":
+			"compatibilityVersion":
 			{
-				"id": "http://jsonschema.net/feature/compatibility_version",
+				"id": "http://jsonschema.net/feature/compatibilityVersion",
 				"type": "string"
 			},
-			"api_path":
+			"apiPath":
 			{
-				"id": "http://jsonschema.net/feature/api_path",
+				"id": "http://jsonschema.net/feature/apiPath",
 				"type": "string"
 			}
 		},
@@ -164,8 +155,10 @@ class FeatureObject extends Object
 			"namespace",
 			"name",
 			"version",
-			"compatibility_version",
-			"api_path"
+			"compatibilityVersion",
+			"apiPath"
 		]
 	}';
 }
+
+?>

@@ -47,6 +47,7 @@ class ConversationStatusObject extends ReferencingRemoteObject
 	{
 		$this->author = $author;
 		$this->invalidate();
+		
 		return $this;
 	}
 	
@@ -59,6 +60,7 @@ class ConversationStatusObject extends ReferencingRemoteObject
 	{
 		$this->status = $status;
 		$this->invalidate();
+		
 		return $this;
 	}
 	
@@ -71,6 +73,7 @@ class ConversationStatusObject extends ReferencingRemoteObject
 	{
 		$this->targetGID = $targetGID;
 		$this->invalidate();
+		
 		return $this;
 	}
 	
@@ -86,6 +89,7 @@ class ConversationStatusObject extends ReferencingRemoteObject
 		else
 			$this->datetime = $datetime;
 		$this->invalidate();
+		
 		return $this;
 	}
 	

@@ -8,7 +8,6 @@ use sgoendoer\Sonic\Model\ReferencingRemoteObjectBuilder;
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\IllegalModelStateException;
 
-
 /**
  * Builder class for a CONVERSATION STATUS object
  * version 20151022
