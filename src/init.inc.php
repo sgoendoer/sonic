@@ -31,7 +31,7 @@ define('SONIC_HEADER__RANDOM',			'SonicRandom');
 define('SONIC_HEADER__AUTH_TOKEN',		'SonicAuthToken');
 
 define('SONIC_SDK__APP_NAME',			'SonicSDK');
-define('SONIC_SDK__APP_VERSION',		'0.2.0');
+define('SONIC_SDK__APP_VERSION',		'0.2.5');
 define('SONIC_SDK__APP_VERSION_NAME',	'beta4');
 define('SONIC_SDK__API_VERSION',		'0.1.2');
 
