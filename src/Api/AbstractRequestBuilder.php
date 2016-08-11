@@ -90,19 +90,14 @@ abstract class AbstractRequestBuilder
 	 */
 	protected function getDomainFromProfileLocation($profileLocation)
 	{
-		$profileLocation = str_replace(array('http://', 'https://'), '', $profileLocation);
-		return explode('/', $profileLocation)[0];
+		return parse_url($profileLocation,  PHP_URL_HOST);
 	}
 	
 	protected function getPathFromProfileLocation($profileLocation)
 	{
-		$domain = $this->getDomainFromProfileLocation($profileLocation);
-		
-		$path = str_replace($domain, '', $profileLocation);
-		$path = str_replace(array('http://', 'https://'), '', $path);
-		
+		$path = parse_url($profileLocation,  PHP_URL_PATH);
 		if($path == '') return '/';
-		
+
 		return $path;
 	}
 	

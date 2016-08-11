@@ -21,6 +21,7 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPort(parse_url($this->targetSocialRecord->getProfileLocation(), PHP_URL_PORT));
 		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
 		$this->request->setRequestMethod('GET');
 		
@@ -32,6 +33,7 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPort(parse_url($this->targetSocialRecord->getProfileLocation(), PHP_URL_PORT));
 		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($linkRequest->getJSONString());
@@ -44,6 +46,7 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPort(parse_url($this->targetSocialRecord->getProfileLocation(), PHP_URL_PORT));
 		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkResponse->getTargetID());
 		$this->request->setRequestMethod('PUT');
 		$this->request->setRequestBody($linkResponse->getJSONString());
@@ -56,6 +59,7 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
+		$this->request->setPort(parse_url($this->targetSocialRecord->getProfileLocation(), PHP_URL_PORT));
 		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkUOID);
 		$this->request->setRequestMethod('DELETE');
 		
