@@ -15,10 +15,10 @@ use sgoendoer\Sonic\Request\MalformedRequestHeaderException;
  */
 abstract class AbstractRequest
 {
+	protected $method			= NULL; // scheme, i.e. http or https
 	protected $server			= NULL; // profile location, i.e. the domain and path to the api
 	protected $port				= NULL; // unused as of now
 	protected $path				= NULL; // path of the url without apiRoot and domain
-	protected $method			= NULL;
 	protected $headers			= NULL;
 	protected $body				= NULL;
 	

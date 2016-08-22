@@ -34,21 +34,6 @@ class IncomingRequest extends AbstractRequest
 	{
 		return explode('/', str_replace(Configuration::getApiPath(), '', $this->path))[0];
 	}
-	
-	/**
-	 * extracts the API call from the path
-	 */
-	/*public function getAPICall()
-	{
-		// we assume that the API root is known
-		$api_root = '/path/to/api/';// <-- should be configured somewhere
-
-		$tmp = str_replace($APIRoot, '', $this->path);
-		$tmp = explode('/', $tmp);
-		unset($tmp[0]);
-
-		return implode('/', $tmp);
-	}*/
 }
 
 ?>

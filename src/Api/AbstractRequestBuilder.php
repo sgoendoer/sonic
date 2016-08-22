@@ -6,6 +6,7 @@ use sgoendoer\Sonic\Identity\SocialRecordManager;
 use sgoendoer\Sonic\Request\OutgoingRequest;
 use sgoendoer\Sonic\Request\MalformedRequestException;
 use sgoendoer\Sonic\Request\IncomingResponse;
+use sgoendoer\Sonic\Request\URL;
 
 /**
  * Creates and verifies signatures
