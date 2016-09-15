@@ -6,21 +6,21 @@ use sgoendoer\Sonic\Model\FeatureListObject;
 
 /**
  * Creates FEATURE requests
- * version 20160517
+ * version 20160915
  *
  * author: Markus Beckmann, Senan Sharhan, Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
 class FeatureListRequestBuilder extends  AbstractRequestBuilder
 {
-	const RESOURCE_NAME_FEATURE_LIST = 'FEATURE_LIST';
+	const RESOURCE_NAME_FEATURE = 'FEATURE';
 
 	public function createGETFeatureList()
 	{
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_FEATURE_LIST);
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_FEATURE);
 		$this->request->setRequestMethod('GET');
 		
 		return $this;
@@ -31,7 +31,7 @@ class FeatureListRequestBuilder extends  AbstractRequestBuilder
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_FEATURE_LIST);
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_FEATURE);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($featureListObject->getJSONString());
 		
