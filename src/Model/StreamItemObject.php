@@ -22,7 +22,7 @@ class StreamItemObject extends RemoteObject
 	protected $author = NULL;
 	protected $datetime = NULL;
 	protected $activity = NULL;
-	
+
 	public function __construct(StreamItemObjectBuilder $builder)
 	{
 		parent::__construct($builder->getObjectID());
