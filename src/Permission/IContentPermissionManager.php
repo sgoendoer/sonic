@@ -20,6 +20,8 @@ interface IContentPermissionManager
 	 * @return boolean
 	 */
 	public function hasContentAccessPriviledges($gid, $uoid);
+	
+	public function getPermissionObjectForUOID($uoid);
 }
 
 ?>

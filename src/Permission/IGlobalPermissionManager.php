@@ -19,6 +19,8 @@ interface IGlobalPermissionManager
 	 * @return boolean
 	 */
 	public function isGloballyRestricted($gid);
+	
+	public function getPermissionObject();
 }
 
 ?>

@@ -50,6 +50,8 @@ interface IAPIPermissionManager
 	 * @return boolean
 	 */
 	public function hasDeletePriviledges($gid, $resource);
+	
+	public function getPermissionObjectForResource($resource);
 }
 
 ?>
