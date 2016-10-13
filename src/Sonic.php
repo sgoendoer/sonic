@@ -8,6 +8,7 @@ use sgoendoer\Sonic\Crypt\KeyPair;
 use sgoendoer\Sonic\Identity\EntityAuthData;
 use sgoendoer\Sonic\Identity\ISocialRecordCaching;
 use sgoendoer\Sonic\Crypt\IUniqueIDManager;
+use sgoendoer\Sonic\Permission\PermissionManager;
 use sgoendoer\Sonic\SonicRuntimeException;
 
 use Monolog\Logger;
@@ -36,6 +37,7 @@ class Sonic
 	
 	private $socialRecordCache			= NULL;
 	private $uniqueIDManager			= NULL;
+	private $permissionManager			= NULL;
 	
 	/**
 	 * protected/hidden constructor
@@ -79,6 +81,8 @@ class Sonic
 		}
 		
 		self::$_instance->platformAuthData = $platform;
+		
+		self::$permissionManager = PermissionManager::getInstance();
 		
 		self::$logger = new Logger('sonic');
 		self::$logger->pushHandler(new StreamHandler(Configuration::getLogfile()));
@@ -202,6 +206,22 @@ class Sonic
 		
 		if(self::$_instance->uniqueIDManager != NULL)
 			return self::$_instance->uniqueIDManager;
+		else
+			return NULL;
+	}
+	
+	/**
+	 * returns the PermissionManager instance
+	 * 
+	 * @return the PermissionManager instance
+	 */
+	public static function getPermissionManager()
+	{
+		if(self::$_instance === NULL)
+			throw new SonicRuntimeException('Sonic instance not initialized');
+		
+		if(self::$_instance->permissionManager != NULL)
+			return self::$_instance->permissionManager;
 		else
 			return NULL;
 	}
