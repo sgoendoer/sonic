@@ -5,6 +5,7 @@ use sgoendoer\Sonic\Model\ReferencingRemoteObject;
 use sgoendoer\Sonic\Model\LikeObjectBuilder;
 use sgoendoer\Sonic\Model\ConversationMessageObject;
 use sgoendoer\Sonic\Model\ConversationMessageStatusObject;
+use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 /**
  * Represents a LIKE object
@@ -13,7 +14,7 @@ use sgoendoer\Sonic\Model\ConversationMessageStatusObject;
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class LikeObject extends ReferencingRemoteObject
+class LikeObject extends ReferencingRemoteObject implements IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'like';

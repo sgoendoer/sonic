@@ -1,15 +1,15 @@
-<?php namespace sgoendoer\Sonic\Permission;
+<?php namespace sgoendoer\Sonic\AccessControl;
 
-use sgoendoer\Sonic\Permission\PermissionManager;
+use sgoendoer\Sonic\AccessControl\AccessControlManager;
 
 /**
- * Interface for GlobalPermissionManager
- * version 20161013
+ * Interface for APIAccessControlManager
+ * version 20161014
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-interface IAPIPermissionManager
+interface IAPIAccessControlManager
 {
 	/**
 	 * determines if a globalID has create access priviledges for a given resource at the current profile
@@ -51,7 +51,14 @@ interface IAPIPermissionManager
 	 */
 	public function hasDeletePriviledges($gid, $resource);
 	
-	public function getPermissionObjectForResource($resource);
+	/**
+	 * returns the access control object for a given resource
+	 * 
+	 * @param $resource The resource name as a string
+	 * 
+	 * @return APIAccessControlObject
+	 */
+	public function getAccessControlObjectForResource($resource);
 }
 
 ?>

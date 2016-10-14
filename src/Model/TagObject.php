@@ -3,6 +3,7 @@
 use sgoendoer\Sonic\Model\TagObjectBuilder;
 use sgoendoer\Sonic\Model\ReferencingRemoteObject;
 use sgoendoer\Sonic\Date\XSDDateTime;
+use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 /**
  * Represents a TAG object
@@ -11,7 +12,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class TagObject extends ReferencingRemoteObject
+class TagObject extends ReferencingRemoteObject implements IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'tag';

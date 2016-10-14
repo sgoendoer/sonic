@@ -7,7 +7,7 @@
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-interface IRestrictableObject
+interface IAccessRestrictableObject
 {
 	
 }

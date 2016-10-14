@@ -1,20 +1,20 @@
-<?php namespace sgoendoer\sonic\Model;
+<?php namespace sgoendoer\Sonic\Model;
 
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Identity\GID;
 use sgoendoer\Sonic\Identity\UOID;
 use sgoendoer\Sonic\Model\IllegalModelStateException;
 use sgoendoer\Sonic\Model\ReferencingObjectBuilder;
-use sgoendoer\Sonic\Model\ContentPermissionObject;
+use sgoendoer\Sonic\Model\ContentAccessControlObject;
 
 /**
- * Builder class for a ContentPermission object
- * version 20151013
+ * Builder class for a ContentAccessControl object
+ * version 20151014
  *
  * author: Senan Sharhan, Sebastian Goendoer
  * copyright: Senan Sharhan <senan.sharhan@campus.tu-berlin.de>, Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class ContentPermissionObjectBuilder extends ReferencingObjectBuilder
+class ContentAccessControlObjectBuilder extends ReferencingObjectBuilder
 {
 	protected $owner		= NULL;
 	protected $type			= NULL;
@@ -27,7 +27,7 @@ class ContentPermissionObjectBuilder extends ReferencingObjectBuilder
 		// TODO parse and verify json
 		$jsonObject = json_decode($json);
 		
-		$builder = (new ContentPermissionObjectBuilder())
+		$builder = (new ContentAccessControlObjectBuilder())
 					->objectID($jsonObject->objectID)
 					->targetID($jsonObject->targetID)
 					->owner($jsonObject->owner)

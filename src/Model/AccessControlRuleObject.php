@@ -1,19 +1,19 @@
-<?php namespace sgoendoer\sonic\Model;
+<?php namespace sgoendoer\Sonic\Model;
 
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\ReferencingObject;
 
 /**
- * Represents a ContentPermission object
+ * Represents a ContentAccessControl object
  * version 20161013
  *
  * author: Senan Sharhan, Sebastian Goendoer
  * copyright: Senan Sharhan <senan.sharhan@campus.tu-berlin.de>, Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class ContentPermissionObject extends ReferencingObject
+class ContentAccessControlObject extends ReferencingObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
-	const JSONLD_TYPE = 'ContentPermission';
+	const JSONLD_TYPE = 'ContentAccessControl';
 	
 	protected $owner		= NULL;
 	protected $type			= NULL;

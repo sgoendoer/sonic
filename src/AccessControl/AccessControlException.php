@@ -1,8 +1,9 @@
-<?php namespace sgoendoer\Sonic\Permission;
+<?php namespace sgoendoer\Sonic\AccessControl;
 
+use sgoendoer\Sonic\Sonic;
 use sgoendoer\Sonic\Config\Configuration;
 
-class PermissionException extends \Exception
+class AccessControlException extends \Exception
 {
 	public function __construct($message = null, $code = 0, \Exception $previous = null)
 	{

@@ -3,6 +3,7 @@
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\Object;
 use sgoendoer\Sonic\Model\ProfileObjectBuilder;
+use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 /**
  * Represents a PROFILE object
@@ -11,7 +12,7 @@ use sgoendoer\Sonic\Model\ProfileObjectBuilder;
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class ProfileObject extends Object
+class ProfileObject extends Object implements IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'profile';

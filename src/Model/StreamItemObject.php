@@ -3,6 +3,7 @@
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\RemoteObject;
 use sgoendoer\Sonic\Model\StreamItemObjectBuilder;
+use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 use sgoendoer\json\JSONObject;
 
@@ -13,7 +14,7 @@ use sgoendoer\json\JSONObject;
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class StreamItemObject extends RemoteObject
+class StreamItemObject extends RemoteObject implements IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'stream-item';

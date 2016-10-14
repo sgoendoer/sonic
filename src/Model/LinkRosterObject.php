@@ -4,6 +4,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\Object;
 use sgoendoer\Sonic\Model\LinkRosterObjectBuilder;
 use sgoendoer\Sonic\Model\LinkObject;
+use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 /**
  * Represents a LINK-ROSTER object
@@ -12,7 +13,7 @@ use sgoendoer\Sonic\Model\LinkObject;
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class LinkRosterObject extends Object
+class LinkRosterObject extends Object implements IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'link-roster';
