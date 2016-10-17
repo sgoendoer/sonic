@@ -9,16 +9,19 @@ use sgoendoer\Sonic\AccessControl\AccessControlException;
 
 /**
  * Manages permissions for access control
- * version 20161014
+ * version 20161017
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
 class AccessControlManager
 {
-	protected static $_instance			= NULL;
+	protected static $_instance				= NULL;
 	
-	private $GlobalAccessControlManager	= NULL;
+	const ACL_DIRECTIVE_DENY				= 'DENY';
+	const ACL_DIRECTIVE_ALLOW				= 'ALLOW';
+	
+	private $GlobalAccessControlManager		= NULL;
 	private $APIAccessControlManager		= NULL;
 	private $ContentAccessControlManager	= NULL;
 	
@@ -50,11 +53,11 @@ class AccessControlManager
 	 * @param $globalAccessControlManager The GlobalAccessControlManager instance
 	 * @return AccessControlManager instance
 	 */
-	public function setGlobalAccessControlManager(IGlobalAccessControlManager $globalAccessControlManager)
+	public function setGlobalAccessControlManager(GlobalAccessControlManager $globalAccessControlManager)
 	{
-		if(!array_key_exists('sgoendoer\Sonic\AccessControl\IGlobalAccessControlManager', class_implements($IGlobalAccessControlManager)))
+		if(!array_key_exists('sgoendoer\Sonic\AccessControl\GlobalAccessControlManager', class_parents($globalAccessControlManager)))
 		{
-			throw new AccessControlManagerException('globalAccessControlManager must implement goendoer\Sonic\AccessControl\IGlobalAccessControlManager');
+			throw new AccessControlManagerException('globalAccessControlManager must extend goendoer\Sonic\AccessControl\GlobalAccessControlManager');
 		}
 		else
 			$this->globalAccessControlManager = $globalAccessControlManager;
