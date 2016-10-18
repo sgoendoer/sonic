@@ -3,27 +3,27 @@
 use sgoendoer\Sonic\Model\LocalGroupObjectBuilder;
 
 /**
- * Represents a group object
- * version 20160413
+ * Represents a AccessControlGroup object
+ * version 20161018
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class LocalGroupObject extends BasicObject
+class AccessControlGroupObject extends BasicObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
-	const JSONLD_TYPE = 'localgroup';
+	const JSONLD_TYPE = 'accessControlGroup';
 	
 	protected $owner			= NULL;
-	protected $accessList		= array();
+	protected $members			= array();
 	
-	public function __construct(LocalGroupObjectBuilder $builder)
+	public function __construct(AccessControlGroupObjectBuilder $builder)
 	{
 		parent::__construct($builder->getObjectID());
 		
 		$this->owner = $builder->getOwner();
-		$this->memberList = $builder->getMemberList();
-		asort($this->memberList);
+		$this->members = $builder->getMembers();
+		asort($this->members);
 	}
 	
 	public function getOwner()
@@ -37,23 +37,23 @@ class LocalGroupObject extends BasicObject
 		return $this;
 	}
 	
-	public function addToMemberList($globalID)
+	public function addToMembers($globalID)
 	{
-		$this->memberList[] = $globalID;
-		asort($this->memberList);
+		$this->members[] = $globalID;
+		asort($this->members);
 		return $this;
 	}
 	
-	public function setMemberList($memberList)
+	public function setMembers($members)
 	{
-		$this->memberList = $memberList;
-		asort($this->memberList);
+		$this->members = $members;
+		asort($this->members);
 		return $this;
 	}
 	
-	public function getMemberList()
+	public function getMembers()
 	{
-		return $this->memberList;
+		return $this->members;
 	}
 	
 	public function getJSONString()

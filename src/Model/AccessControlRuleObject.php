@@ -3,34 +3,26 @@
 use sgoendoer\Sonic\Model\ReferencingObject;
 
 /**
- * Represents a ContentAccessControlRule object
+ * Abstract AccessControlRule object
  * version 20161018
- * 
- * syntax: 	The $owner of content (grants|denies) [$directive] (everybody|his friends|a group|an individual) [$scope] 
- *			identified by the $entityID read access to content identified by $targetID. Rules witha higher $index will
- *			overwritten by rules with a lower index
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class ContentAccessControlRuleObject extends ReferencingObject
+abstract class AccessControlRuleObject extends ReferencingObject
 {
-	const JSONLD_CONTEXT			= 'http://sonic-project.net/';
-	const JSONLD_TYPE				= 'ContentAccessControlRule';
-	
 	const ACL_DIRECTIVE_DENY		= 'DENY';
 	const ACL_DIRECTIVE_ALLOW		= 'ALLOW';
 	
-	const ACL_SCOPE_ALL				= 'ALL';
 	const ACL_SCOPE_FRIENDS			= 'FRIENDS';
-	const ACL_SCOPE_GROUP			= 'GROUP';
 	const ACL_SCOPE_INDIVIDUAL		= 'INDIVIDUAL';
+	const ACL_SCOPE_GROUP			= 'GROUP';
 	
 	protected $owner				= NULL;
 	protected $index				= 0;
 	protected $directive			= NULL;
 	protected $scope				= NULL;
-	protected $entityID				= NULL;
+	protected $IDs					= array();
 	
 	public function __construct(ContentAccessControlRuleObjectBuilder $builder)
 	{
@@ -40,7 +32,8 @@ class ContentAccessControlRuleObject extends ReferencingObject
 		$this->priority = $builder->getPriority();
 		$this->directive = $builder->getDirective();
 		$this->scope = $builder->getScope();
-		$this->entityID = $builder->entityID();
+		$this->accessList = $builder->getAccessList();
+		asort($this->accessList);
 	}
 	
 	public function getOwner()
@@ -87,15 +80,23 @@ class ContentAccessControlRuleObject extends ReferencingObject
 		return $this;
 	}
 	
-	public function setEntityID($entityID)
+	public function addToAccessList($globalID)
 	{
-		$this->entityID = $entityID;
+		$this->accessList[] = $globalID;
+		asort($this->accessList);
 		return $this;
 	}
 	
-	public function getEntityID()
+	public function setAccessList($accessList)
 	{
-		return $this->entityID;
+		$this->accessList = $accessList;
+		asort($this->accessList);
+		return $this;
+	}
+	
+	public function getAccessList()
+	{
+		return $this->accessList;
 	}
 	
 	public function getJSONString()
@@ -109,33 +110,21 @@ class ContentAccessControlRuleObject extends ReferencingObject
 				. '"index":"'		. $this->index . '",'
 				. '"scope":"'		. $this->scope . '",'
 				. '"directive":"'	. $this->directive . '",'
-				. '"entityID":"'	. $this->entityID . '"}';
+				. '"allow":[';
+				
+		asort($this->accessList);
+		
+		foreach($this->accessList as $member)
+		{
+			$json .= '"' . $member . '"';
+			if($member !== end($this->accessList)) $json .= ',';
+		}
+		
+		$json .= ']}';
 		
 		return $json;
 	}
 	
-	const SCHEMA = '{
-		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/contentAccessControlRule",
-		"type": "object",
-		"properties":
-		{
-			"objectID": {"type": "string"},
-			"targetID":	{"type": "string"},
-			"owner": {"type": "string"},
-			"index": {"type": "int"},
-			"scope": {"type": "string"},
-			"directive": {"type": "string"},
-			"entityID": {"type": "string"}
-		},
-		"required": [
-			"objectID",
-			"targetID",
-			"owner",
-			"index",
-			"scope",
-			"directive",
-			"entityID"
-		]
-	}';'
+	// TODO add json schema
+	const SCHEMA = '{}';'
 }

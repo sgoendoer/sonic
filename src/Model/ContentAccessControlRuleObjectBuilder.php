@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Model\ContentAccessControlObject;
 
 /**
  * Builder class for a ContentAccessControlRule object
- * version 20151017
+ * version 20151018
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -20,32 +20,22 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 	protected $index				= 0;
 	protected $directive			= NULL;
 	protected $scope				= NULL;
-	protected $accessList			= array();
+	protected $entityID				= NULL;
 	
 	public static function buildFromJSON($json)
 	{
 		// TODO parse and verify json
 		$jsonObject = json_decode($json);
 		
-		$builder = (new ContentAccessControlRuleObjectBuilder())
-					->objectID($jsonObject->objectID)
-					->targetID($jsonObject->targetID)
-					->owner($jsonObject->owner)
-					->index($jsonObject->index)
-					->directive($jsonObject->directive)
-					->scope($jsonObject->scope);
-					
-		$accessList = array();
-		
-		foreach($jsonObject->accessList as $member)
-			$accessList[] = $member;
-		
-		if(is_array($accessList))
-			asort($accessList);
-		
-		$builder->allow($accessList);
-		
-		return $builder->build();
+		return (new ContentAccessControlRuleObjectBuilder())
+				->objectID($jsonObject->objectID)
+				->targetID($jsonObject->targetID)
+				->owner($jsonObject->owner)
+				->index($jsonObject->index)
+				->directive($jsonObject->directive)
+				->scope($jsonObject->scope)
+				->entityID($jsonObject->entityID)
+				->build();
 	}
 	
 	public function getOwner()
@@ -92,15 +82,14 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 		return $this;
 	}
 	
-	public function getAccessList()
+	public function getEntityID()
 	{
-		return $this->accessList;
+		return $this->entityID;
 	}
 	
-	public function accessList($accessList)
+	public function entityID($entityID)
 	{
-		$this->accessList = $accessList;
-		asort($this->accessList);
+		$this->entityID = $entityID;
 		return $this;
 	}
 	
@@ -108,8 +97,6 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 	{
 		if($this->objectID == NULL)
 			$this->objectID = UOID::createUOID();
-		if($this->accessList == NULL)
-			$this->accessList = array();
 		if($this->index == NULL)
 			$this->index = 0;
 		
@@ -119,8 +106,8 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 			throw new IllegalModelStateException('Invalid targetID');
 		if(!is_numeric($this->index))
 			throw new IllegalModelStateException('Invalid index value');
-		if(!is_array($this->accessList))
-			throw new IllegalModelStateException('Invalid accessList');
+		if($this->entityID == NULL)
+			throw new IllegalModelStateException('Invalid entityID');
 		
 		if($this->directive != ContentAccessControlRuleObject::ACL_DIRECTIVE_DENY 
 			&& $this->directive != ContentAccessControlRuleObject::ACL_DIRECTIVE_ALLOW)

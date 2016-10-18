@@ -6,7 +6,7 @@ use sgoendoer\Sonic\AccessControl\AccessControlException;
 
 /**
  * Interface for ContentAccessControlManager
- * version 20161017
+ * version 20161018
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -26,61 +26,80 @@ abstract class ContentAccessController
 	/**
 	 * determines if a globalID has access priviledges for a specific content object
 	 * 
-	 * @param $gid the GlobalID
-	 * @param $resource The resource name as a string
+	 * @param $gid the GlobalID of the user accessing the content
+	 * @param $uoid the UOID of the content being accessed
 	 * 
 	 * @return boolean
 	 */
 	public function hasContentAccessPriviledges($gid, $uoid)
 	{
-		$aco = $this->loadAccessControlRulesForUOID($uoid);
-		//if false -> exception
+		$rules = $this->loadAccessControlRulesForUOID($uoid);
 		
-		if($aco->getDirective() == ContentAccessControlRuleObject::ACL_DIRECTIVE_ALLOW)
+		// starting off with base directive (deny is default)
+		if($this->contentAccessBaseDirective == ContentAccessControlRuleObject::ACL_DIRECTIVE_ALLOW)
 			$grantAccess = true;
 		else
 			$grantAccess = false;
 		
-		$ruleKeys = array_keys($aco->getRules());
-		asort($ruleKeys);
-		
-		foreach($ruleKeys as $index)
+		// sorting rules by index: index 0 has highest priority and will overwrite all other rules
+		usort($rules, function($a, $b)
 		{
-			$rule = $aco->getRule($index);
-			
-			// check individual
-			if($rule->getScope() == ContentAccessControlRuleObject::ACR_SCOPE_INDIVIDUAL)
+			if($a->getIndex() == $b->getIndex()) return 0; // should never happen!
+			return ($a->getIndex() < $b->getIndex()) ? -1 : 1;
+		});
+		
+		foreach($rules as $rule)
+		{
+			// checking rules in the order of friends -> groups -> individual
+			// check friends
+			if($rule->getScope() == AccessControlRuleObject::ACR_SCOPE_FRIENDS)
 			{
-				if(in_array($gid, $rule->getIDs()))
+				try
 				{
-					if($rule->getDirective() == ContentAccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
+					if(Sonic::getAccessControlManager()->getFriendManager()->isAFriend($gid))
+					{
+						if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
+							$grantAccess = true;
+						elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
+							$grantAccess = false;
+						else
+							$grantAccess = false;
+					}
+				}
+				catch(AccessControlManagerException $e)
+				{}
+			}
+			// check groups
+			elseif($rule->getScope() == AccessControlRuleObject::ACR_SCOPE_GROUP)
+			{
+				try
+				{
+					if(Sonic::getAccessControlManager()->getGroupManager()->isInGroup($gid, $rule->getID()))
+					{
+						if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
+							$grantAccess = true;
+						elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
+							$grantAccess = false;
+						else
+							$grantAccess = false;
+					}
+				}
+				catch(AccessControlManagerException $e)
+				{}
+			}
+			// check individual
+			elseif($rule->getScope() == ContentAccessControlRuleObject::ACL_SCOPE_INDIVIDUAL)
+			{
+				if(in_array($gid, $rule->getID()))
+				{
+					if($rule->getDirective() == ContentAccessControlRuleObject::ACL_DIRECTIVE_ALLOW)
 						$grantAccess = true;
-					elseif($rule->getDirective() == ContentAccessControlRuleObject::ACR_DIRECTIVE_DENY)
+					elseif($rule->getDirective() == ContentAccessControlRuleObject::ACL_DIRECTIVE_DENY)
+						$grantAccess = false;
+					else
 						$grantAccess = false;
 				}
 			}
-			// check friends
-			/*elseif($rule->getScope() == AccessControlRuleObject::ACR_SCOPE_FRIENDS)
-			{
-				if(in_array($gid, $rule->getIDs()))
-				{
-					if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
-						$grantAccess = true;
-					elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
-						$grantAccess = false;
-				}
-			}*/
-			// check groups
-			/*elseif($rule->getScope() == AccessControlRuleObject::ACR_SCOPE_GROUP)
-			{
-				if(in_array($gid, $rule->getIDs()))
-				{
-					if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
-						$grantAccess = true;
-					elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
-						$grantAccess = false;
-				}
-			}*/
 		} 
 		
 		return $grantAccess;

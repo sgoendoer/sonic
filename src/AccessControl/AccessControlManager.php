@@ -1,8 +1,8 @@
 <?php namespace sgoendoer\Sonic\AccessControl;
 
-use sgoendoer\Sonic\AccessControl\IGlobalAccessControlManager;
-use sgoendoer\Sonic\AccessControl\IAPIAccessControlManager;
-use sgoendoer\Sonic\AccessControl\IContentAccessControlManager;
+use sgoendoer\Sonic\AccessControl\GlobalAccessControlManager;
+use sgoendoer\Sonic\AccessControl\APIAccessControlManager;
+use sgoendoer\Sonic\AccessControl\ContentAccessControlManager;
 use sgoendoer\Sonic\AccessControl\AccessControlManager;
 use sgoendoer\Sonic\AccessControl\AccessControlManagerException;
 use sgoendoer\Sonic\AccessControl\AccessControlException;
@@ -21,9 +21,12 @@ class AccessControlManager
 	const ACL_DIRECTIVE_DENY				= 'DENY';
 	const ACL_DIRECTIVE_ALLOW				= 'ALLOW';
 	
-	private $GlobalAccessControlManager		= NULL;
-	private $APIAccessControlManager		= NULL;
-	private $ContentAccessControlManager	= NULL;
+	private $friendsManager					= NULL;
+	private $accessControlGroupManager		= NULL;
+	
+	private $globalAccessControlManager		= NULL;
+	private $apiAccessControlManager		= NULL;
+	private $contentAccessControlManager	= NULL;
 	
 	/**
 	 * protected/hidden constructor
@@ -45,6 +48,37 @@ class AccessControlManager
 		if(NULL === self::$_instance)
 			self::$_instance = new AccessControlManager();
 		return self::$_instance;
+	}
+	
+	/**
+	 * sets the FriendsManager instance
+	 * 
+	 * @param $friendsManager The friendsManager instance
+	 * @return FriendsManager instance
+	 */
+	public function setFriendsManager(FriendsManager $friendsManager)
+	{
+		if(!array_key_exists('sgoendoer\Sonic\AccessControl\FriendsManager', class_parents($friendsManager)))
+		{
+			throw new AccessControlManagerException('friendsManager must extend goendoer\Sonic\AccessControl\FriendsManager');
+		}
+		else
+			$this->friendsManager = $friendsManager;
+		return $this;
+	}
+	
+	/**
+	 * returns the FriendsManager
+	 * 
+	 * @throws AccessControlManagerException if instance not found
+	 * @return the friendsManager instance
+	 */
+	public function getFriendsManager()
+	{
+		if($this->friendsManager === NULL)
+			throw new AccessControlManagerException('FriendsManager not set');
+		else
+			return $this->friendsManager;
 	}
 	
 	/**
