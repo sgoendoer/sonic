@@ -18,8 +18,8 @@ class AccessControlManager
 {
 	protected static $_instance				= NULL;
 	
-	const ACL_DIRECTIVE_DENY				= 'DENY';
-	const ACL_DIRECTIVE_ALLOW				= 'ALLOW';
+	const DIRECTIVE_DENY					= 'DENY';
+	const DIRECTIVE_ALLOW					= 'ALLOW';
 	
 	private $friendsManager					= NULL;
 	private $accessControlGroupManager		= NULL;

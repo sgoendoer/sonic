@@ -6,7 +6,7 @@ use sgoendoer\Sonic\AccessControl\AccessControlException;
 
 /**
  * Interface for ContentAccessControlManager
- * version 20161018
+ * version 20161019
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -41,7 +41,7 @@ abstract class ContentAccessController
 		else
 			$grantAccess = false;
 		
-		// sorting rules by index: index 0 has highest priority and will overwrite all other rules
+		// sorting rules by index: rules with higher indexesoverwrite rules with a lower index
 		usort($rules, function($a, $b)
 		{
 			if($a->getIndex() == $b->getIndex()) return 0; // should never happen!
@@ -51,12 +51,10 @@ abstract class ContentAccessController
 		foreach($rules as $rule)
 		{
 			// checking rules in the order of friends -> groups -> individual
-			// check friends
-			if($rule->getScope() == AccessControlRuleObject::ACR_SCOPE_FRIENDS)
+			switch($rule->getScope())
 			{
-				try
-				{
-					if(Sonic::getAccessControlManager()->getFriendManager()->isAFriend($gid))
+				case AccessControlRuleObject::ACR_SCOPE_ALL:
+					try
 					{
 						if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
 							$grantAccess = true;
@@ -65,40 +63,55 @@ abstract class ContentAccessController
 						else
 							$grantAccess = false;
 					}
-				}
-				catch(AccessControlManagerException $e)
-				{}
-			}
-			// check groups
-			elseif($rule->getScope() == AccessControlRuleObject::ACR_SCOPE_GROUP)
-			{
-				try
-				{
-					if(Sonic::getAccessControlManager()->getGroupManager()->isInGroup($gid, $rule->getID()))
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ACR_SCOPE_FRIENDS:
+					try
 					{
-						if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
+						if(Sonic::getAccessControlManager()->getFriendManager()->isAFriend($gid))
+						{
+							if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
+								$grantAccess = true;
+							elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
+								$grantAccess = false;
+							else
+								$grantAccess = false;
+						}
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ACR_SCOPE_GROUP:
+					try
+					{
+						if(Sonic::getAccessControlManager()->getGroupManager()->isInGroup($gid, $rule->getID()))
+						{
+							if($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_ALLOW)
+								$grantAccess = true;
+							elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
+								$grantAccess = false;
+							else
+								$grantAccess = false;
+						}
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ACL_SCOPE_INDIVIDUAL:
+					if(in_array($gid, $rule->getEntityID()))
+					{
+						if($rule->getDirective() == AccessControlRuleObject::ACL_DIRECTIVE_ALLOW)
 							$grantAccess = true;
-						elseif($rule->getDirective() == AccessControlRuleObject::ACR_DIRECTIVE_DENY)
+						elseif($rule->getDirective() == AccessControlRuleObject::ACL_DIRECTIVE_DENY)
 							$grantAccess = false;
 						else
 							$grantAccess = false;
 					}
-				}
-				catch(AccessControlManagerException $e)
-				{}
-			}
-			// check individual
-			elseif($rule->getScope() == ContentAccessControlRuleObject::ACL_SCOPE_INDIVIDUAL)
-			{
-				if(in_array($gid, $rule->getID()))
-				{
-					if($rule->getDirective() == ContentAccessControlRuleObject::ACL_DIRECTIVE_ALLOW)
-						$grantAccess = true;
-					elseif($rule->getDirective() == ContentAccessControlRuleObject::ACL_DIRECTIVE_DENY)
-						$grantAccess = false;
-					else
-						$grantAccess = false;
-				}
+				break;
 			}
 		} 
 		

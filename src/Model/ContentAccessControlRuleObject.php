@@ -7,9 +7,17 @@ use sgoendoer\Sonic\Model\ReferencingObject;
  * version 20161018
  * 
  * syntax: 	The $owner of content (grants|denies) [$directive] (everybody|his friends|a group|an individual) [$scope] 
- *			identified by the $entityID read access to content identified by $targetID. Rules witha higher $index will
- *			overwritten by rules with a lower index
- *
+ * 		identified by the $entityID read access to content identified by $targetID. Rules with a lower $index will
+ * 		overwritten by rules with a higher index.
+ * 
+ * example: INDEX	DIRECTIVE	SCOPE		ENTITYID	TARGETID
+ * 			0		DENY		ALL						ContentID1		Denies access for everyone
+ * 			1		ALLOW		FRIENDS					ContentID1		Allows access for friends
+ * 			2		ALLOW		INDIVIDUAL	GlobalID1	ContentID1		Further allows access for a specific GlobalID
+ * 			3		DENY		INDIVIDUAL	GlobalID2	ContentID1		Denies access for another specific GlobalID
+ * 
+ * 			=> Friends and GlobalID1 have access, access for GlobalID2 is blocked - even if this GlobalID2 is a friend
+ * 
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
