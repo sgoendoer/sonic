@@ -1,217 +1,317 @@
 <?php namespace sgoendoer\Sonic\AccessControl;
 
-use sgoendoer\Sonic\AccessControl\GlobalAccessControlManager;
-use sgoendoer\Sonic\AccessControl\APIAccessControlManager;
-use sgoendoer\Sonic\AccessControl\ContentAccessControlManager;
-use sgoendoer\Sonic\AccessControl\AccessControlManager;
-use sgoendoer\Sonic\AccessControl\AccessControlManagerException;
 use sgoendoer\Sonic\AccessControl\AccessControlException;
+use sgoendoer\Sonic\AccessControl\AccessControlManagerException;
+use sgoendoer\Sonic\Model\AccessControlRuleObject;
 
 /**
- * Manages permissions for access control
- * version 20161017
+ * Abstract AccessControlManager
+ * version 20161019
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class AccessControlManager
+abstract class AccessControlManager
 {
-	protected static $_instance				= NULL;
+	const DIRECTIVE_DENY						= 'DENY';
+	const DIRECTIVE_ALLOW						= 'ALLOW';
 	
-	const DIRECTIVE_DENY					= 'DENY';
-	const DIRECTIVE_ALLOW					= 'ALLOW';
-	
-	private $friendsManager					= NULL;
-	private $accessControlGroupManager		= NULL;
-	
-	private $globalAccessControlManager		= NULL;
-	private $apiAccessControlManager		= NULL;
-	private $contentAccessControlManager	= NULL;
+	private $baseDirectiveInterface				= NULL;
+	private $baseDirectiveContent				= NULL;
 	
 	/**
-	 * protected/hidden constructor
+	 * constructor for AccessControlManager
 	 */
-	protected function __construct() {}
-	
-	/**
-	 * disable cloning
-	 */
-	private function __clone() {}
-	
-	/**
-	 * returns the singleton instance of the AccessControlManager.
-	 * 
-	 * @param The AccessControlManager instance
-	 */
-	public static function &getInstance()
+	public function __construct($baseDirectiveInterface, $baseDirectiveContent)
 	{
-		if(NULL === self::$_instance)
-			self::$_instance = new AccessControlManager();
-		return self::$_instance;
+		if($baseDirectiveInterface == AccessControlManager::DIRECTIVE_DENY)
+			$this->baseDirectiveInterface = $baseDirectiveInterface;
+		else
+			$this->baseDirectiveInterface = AccessControlManager::DIRECTIVE_ALLOW;
+		
+		if($baseDirectiveContent == AccessControlManager::DIRECTIVE_ALLOW)
+			$this->baseDirectiveContent = $baseDirectiveContent;
+		else
+			$this->baseDirectiveContent = AccessControlManager::DIRECTIVE_DENY;
 	}
 	
 	/**
-	 * sets the FriendsManager instance
+	 * determines if a globalID has access priviledges for a specific resource
 	 * 
-	 * @param $friendsManager The friendsManager instance
-	 * @return FriendsManager instance
+	 * @param $gid the GlobalID of the user accessing the content
+	 * @param $uoid UOID of the resource being accessed
+	 * 
+	 * @return boolean
 	 */
-	public function setFriendsManager(FriendsManager $friendsManager)
+	public function hasContentAccessPriviledges($gid, $uoid)
 	{
-		if(!array_key_exists('sgoendoer\Sonic\AccessControl\FriendsManager', class_parents($friendsManager)))
+		if(!UOID::isValid($uoid) && $uoid)
+			throw new AccessControlManagerException('Illegal argument UOID: ' . $uoid);
+		
+		$rules = $this->loadAccessControlRulesForUOID($gid, $uoid);
+		
+		// starting off with base directive (deny is default)
+		if($this->baseDirective == AccessControlRuleObject::DIRECTIVE_ALLOW)
+			$grantAccess = true;
+		else
+			$grantAccess = false;
+		
+		// if no rules were found, use content base directive
+		if(!is_array($rules) || count($rules) == 0)
+			return $grantAccess;
+		
+		// sorting rules by index: rules with higher indexes overwrite rules with a lower index
+		usort($rules, function($a, $b)
 		{
-			throw new AccessControlManagerException('friendsManager must extend goendoer\Sonic\AccessControl\FriendsManager');
-		}
-		else
-			$this->friendsManager = $friendsManager;
-		return $this;
-	}
-	
-	/**
-	 * returns the FriendsManager
-	 * 
-	 * @throws AccessControlManagerException if instance not found
-	 * @return the friendsManager instance
-	 */
-	public function getFriendsManager()
-	{
-		if($this->friendsManager === NULL)
-			throw new AccessControlManagerException('FriendsManager not set');
-		else
-			return $this->friendsManager;
-	}
-	
-	/**
-	 * sets the GlobalAccessControlManager instance
-	 * 
-	 * @param $globalAccessControlManager The GlobalAccessControlManager instance
-	 * @return AccessControlManager instance
-	 */
-	public function setGlobalAccessControlManager(GlobalAccessControlManager $globalAccessControlManager)
-	{
-		if(!array_key_exists('sgoendoer\Sonic\AccessControl\GlobalAccessControlManager', class_parents($globalAccessControlManager)))
+			if($a->getIndex() == $b->getIndex())
+			{
+				// TODO sort by ENTITY_TYPE: ALL < FRIENDS < FOF < GROUP < INDIVIDUAL
+				return 0;
+			}
+			
+			return ($a->getIndex() < $b->getIndex()) ? -1 : 1;
+		});
+		
+		foreach($rules as $rule)
 		{
-			throw new AccessControlManagerException('globalAccessControlManager must extend goendoer\Sonic\AccessControl\GlobalAccessControlManager');
-		}
-		else
-			$this->globalAccessControlManager = $globalAccessControlManager;
-		return $this;
+			// checking rules in the order of all -> friends -> groups -> individual
+			switch($rule->getEntityType())
+			{
+				case AccessControlRuleObject::ENTITY_TYPE_ALL:
+					try
+					{
+						if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+							$grantAccess = true;
+						elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+							$grantAccess = false;
+						else
+							$grantAccess = false;
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ENTITY_TYPE_FRIENDS:
+					try
+					{
+						if($this->isAFriend($gid))
+						{
+							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+								$grantAccess = true;
+							elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+								$grantAccess = false;
+							else
+								$grantAccess = false;
+						}
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ENTITY_TYPE_GROUP:
+					try
+					{
+						if($this->isInGroup($gid, $rule->getEntityID()))
+						{
+							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+								$grantAccess = true;
+							elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+								$grantAccess = false;
+							else
+								$grantAccess = false;
+						}
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL:
+					if($rule->getEntityID() == $gid)
+					{
+						if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+							$grantAccess = true;
+						elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+							$grantAccess = false;
+						else
+							$grantAccess = false;
+					}
+				break;
+			}
+		} 
+		
+		return $grantAccess;
 	}
 	
 	/**
-	 * returns the GlobalAccessControlManager
+	 * determines if a globalID has access priviledges for a specific interface
 	 * 
-	 * @throws AccessControlManagerException if instance not found
-	 * @return the GlobalAccessControlManager instance
+	 * @param $gid the GlobalID of the user accessing the interface
+	 * @param $interface name of the interface being accessed or wildcard (*)
+	 * 
+	 * @return boolean
 	 */
-	public function getGlobalAccessControlManager()
+	public function hasInterfaceAccessPriviledges($gid, $interface)
 	{
-		if($this->globalAccessControlManager === NULL)
-			throw new AccessControlManagerException('GlobalAccessControlManager not set');
+		if($interface == '')
+			$interface = '*';
+		
+		$rules = $this->loadAccessControlRulesForInterface($gid, $interface);
+		
+		// starting off with base interface directive (allow is default)
+		if($this->baseDirectiveInterface == AccessControlRuleObject::DIRECTIVE_DENY)
+			$grantAccess = false;
 		else
-			return $this->globalAccessControlManager;
-	}
-	
-	/**
-	 * determines, if GlobalAccessControlManager is enabled
-	 * 
-	 * @return true, if GlobalAccessControlManager is enabled, else false
-	 */
-	public static function globalAccessControlManagerEnabled()
-	{
-		if($this->globalAccessControlManager === NULL)
-			return false;
-		else
-			return true;
-	}
-	
-	/**
-	 * sets the APIAccessControlManager instance
-	 * 
-	 * @param $APIAccessControlManager The APIAccessControlManager instance
-	 * @return AccessControlManager instance
-	 */
-	public function setAPIAccessControlManager(IAPIAccessControlManager $APIAccessControlManager)
-	{
-		if(!array_key_exists('sgoendoer\Sonic\AccessControl\IAPIAccessControlManager', class_implements($IAPIAccessControlManager)))
+			$grantAccess = true;
+		
+		// if no rules were found, use interface base directive
+		if(!is_array($rules) || count($rules) == 0)
+			return $grantAccess;
+		
+		// sorting rules by index: rules with higher indexes overwrite rules with a lower index
+		usort($rules, function($a, $b)
 		{
-			throw new AccessControlManagerException('APIAccessControlManager must implement goendoer\Sonic\AccessControl\IAPIAccessControlManager');
-		}
-		else
-			$this->APIAccessControlManager = $APIAccessControlManager;
-		return $this;
-	}
-	
-	/**
-	 * returns the APIAccessControlManager
-	 * 
-	 * @throws AccessControlManagerException if instance not found
-	 * @return the APIAccessControlManager instance
-	 */
-	public function getAPIAccessControlManager()
-	{
-		if($this->APIAccessControlManager === NULL)
-			throw new AccessControlManagerException('APIAccessControlManager not set');
-		else
-			return $this->APIAccessControlManager;
-	}
-	
-	/**
-	 * determines, if APIAccessControlManager is enabled
-	 * 
-	 * @return true, if APIAccessControlManager is enabled, else false
-	 */
-	public static function APIAccessControlManagerEnabled()
-	{
-		if($this->APIAccessControlManager === NULL)
-			return false;
-		else
-			return true;
-	}
-	
-	/**
-	 * sets the ContentAccessControlManager instance
-	 * 
-	 * @param $contentAccessControlManager The ContentAccessControlManager instance
-	 * @return AccessControlManager instance
-	 */
-	public function setContentAccessControlManager(IContentAccessControlManager $contentAccessControlManager)
-	{
-		if(!array_key_exists('sgoendoer\Sonic\AccessControl\IContentAccessControlManager', class_implements($IContentAccessControlManager)))
+			if($a->getIndex() == $b->getIndex())
+			{
+				// TODO sort by ENTITY_TYPE: ALL < FRIENDS < FOF < GROUP < INDIVIDUAL
+				return 0;
+			}
+			
+			return ($a->getIndex() < $b->getIndex()) ? -1 : 1;
+		});
+		
+		foreach($rules as $rule)
 		{
-			throw new AccessControlManagerException('contentAccessControlManager must implement goendoer\Sonic\AccessControl\IContentAccessControlManager');
-		}
-		else
-			$this->contentAccessControlManager = $contentAccessControlManager;
-		return $this;
+			// checking rules in the order of all -> friends -> groups -> individual
+			switch($rule->getEntityType())
+			{
+				case AccessControlRuleObject::ENTITY_TYPE_ALL:
+					try
+					{
+						if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+							$grantAccess = true;
+						elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+							$grantAccess = false;
+						else
+							$grantAccess = false;
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ENTITY_TYPE_FRIENDS:
+					try
+					{
+						if($this->isAFriend($gid))
+						{
+							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+								$grantAccess = true;
+							elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+								$grantAccess = false;
+							else
+								$grantAccess = false;
+						}
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ENTITY_TYPE_GROUP:
+					try
+					{
+						if($this->isInGroup($gid, $rule->getEntityID()))
+						{
+							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+								$grantAccess = true;
+							elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+								$grantAccess = false;
+							else
+								$grantAccess = false;
+						}
+					}
+					catch(AccessControlManagerException $e)
+					{}
+				break;
+				
+				case AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL:
+					if($rule->getEntityID() == $gid)
+					{
+						if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
+							$grantAccess = true;
+						elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
+							$grantAccess = false;
+						else
+							$grantAccess = false;
+					}
+				break;
+			}
+		} 
+		
+		return $grantAccess;
 	}
 	
 	/**
-	 * returns the ContentAccessControlManager
+	 * returns an array of all available AccessControlRuleObjects with TARGET_TYPE "CONTENT" and TARGET being $uoid 
+	 * from data storage with ENTITY_ID matching $gid or wildcard (*). 
 	 * 
-	 * @throws AccessControlManagerException if instance not found
-	 * @return the ContentAccessControlManager instance
+	 * SELECT * FROM rules WHERE 
+	 * target_type = 'CONTENT' 
+	 * AND 
+	 * (entity_id = '$gid' OR entity_id = '*')
+	 * AND
+	 * target = '$uoid'
+	 * ORDER BY index ASC
+	 * 
+	 * @param $gid The GlobalID requesting entitiy
+	 * @param $uoid The UOID of the content or wildcard (*)
+	 * 
+	 * @return array of AccessControlRuleObjects, NULL if no rules were found
 	 */
-	public function getContentAccessControlManager()
-	{
-		if($this->contentAccessControlManager === NULL)
-			throw new AccessControlManagerException('ContentAccessControlManager not set');
-		else
-			return $this->contentAccessControlManager;
-	}
+	protected abstract function loadAccessControlRulesForUOID($gid, $uoid);
 	
 	/**
-	 * determines, if ContentAccessControlManager is enabled
+	 * returns an array of all available AccessControlRuleObjects with TARGET_TYPE "INTERFACE" and TARGET being 
+	 * $interface from data storage with ENTITY_ID matching $gid or wildcard (*). 
 	 * 
-	 * @return true, if ContentAccessControlManager is enabled, else false
+	 * SELECT * FROM rules WHERE 
+	 * target_type = 'INTERFACE' 
+	 * AND 
+	 * (entity_id = '$gid' OR entity_id = '*')
+	 * AND
+	 * target = '$interface'
+	 * ORDER BY index ASC
+	 * 
+	 * @param $gid The GlobalID requesting entitiy
+	 * @param $interface The interface name of the content or wildcard (*)
+	 * 
+	 * @return array of AccessControlRuleObjects, NULL if no rules were found
 	 */
-	public static function contentAccessControlManagerEnabled()
-	{
-		if($this->contentAccessControlManager === NULL)
-			return false;
-		else
-			return true;
-	}
+	protected abstract function loadAccessControlRulesForInterface($gid, $interface);
+	
+	/**
+	 * loads the AccessControlRuleObjects for a given $gid from the data storage
+	 * 
+	 * @param $gid The GlobalID
+	 * 
+	 * @return array of AccessControlRuleObjects, NULL if no rules were found
+	 */
+	//protected abstract function loadAccessControlRulesForGID($gid);
+	
+	
+	abstract public function isAFriend($gid);
+	
+	//abstract public function getAllFriends();
+	
+	//abstract public function isAFriendOfAFriend($gid);
+	
+	//abstract public function getAllFriendOfFriends();
+	
+	//abstract public function getGroupsForGID($gid);
+	
+	abstract public function isInGroup($gid, $groupID);
+	
+	//abstract public function getMembersOfGroup($groupID);
+	
+	//abstract public function getGroups();
 }
 
 ?>

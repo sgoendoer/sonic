@@ -1,39 +1,64 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-use sgoendoer\Sonic\Model\ReferencingObject;
+use sgoendoer\Sonic\Model\Object;
 
 /**
- * Abstract AccessControlRule object
- * version 20161018
- *
+ * Represents a AccessControlRule object
+ * version 20161019
+ * 
+ * syntax: 	The $owner of content (grants|denies) [$directive] (everybody|his friends|a group|an individual) [$scope] 
+ * 		identified by the $entityID read access to content identified by $targetID. Rules with a lower $index will
+ * 		overwritten by rules with a higher index.
+ * 
+ * example: INDEX	DIRECTIVE	ENTITY_TYPE	ENTITY_ID	TARGET_TYPE		TARGET
+ * 			0		DENY		ALL			*			INTERFACE		*			Denies access for everyone
+ * 			1		ALLOW		FRIENDS		*			INTERFACE		*			Allows access for friends
+ * 			2		ALLOW		INDIVIDUAL	GlobalID1	CONTENT			ContentID1	Further allows access for a specific GlobalID
+ * 			3		DENY		INDIVIDUAL	GlobalID2	CONTENT			ContentID1	Denies access for another specific GlobalID
+ * 
+ * 			=> Friends and GlobalID1 have access, access for GlobalID2 is blocked - even if this GlobalID2 is a friend
+ * 
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-abstract class AccessControlRuleObject extends ReferencingObject
+class AccessControlRuleObject extends Object
 {
-	const ACL_DIRECTIVE_DENY		= 'DENY';
-	const ACL_DIRECTIVE_ALLOW		= 'ALLOW';
+	const JSONLD_CONTEXT				= 'http://sonic-project.net/';
+	const JSONLD_TYPE					= 'AccessControlRule';
 	
-	const ACL_SCOPE_FRIENDS			= 'FRIENDS';
-	const ACL_SCOPE_INDIVIDUAL		= 'INDIVIDUAL';
-	const ACL_SCOPE_GROUP			= 'GROUP';
+	const DIRECTIVE_DENY				= 'DENY';
+	const DIRECTIVE_ALLOW				= 'ALLOW';
 	
-	protected $owner				= NULL;
-	protected $index				= 0;
-	protected $directive			= NULL;
-	protected $scope				= NULL;
-	protected $IDs					= array();
+	const ENTITY_TYPE_ALL				= 'ALL';
+	const ENTITY_TYPE_FRIENDS			= 'FRIENDS';
+	const ENTITY_TYPE_FRIEND_OF_FRIENDS	= 'FOF'; // unused as of now
+	const ENTITY_TYPE_GROUP				= 'GROUP';
+	const ENTITY_TYPE_INDIVIDUAL		= 'INDIVIDUAL';
 	
-	public function __construct(ContentAccessControlRuleObjectBuilder $builder)
+	const TARGET_TYPE_INTERFACE			= 'INTERFACE';
+	const TARGET_TYPE_CONTENT			= 'CONTENT';
+	
+	const WILDCARD						= '*';
+	
+	protected $owner					= NULL;
+	protected $index					= 0;
+	protected $directive				= NULL;
+	protected $entity					= NULL;
+	protected $entityID					= NULL;
+	protected $targetType				= NULL;
+	protected $target					= NULL;
+	
+	public function __construct(AccessControlRuleObjectBuilder $builder)
 	{
-		parent::__construct($builder->getObjectID(), $builder->getTargetID());
+		parent::__construct($builder->getObjectID());
 		
 		$this->owner = $builder->getOwner();
 		$this->priority = $builder->getPriority();
 		$this->directive = $builder->getDirective();
-		$this->scope = $builder->getScope();
-		$this->accessList = $builder->getAccessList();
-		asort($this->accessList);
+		$this->entityType = $builder->getScope();
+		$this->entityID = $builder->entityID();
+		$this->targetType = $builder->getTargetType();
+		$this->target = $builder->getTarget();
 	}
 	
 	public function getOwner()
@@ -58,14 +83,14 @@ abstract class AccessControlRuleObject extends ReferencingObject
 		return $this;
 	}
 	
-	public function getScope()
+	public function getEntityType()
 	{
-		return $this->scope;
+		return $this->entityType;
 	}
 	
-	public function setScope($scope)
+	public function setEntityType($entityType)
 	{
-		$this->scope = $scope;
+		$this->entityType = $entityType;
 		return $this;
 	}
 	
@@ -80,51 +105,80 @@ abstract class AccessControlRuleObject extends ReferencingObject
 		return $this;
 	}
 	
-	public function addToAccessList($globalID)
+	public function setEntityID($entityID)
 	{
-		$this->accessList[] = $globalID;
-		asort($this->accessList);
+		$this->entityID = $entityID;
 		return $this;
 	}
 	
-	public function setAccessList($accessList)
+	public function getEntityID()
 	{
-		$this->accessList = $accessList;
-		asort($this->accessList);
+		return $this->entityID;
+	}
+	
+	public function getTargetType()
+	{
+		return $this->targetType;
+	}
+	
+	public function setTargetType($targetType)
+	{
+		$this->targetType = $targetType;
 		return $this;
 	}
 	
-	public function getAccessList()
+	public function getTarget()
 	{
-		return $this->accessList;
+		return $this->target;
+	}
+	
+	public function setTarget($target)
+	{
+		$this->target = $target;
+		return $this;
 	}
 	
 	public function getJSONString()
 	{
 		$json =  '{'
-				. '"@context":"'	. ContentAccessControlRuleObject::JSONLD_CONTEXT . '",'
-				. '"@type":"'		. ContentAccessControlRuleObject::JSONLD_TYPE . '",'
+				. '"@context":"'	. AccessControlRuleObject::JSONLD_CONTEXT . '",'
+				. '"@type":"'		. AccessControlRuleObject::JSONLD_TYPE . '",'
 				. '"objectID":"'	. $this->objectID . '",'
-				. '"targetID":"'	. $this->targetID . '",'
 				. '"owner":"'		. $this->owner . '",'
 				. '"index":"'		. $this->index . '",'
-				. '"scope":"'		. $this->scope . '",'
+				. '"entityType":"'	. $this->entityType . '",'
 				. '"directive":"'	. $this->directive . '",'
-				. '"allow":[';
-				
-		asort($this->accessList);
-		
-		foreach($this->accessList as $member)
-		{
-			$json .= '"' . $member . '"';
-			if($member !== end($this->accessList)) $json .= ',';
-		}
-		
-		$json .= ']}';
+				. '"entityID":"'	. $this->entityID . '",'
+				. '"targetType":"'	. $this->targetType . '",'
+				. '"target":"'		. $this->target . '"}';
 		
 		return $json;
 	}
 	
-	// TODO add json schema
-	const SCHEMA = '{}';'
+	const SCHEMA = '{
+		"$schema": "http://json-schema.org/draft-04/schema#",
+		"id": "http://jsonschema.net/sonic/accessControlRule",
+		"type": "object",
+		"properties":
+		{
+			"objectID": {"type": "string"},
+			"owner": {"type": "string"},
+			"index": {"type": "int"},
+			"directive": {"type": "string"},
+			"entityType": {"type": "string"},
+			"entityID": {"type": "string"},
+			"targetType":	{"type": "string"},
+			"target":	{"type": "string"}
+		},
+		"required": [
+			"objectID",
+			"owner",
+			"index",
+			"directive",
+			"entityType",
+			"entityID",
+			"targetType",
+			"target"
+		]
+	}';'
 }
