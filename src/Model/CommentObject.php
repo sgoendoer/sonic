@@ -5,6 +5,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\CommentObjectBuilder;
 use sgoendoer\Sonic\Model\ILikeableObject;
 use sgoendoer\Sonic\Model\ReferencingRemoteObject;
+use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 /**
  * Represents a COMMENT object
@@ -13,7 +14,7 @@ use sgoendoer\Sonic\Model\ReferencingRemoteObject;
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class CommentObject extends ReferencingRemoteObject implements ILikeableObject
+class CommentObject extends ReferencingRemoteObject implements ILikeableObject, IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'comment';

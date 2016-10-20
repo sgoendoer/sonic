@@ -8,6 +8,7 @@ use sgoendoer\Sonic\Crypt\KeyPair;
 use sgoendoer\Sonic\Identity\EntityAuthData;
 use sgoendoer\Sonic\Identity\ISocialRecordCaching;
 use sgoendoer\Sonic\Crypt\IUniqueIDManager;
+use sgoendoer\Sonic\AccessControl\AccessControlManager;
 use sgoendoer\Sonic\SonicRuntimeException;
 
 use Monolog\Logger;
@@ -16,7 +17,7 @@ use Monolog\Handler\StreamHandler;
 /**
  * Main class of the SONIC SDK
  * 
- * version 20160201
+ * version 20161018
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -36,6 +37,7 @@ class Sonic
 	
 	private $socialRecordCache			= NULL;
 	private $uniqueIDManager			= NULL;
+	private $accessControlManager		= NULL;
 	
 	/**
 	 * protected/hidden constructor
@@ -131,7 +133,7 @@ class Sonic
 		
 		if(!array_key_exists('sgoendoer\Sonic\Identity\ISocialRecordCaching', class_implements($srCachingObject)))
 		{
-			throw new \Exception('SocialRecordCaching must implement goendoer\Sonic\Identity\ISocialRecordCaching');
+			throw new SonicRuntimeException('SocialRecordCaching must implement goendoer\Sonic\Identity\ISocialRecordCaching');
 		}
 		else
 			$this->socialRecordCache = $srCachingObject;
@@ -182,7 +184,7 @@ class Sonic
 		
 		if(!array_key_exists('sgoendoer\Sonic\Crypt\IUniqueIDManager', class_implements($uniqueIDManagerObject)))
 		{
-			throw new \Exception('UniqueIDManager must implement sgoendoer\Sonic\Crypt\IUniqueIDManager');
+			throw new SonicRuntimeException('UniqueIDManager must implement sgoendoer\Sonic\Crypt\IUniqueIDManager');
 		}
 		else
 			$this->uniqueIDManager = $uniqueIDManagerObject;
@@ -204,6 +206,43 @@ class Sonic
 			return self::$_instance->uniqueIDManager;
 		else
 			return NULL;
+	}
+	
+	/**
+	 * sets the AccessControlManager
+	 * 
+	 * @param $accessControlManagerObject The AccessControlManager instance
+	 * @return Sonic instance
+	 */
+	public function setAccessControlManager(AccessControlManager $accessControlManagerObject)
+	{
+		if(self::$_instance === NULL)
+			throw new SonicRuntimeException('Sonic instance not initialized');
+		
+		if(!array_key_exists('sgoendoer\Sonic\AccessControl\AccessControlManager', class_parents($accessControlManagerObject)))
+		{
+			throw new SonicRuntimeException('AccessControlManager must implement sgoendoer\Sonic\AccessControl\AccessControlManager');
+		}
+		else
+			$this->accessControlManager = $accessControlManagerObject;
+		
+		return self::$_instance;
+	}
+	
+	/**
+	 * returns the AccessControlManager instance
+	 * 
+	 * @return the AccessControlManager instance
+	 */
+	public static function getAccessControlManager()
+	{
+		if(self::$_instance === NULL)
+			throw new SonicRuntimeException('Sonic instance not initialized');
+		
+		if(self::$_instance->accessControlManager != NULL)
+			return self::$_instance->accessControlManager;
+		else
+			throw new AccessControlManagerException('AccessControlManager instance not found');
 	}
 	
 	/**
