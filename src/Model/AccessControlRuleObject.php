@@ -53,7 +53,7 @@ class AccessControlRuleObject extends Object
 		parent::__construct($builder->getObjectID());
 		
 		$this->owner = $builder->getOwner();
-		$this->priority = $builder->getPriority();
+		$this->index = $builder->getIndex();
 		$this->directive = $builder->getDirective();
 		$this->entityType = $builder->getScope();
 		$this->entityID = $builder->entityID();

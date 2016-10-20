@@ -1,40 +1,42 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Identity\GID;
 use sgoendoer\Sonic\Identity\UOID;
 use sgoendoer\Sonic\Model\IllegalModelStateException;
-use sgoendoer\Sonic\Model\ReferencingObjectBuilder;
-use sgoendoer\Sonic\Model\ContentAccessControlObject;
+use sgoendoer\Sonic\Model\ObjectBuilder;
+use sgoendoer\Sonic\Model\AccessControlRuleObject;
 
 /**
- * Builder class for a ContentAccessControlRule object
- * version 20151018
+ * Builder class for a AccessControlRule object
+ * version 20151020
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
+class AccessControlRuleObjectBuilder extends ObjectBuilder
 {
-	protected $owner				= NULL;
-	protected $index				= 0;
-	protected $directive			= NULL;
-	protected $scope				= NULL;
-	protected $entityID				= NULL;
+	protected $owner					= NULL;
+	protected $index					= 0;
+	protected $directive				= NULL;
+	protected $entity					= NULL;
+	protected $entityID					= NULL;
+	protected $targetType				= NULL;
+	protected $target					= NULL;
 	
 	public static function buildFromJSON($json)
 	{
 		// TODO parse and verify json
 		$jsonObject = json_decode($json);
 		
-		return (new ContentAccessControlRuleObjectBuilder())
+		return (new AccessControlRuleObjectBuilder())
 				->objectID($jsonObject->objectID)
-				->targetID($jsonObject->targetID)
 				->owner($jsonObject->owner)
 				->index($jsonObject->index)
 				->directive($jsonObject->directive)
-				->scope($jsonObject->scope)
+				->entity($jsonObject->entity)
 				->entityID($jsonObject->entityID)
+				->targetType($jsonObject->targetType)
+				->target($jsonObject->target)
 				->build();
 	}
 	
@@ -60,17 +62,6 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 		return $this;
 	}
 	
-	public function getScope()
-	{
-		return $this->scope;
-	}
-	
-	public function scope($scope)
-	{
-		$this->scope = $scope;
-		return $this;
-	}
-	
 	public function getDirective()
 	{
 		return $this->directive;
@@ -79,6 +70,17 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 	public function directive($directive)
 	{
 		$this->directive = $directive;
+		return $this;
+	}
+	
+	public function getEntity()
+	{
+		return $this->entity;
+	}
+	
+	public function entity($entity)
+	{
+		$this->entity = $entity;
 		return $this;
 	}
 	
@@ -93,32 +95,66 @@ class ContentAccessControlRuleObjectBuilder extends ReferencingObjectBuilder
 		return $this;
 	}
 	
+	public function getTargetType()
+	{
+		return $this->targetType;
+	}
+	
+	public function targetType($targetType)
+	{
+		$this->targetType = $targetType;
+		return $this;
+	}
+	
+	public function getTarget()
+	{
+		return $this->target;
+	}
+	
+	public function target($target)
+	{
+		$this->target = $target;
+		return $this;
+	}
+	
 	public function build()
 	{
 		if($this->objectID == NULL)
 			$this->objectID = UOID::createUOID();
-		if($this->index == NULL)
+		if($this->index == NULL 
+			|| !is_numeric($this->index) 
+			|| $this->index < 0)
 			$this->index = 0;
 		
 		if(!UOID::isValid($this->objectID))
 			throw new IllegalModelStateException('Invalid objectID');
-		if(!UOID::isValid($this->targetID))
-			throw new IllegalModelStateException('Invalid targetID');
-		if(!is_numeric($this->index))
-			throw new IllegalModelStateException('Invalid index value');
+		if(!GID::isValid($this->owner))
+			throw new IllegalModelStateException('Invalid owner');
+		if($this->entityType == NULL)
+			throw new IllegalModelStateException('Invalid entityType');
 		if($this->entityID == NULL)
 			throw new IllegalModelStateException('Invalid entityID');
 		
-		if($this->directive != ContentAccessControlRuleObject::ACL_DIRECTIVE_DENY 
-			&& $this->directive != ContentAccessControlRuleObject::ACL_DIRECTIVE_ALLOW)
+		if($this->directive != AccessControlRuleObject::DIRECTIVE_DENY 
+			&& $this->directive != AccessControlRuleObject::DIRECTIVE_ALLOW)
 			throw new IllegalModelStateException('Invalid directive');
 		
-		if($this->scope != ContentAccessControlRuleObject::ACL_SCOPE_FRIENDS 
-			&& $this->scope != ContentAccessControlRuleObject::ACL_SCOPE_ALL 
-			&& $this->scope != ContentAccessControlRuleObject::ACL_SCOPE_GROUP 
-			&& $this->scope != ContentAccessControlRuleObject::ACL_SCOPE_INDIVIDUAL)
-			throw new IllegalModelStateException('Invalid directive');
+		if($this->entity == NULL)
+			throw new IllegalModelStateException('Invalid entity');
 		
-		return new ControlAccessControlRuleObject($this);
+		if($this->entityType != AccessControlRuleObject::ENTITY_TYPE_ALL 
+			&& $this->scope != AccessControlRuleObject::ENTITY_TYPE_FRIENDS 
+			&& $this->scope != AccessControlRuleObject::ENTITY_TYPE_GROUP 
+			&& $this->scope != AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL)
+			throw new IllegalModelStateException('Invalid entityType');
+		
+		if($this->targetType != AccessControlRuleObject::TARGET_TYPE_INTERFACE 
+			&& $this->scope != AccessControlRuleObject::TARGET_TYPE_CONTENT)
+			throw new IllegalModelStateException('Invalid targetType');
+		
+		if($this->target == NULL)
+			throw new IllegalModelStateException('Invalid target');
+		
+		return new AccessControlRuleObject($this);
 	}
 }

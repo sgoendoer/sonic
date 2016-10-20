@@ -1,20 +1,21 @@
 <?php namespace sgoendoer\Sonic\Model;
 
-use sgoendoer\Sonic\Model\LocalGroupObjectBuilder;
+use sgoendoer\Sonic\Model\AccessControlGroupObjectBuilder;
 
 /**
  * Represents a AccessControlGroup object
- * version 20161018
+ * version 20161020
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
  */
-class AccessControlGroupObject extends BasicObject
+class AccessControlGroupObject extends Object
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'accessControlGroup';
 	
 	protected $owner			= NULL;
+	protected $displayName		= NULL;
 	protected $members			= array();
 	
 	public function __construct(AccessControlGroupObjectBuilder $builder)
@@ -22,6 +23,7 @@ class AccessControlGroupObject extends BasicObject
 		parent::__construct($builder->getObjectID());
 		
 		$this->owner = $builder->getOwner();
+		$this->displayName = $builder->getDisplayName();
 		$this->members = $builder->getMembers();
 		asort($this->members);
 	}
@@ -34,6 +36,17 @@ class AccessControlGroupObject extends BasicObject
 	public function setOwner($owner)
 	{
 		$this->owner = $owner;
+		return $this;
+	}
+	
+	public function getDisplayName()
+	{
+		return $this->displayName;
+	}
+	
+	public function setDisplayName($displayName)
+	{
+		$this->displayName = $displayName;
 		return $this;
 	}
 	
@@ -59,21 +72,19 @@ class AccessControlGroupObject extends BasicObject
 	public function getJSONString()
 	{
 		$json =  '{'
-				. '"@context":"' . APIAccessControlObject::JSONLD_CONTEXT . '",'
-				. '"@type":"' . APIAccessControlObject::JSONLD_TYPE . '",'
+				. '"@context":"' . AccessControlGroupObject::JSONLD_CONTEXT . '",'
+				. '"@type":"' . AccessControlGroupObject::JSONLD_TYPE . '",'
 				. '"objectID":"' . $this->objectID . '",'
 				. '"owner":"' . $this->owner . '",'
-				. '"resource":"' . $this->resource . '",'
-				. '"directive":"' . $this->directive . '",'
-				. '"scope":"' . $this->scope . '",'
-				. '"accessList":[';
+				. '"displayName":"' . $this->displayName . '",'
+				. '"members":[';
 				
-		asort($this->accessList);
+		asort($this->members);
 		
-		foreach($this->accessList as $gid)
+		foreach($this->members as $gid)
 		{
 			$json .= '"' . $gid . '"';
-			if($gid !== end($this->accessList)) $json .= ',';
+			if($gid !== end($this->members)) $json .= ',';
 		}
 		
 		$json .= ']}';
@@ -83,53 +94,20 @@ class AccessControlGroupObject extends BasicObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/comment",
+		"id": "http://jsonschema.net/sonic/accessControlGroup",
 		"type": "object",
 		"properties":
 		{
-			"objectID":
-			{
-				"id": "http://jsonschema.net/sonic/comment/objectID",
-				"type": "string"
-			},
-			"targetID":
-			{
-				"id": "http://jsonschema.net/sonic/comment/targetID",
-				"type": "string"
-			},
-			"author":
-			{
-				"id": "http://jsonschema.net/sonic/comment/author",
-				"type": "string"
-			},
-			"comment":
-			{
-				"id": "http://jsonschema.net/sonic/comment/comment",
-				"type": "string"
-			},
-			"datePublished":
-			{
-				"id": "http://jsonschema.net/sonic/comment/datePublished,
-				"type": "string"
-			},
-			"dateUpdated":
-			{
-				"id": "http://jsonschema.net/sonic/comment/dateUpdated,
-				"type": "string"
-			},
-			"signature":
-			{
-				"id": "http://jsonschema.net/sonic/comment/signature",
-				"type": "object"
-			}
+			"objectID": {"type": "string"},
+			"owner": {"type": "string"},
+			"displayName": {"type": "string"},
+			"members": {"type": "array"}
 		},
 		"required": [
 			"objectID",
-			"targetID",
-			"author",
-			"comment",
-			"datePublished",
-			"signature"
+			"owner",
+			"displayName",
+			"members"
 		]
 	}';
 }
