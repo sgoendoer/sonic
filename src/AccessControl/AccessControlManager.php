@@ -1,12 +1,13 @@
 <?php namespace sgoendoer\Sonic\AccessControl;
 
+use sgoendoer\Sonic\AccessControl\AccessControlGroupManager;
 use sgoendoer\Sonic\AccessControl\AccessControlException;
 use sgoendoer\Sonic\AccessControl\AccessControlManagerException;
 use sgoendoer\Sonic\Model\AccessControlRuleObject;
 
 /**
  * Abstract AccessControlManager
- * version 20161019
+ * version 20161021
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
@@ -16,13 +17,15 @@ abstract class AccessControlManager
 	const DIRECTIVE_DENY						= 'DENY';
 	const DIRECTIVE_ALLOW						= 'ALLOW';
 	
+	private $accessControlGroupManager			= NULL;
+	
 	private $baseDirectiveInterface				= NULL;
 	private $baseDirectiveContent				= NULL;
 	
 	/**
 	 * constructor for AccessControlManager
 	 */
-	public function __construct($baseDirectiveInterface, $baseDirectiveContent)
+	public function __construct($baseDirectiveInterface, $baseDirectiveContent, $acGroupManager = NULL)
 	{
 		if($baseDirectiveInterface == AccessControlManager::DIRECTIVE_DENY)
 			$this->baseDirectiveInterface = $baseDirectiveInterface;
@@ -33,6 +36,20 @@ abstract class AccessControlManager
 			$this->baseDirectiveContent = $baseDirectiveContent;
 		else
 			$this->baseDirectiveContent = AccessControlManager::DIRECTIVE_DENY;
+		
+		if($acGroupManager != NULL)
+			$this->setAccessControlGroupManager($acGroupManager);
+	}
+	
+	public function setAccessControlGroupManager(AccessControlGroupManager $acGroupManager)
+	{
+		if(!array_key_exists('sgoendoer\Sonic\AccessControl\AccessControlGroupManager', class_parents($acGroupManager)))
+		{
+			throw new SonicRuntimeException('acGroupManager must extend goendoer\Sonic\AccessControl\AccessControlGroupManager');
+		}
+		else
+			$this->accessControlGroupManager = $$acGroupMapaner;
+		return $this;
 	}
 	
 	/**
@@ -48,96 +65,19 @@ abstract class AccessControlManager
 		if(!UOID::isValid($uoid) && $uoid)
 			throw new AccessControlManagerException('Illegal argument UOID: ' . $uoid);
 		
-		$rules = $this->loadAccessControlRulesForUOID($gid, $uoid);
-		
-		// starting off with base directive (deny is default)
-		if($this->baseDirective == AccessControlRuleObject::DIRECTIVE_ALLOW)
-			$grantAccess = true;
-		else
-			$grantAccess = false;
-		
-		// if no rules were found, use content base directive
-		if(!is_array($rules) || count($rules) == 0)
-			return $grantAccess;
-		
-		// sorting rules by index: rules with higher indexes overwrite rules with a lower index
-		usort($rules, function($a, $b)
+		try
 		{
-			if($a->getIndex() == $b->getIndex())
-			{
-				// TODO sort by ENTITY_TYPE: ALL < FRIENDS < FOF < GROUP < INDIVIDUAL
-				return 0;
-			}
+			$rules = $this->loadAccessControlRulesForUOID($gid, $uoid);
 			
-			return ($a->getIndex() < $b->getIndex()) ? -1 : 1;
-		});
-		
-		foreach($rules as $rule)
+			$grantAccess = $this->executeAccessControlRules($gid, $rules);
+		}
+		catch (AccessControlManagerException $e)
 		{
-			// checking rules in the order of all -> friends -> groups -> individual
-			switch($rule->getEntityType())
-			{
-				case AccessControlRuleObject::ENTITY_TYPE_ALL:
-					try
-					{
-						if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
-							$grantAccess = true;
-						elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
-							$grantAccess = false;
-						else
-							$grantAccess = false;
-					}
-					catch(AccessControlManagerException $e)
-					{}
-				break;
-				
-				case AccessControlRuleObject::ENTITY_TYPE_FRIENDS:
-					try
-					{
-						if($this->isAFriend($gid))
-						{
-							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
-								$grantAccess = true;
-							elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
-								$grantAccess = false;
-							else
-								$grantAccess = false;
-						}
-					}
-					catch(AccessControlManagerException $e)
-					{}
-				break;
-				
-				case AccessControlRuleObject::ENTITY_TYPE_GROUP:
-					try
-					{
-						if($this->isInGroup($gid, $rule->getEntityID()))
-						{
-							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
-								$grantAccess = true;
-							elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
-								$grantAccess = false;
-							else
-								$grantAccess = false;
-						}
-					}
-					catch(AccessControlManagerException $e)
-					{}
-				break;
-				
-				case AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL:
-					if($rule->getEntityID() == $gid)
-					{
-						if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
-							$grantAccess = true;
-						elseif($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_DENY)
-							$grantAccess = false;
-						else
-							$grantAccess = false;
-					}
-				break;
-			}
-		} 
+			if($this->baseDirectiveInterface == AccessControlManager::DIRECTIVE_DENY)
+				$grantAccess = false;
+			else
+				$grantAccess = true;
+		}
 		
 		return $grantAccess;
 	}
@@ -155,17 +95,32 @@ abstract class AccessControlManager
 		if($interface == '')
 			$interface = '*';
 		
-		$rules = $this->loadAccessControlRulesForInterface($gid, $interface);
+		$grantAccess = false;
 		
-		// starting off with base interface directive (allow is default)
-		if($this->baseDirectiveInterface == AccessControlRuleObject::DIRECTIVE_DENY)
-			$grantAccess = false;
-		else
-			$grantAccess = true;
+		try
+		{
+			$rules = $this->loadAccessControlRulesForInterface($gid, $interface);
+			
+			$grantAccess = $this->executeAccessControlRules($gid, $rules);
+		}
+		catch (AccessControlManagerException $e)
+		{
+			if($this->baseDirectiveInterface == AccessControlManager::DIRECTIVE_DENY)
+				$grantAccess = false;
+			else
+				$grantAccess = true;
+		}
 		
-		// if no rules were found, use interface base directive
+		return $grantAccess;
+	}
+	
+	private function executeAccessControlRules($gid, $rules)
+	{
+		$grantAccess = NULL;
+		
+		// if no rules were found, use base directive
 		if(!is_array($rules) || count($rules) == 0)
-			return $grantAccess;
+			throw new AccessControlManagerException('No AccessControlRules');
 		
 		// sorting rules by index: rules with higher indexes overwrite rules with a lower index
 		usort($rules, function($a, $b)
@@ -216,9 +171,11 @@ abstract class AccessControlManager
 				break;
 				
 				case AccessControlRuleObject::ENTITY_TYPE_GROUP:
+					if($this->accessControlGroupManager == NULL) break;
+					
 					try
 					{
-						if($this->isInGroup($gid, $rule->getEntityID()))
+						if($this->accessControlGroupManager->isInGroup($gid, $rule->getEntityID()))
 						{
 							if($rule->getDirective() == AccessControlRuleObject::DIRECTIVE_ALLOW)
 								$grantAccess = true;
@@ -244,7 +201,7 @@ abstract class AccessControlManager
 					}
 				break;
 			}
-		} 
+		}
 		
 		return $grantAccess;
 	}
@@ -288,30 +245,23 @@ abstract class AccessControlManager
 	protected abstract function loadAccessControlRulesForInterface($gid, $interface);
 	
 	/**
-	 * loads the AccessControlRuleObjects for a given $gid from the data storage
+	 * determines if a user is a friend
+	 *
+	 * @param $gid1 The GlobalID 
+	 * @param $gid2 The GlobalID
+	 * 
+	 * @return boolean True if user $gid is a friend, else false
+	 */
+	abstract public function isAFriend($gid1, $gid2);
+	
+	/**
+	 * determines if a user is a friend of a friend
 	 * 
 	 * @param $gid The GlobalID
 	 * 
-	 * @return array of AccessControlRuleObjects, NULL if no rules were found
+	 * @return boolean True if user $gid is a friend of a friend, else false
 	 */
-	//protected abstract function loadAccessControlRulesForGID($gid);
-	
-	
-	abstract public function isAFriend($gid);
-	
-	//abstract public function getAllFriends();
-	
 	//abstract public function isAFriendOfAFriend($gid);
-	
-	//abstract public function getAllFriendOfFriends();
-	
-	//abstract public function getGroupsForGID($gid);
-	
-	abstract public function isInGroup($gid, $groupID);
-	
-	//abstract public function getMembersOfGroup($groupID);
-	
-	//abstract public function getGroups();
 }
 
 ?>

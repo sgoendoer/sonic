@@ -43,7 +43,7 @@ class AccessControlRuleObject extends Object
 	protected $owner					= NULL;
 	protected $index					= 0;
 	protected $directive				= NULL;
-	protected $entity					= NULL;
+	protected $entityType				= NULL;
 	protected $entityID					= NULL;
 	protected $targetType				= NULL;
 	protected $target					= NULL;
