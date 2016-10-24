@@ -7,7 +7,7 @@ use sgoendoer\Sonic\Model\AccessControlGroupObjectBuilder;
  * version 20161020
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class AccessControlGroupObject extends Object
 {

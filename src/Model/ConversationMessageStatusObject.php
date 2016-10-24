@@ -10,7 +10,7 @@ use sgoendoer\Sonic\Model\ConversationMessageStatusObject;
  * version 20160413
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class ConversationMessageStatusObject extends ReferencingRemoteObject
 {

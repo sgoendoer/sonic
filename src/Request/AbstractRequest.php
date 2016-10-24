@@ -11,7 +11,7 @@ use sgoendoer\Sonic\Request\MalformedRequestHeaderException;
  * version 20160111
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 abstract class AbstractRequest
 {

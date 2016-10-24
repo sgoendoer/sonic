@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Api\AbstractRequestBuilder;
  * version 20150802
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class ProfileRequestBuilder extends AbstractRequestBuilder
 {
@@ -21,8 +21,7 @@ class ProfileRequestBuilder extends AbstractRequestBuilder
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
 		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_PROFILE);
 		$this->request->setRequestMethod('GET');
-		//die($body);
-		//echo $this->request->toString();die();
+		
 		return $this;
 	}
 }

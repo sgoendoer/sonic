@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Model\BasicObject;
  * version 20150904
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SignatureObject extends BasicObject
 {

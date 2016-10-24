@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Date\XSDDateTime;
  * version 20160413
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SearchResultObject extends ReferencingObject
 {

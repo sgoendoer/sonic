@@ -7,7 +7,7 @@ use sgoendoer\Sonic\Permission\PermissionManager;
  * version 20161013
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 interface IGlobalPermissionManager
 {

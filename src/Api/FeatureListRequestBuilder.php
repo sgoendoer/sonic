@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Model\FeatureListObject;
  * version 20160915
  *
  * author: Markus Beckmann, Senan Sharhan, Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class FeatureListRequestBuilder extends  AbstractRequestBuilder
 {

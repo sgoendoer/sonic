@@ -8,7 +8,7 @@ use sgoendoer\json\JSONObject;
  * version 20160413
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 abstract class BasicObject
 {

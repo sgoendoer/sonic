@@ -14,7 +14,7 @@ use sgoendoer\Sonic\Identity\SocialRecordFormatException;
  * version 20160513
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SocialRecordBuilder
 {

@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Crypt\PrivateKey;
  * version 20160104
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class KeyPair
 {

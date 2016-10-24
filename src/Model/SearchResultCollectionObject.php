@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
  * version 20160429
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SearchResultCollectionObject extends ReferencingObject
 {

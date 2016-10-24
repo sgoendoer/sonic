@@ -12,7 +12,7 @@ use sgoendoer\Sonic\Request\MalformedResponseException;
  * version 20160509
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class OutgoingResponse extends AbstractResponse
 {

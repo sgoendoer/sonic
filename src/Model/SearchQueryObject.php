@@ -13,7 +13,7 @@ use sgoendoer\esquery\ESQueryBuilder;
  * version 20160419
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SearchQueryObject extends RemoteObject
 {

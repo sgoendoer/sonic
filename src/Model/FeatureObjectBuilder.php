@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Model\FeatureObject;
  * version 20160517
  *
  * author: Markus Beckmann, Senan Sharhan, Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class FeatureObjectBuilder extends ObjectBuilder
 {

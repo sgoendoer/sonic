@@ -12,7 +12,7 @@ use sgoendoer\Sonic\Model\IllegalModelStateException;
  * version 20160429
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SearchResultCollectionObjectBuilder extends ReferencingObjectBuilder
 {

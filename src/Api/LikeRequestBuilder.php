@@ -9,7 +9,7 @@ use sgoendoer\Sonic\Model\LikeObject;
  * version 20160129
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class LikeRequestBuilder extends AbstractRequestBuilder
 {

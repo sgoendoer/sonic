@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Model\SignatureObject;
  * version 20151014
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 abstract class RemoteObjectBuilder extends ObjectBuilder
 {

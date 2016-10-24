@@ -7,7 +7,7 @@ use sgoendoer\Sonic\Sonic;
  * version 20150925
  *
  * author: Seabstian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class Random
 {

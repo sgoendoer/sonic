@@ -15,7 +15,7 @@ use sgoendoer\Sonic\Model\IllegalModelStateException;
  * version 20151022
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class ConversationMessageStatusObjectBuilder extends ReferencingRemoteObjectBuilder
 {

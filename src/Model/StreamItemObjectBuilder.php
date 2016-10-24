@@ -15,7 +15,7 @@ use sgoendoer\json\JSONObject;
  * version 20151021
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class StreamItemObjectBuilder extends RemoteObjectBuilder
 {

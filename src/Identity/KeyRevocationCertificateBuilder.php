@@ -12,8 +12,9 @@ use sgoendoer\Sonic\Date\XSDDateTime;
  * version 20160105
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
- */class KeyRevocationCertificateBuilder
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
+ */
+class KeyRevocationCertificateBuilder
 {
 	private $globalID			= NULL;
 	private $key				= NULL;	// the revoked public key

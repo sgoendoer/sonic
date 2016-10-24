@@ -19,7 +19,7 @@ use sgoendoer\Sonic\Model\Object;
  * 			=> Friends and GlobalID1 have access, access for GlobalID2 is blocked - even if this GlobalID2 is a friend
  * 
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class AccessControlRuleObject extends Object
 {

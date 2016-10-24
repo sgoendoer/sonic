@@ -12,7 +12,7 @@ use sgoendoer\Sonic\Identity\SocialRecordManager;
  * version 20151211
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SearchRequestBuilder extends AbstractRequestBuilder
 {

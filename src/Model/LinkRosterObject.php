@@ -11,7 +11,7 @@ use sgoendoer\Sonic\Model\IAccessRestrictableObject;
  * version 20160413
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class LinkRosterObject extends Object implements IAccessRestrictableObject
 {

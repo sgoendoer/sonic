@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Api\AbstractRequestBuilder;
  * version 20160404
  *
  * author: Senan Sharhan, Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class MigrationRequestBuilder extends AbstractRequestBuilder
 {

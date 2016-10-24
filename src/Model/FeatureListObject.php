@@ -10,7 +10,7 @@ use sgoendoer\Sonic\Model\FeatureObjectBuilder;
  * version 20160517
  *
  * author: Markus Beckmann, Senan Sharhan, Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class FeatureListObject extends RemoteObject
 {

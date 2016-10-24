@@ -15,7 +15,7 @@ use sgoendoer\Sonic\Model\IllegalModelStateException;
  * version 20151020
  *
  * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian.goendoer@rwth-aachen.de>
+ * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class LinkRequestObjectBuilder extends ObjectBuilder
 {
