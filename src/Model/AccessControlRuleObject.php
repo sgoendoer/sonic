@@ -10,11 +10,12 @@ use sgoendoer\Sonic\Model\Object;
  * 		identified by the $entityID read access to content identified by $targetID. Rules with a lower $index will
  * 		overwritten by rules with a higher index.
  * 
- * example: INDEX	DIRECTIVE	ENTITY_TYPE	ENTITY_ID	TARGET_TYPE		TARGET
- * 			0		DENY		ALL			*			INTERFACE		*			Denies access for everyone
- * 			1		ALLOW		FRIENDS		*			INTERFACE		*			Allows access for friends
- * 			2		ALLOW		INDIVIDUAL	GlobalID1	CONTENT			ContentID1	Further allows access for a specific GlobalID
- * 			3		DENY		INDIVIDUAL	GlobalID2	CONTENT			ContentID1	Denies access for another specific GlobalID
+ * example: 
+ * INDEX	DIRECTIVE	ENTITY_TYPE	ENTITY_ID	TARGET_TYPE	TARGET		ACCESS_TYPE
+ * 0		DENY		ALL			*			INTERFACE	*			RW			Denies access for everyone
+ * 1		ALLOW		FRIENDS		*			INTERFACE	*			RW			Allows access for friends
+ * 2		ALLOW		INDIVIDUAL	GlobalID1	CONTENT		ContentID1	*			Further allows access for a specific GlobalID
+ * 3		DENY		INDIVIDUAL	GlobalID2	CONTENT		ContentID1	*			Denies access for another specific GlobalID
  * 
  * 			=> Friends and GlobalID1 have access, access for GlobalID2 is blocked - even if this GlobalID2 is a friend
  * 
@@ -38,6 +39,10 @@ class AccessControlRuleObject extends Object
 	const TARGET_TYPE_INTERFACE			= 'INTERFACE';
 	const TARGET_TYPE_CONTENT			= 'CONTENT';
 	
+	const ACCESS_TYPE_READ				= 'R';
+	const ACCESS_TYPE_WRITE				= 'W';
+	const ACCESS_TYPE_READWRITE			= 'RW';
+	
 	const WILDCARD						= '*';
 	
 	protected $owner					= NULL;
@@ -47,6 +52,7 @@ class AccessControlRuleObject extends Object
 	protected $entityID					= NULL;
 	protected $targetType				= NULL;
 	protected $target					= NULL;
+	protected $accessType				= NULL;
 	
 	public function __construct(AccessControlRuleObjectBuilder $builder)
 	{
@@ -59,6 +65,7 @@ class AccessControlRuleObject extends Object
 		$this->entityID = $builder->entityID();
 		$this->targetType = $builder->getTargetType();
 		$this->target = $builder->getTarget();
+		$this->accessType = $builder->getAccessType();
 	}
 	
 	public function getOwner()
@@ -83,17 +90,6 @@ class AccessControlRuleObject extends Object
 		return $this;
 	}
 	
-	public function getEntityType()
-	{
-		return $this->entityType;
-	}
-	
-	public function setEntityType($entityType)
-	{
-		$this->entityType = $entityType;
-		return $this;
-	}
-	
 	public function getDirective()
 	{
 		return $this->directive;
@@ -102,6 +98,17 @@ class AccessControlRuleObject extends Object
 	public function setDirective($directive)
 	{
 		$this->directive = $directive;
+		return $this;
+	}
+	
+	public function getEntityType()
+	{
+		return $this->entityType;
+	}
+	
+	public function setEntityType($entityType)
+	{
+		$this->entityType = $entityType;
 		return $this;
 	}
 	
@@ -138,6 +145,17 @@ class AccessControlRuleObject extends Object
 		return $this;
 	}
 	
+	public function getAccessType()
+	{
+		return $this->accessType;
+	}
+	
+	public function setAccessType($accessType)
+	{
+		$this->accessType = $accessType;
+		return $this;
+	}
+	
 	public function getJSONString()
 	{
 		$json =  '{'
@@ -146,11 +164,12 @@ class AccessControlRuleObject extends Object
 				. '"objectID":"'	. $this->objectID . '",'
 				. '"owner":"'		. $this->owner . '",'
 				. '"index":"'		. $this->index . '",'
-				. '"entityType":"'	. $this->entityType . '",'
 				. '"directive":"'	. $this->directive . '",'
+				. '"entityType":"'	. $this->entityType . '",'
 				. '"entityID":"'	. $this->entityID . '",'
 				. '"targetType":"'	. $this->targetType . '",'
-				. '"target":"'		. $this->target . '"}';
+				. '"target":"'		. $this->target . '",'
+				. '"accessType":"'	. $this->accessType . '"}';
 		
 		return $json;
 	}
@@ -168,7 +187,8 @@ class AccessControlRuleObject extends Object
 			"entityType": {"type": "string"},
 			"entityID": {"type": "string"},
 			"targetType":	{"type": "string"},
-			"target":	{"type": "string"}
+			"target":	{"type": "string"},
+			"accessType":	{"type": "string"}
 		},
 		"required": [
 			"objectID",
@@ -178,7 +198,8 @@ class AccessControlRuleObject extends Object
 			"entityType",
 			"entityID",
 			"targetType",
-			"target"
+			"target",
+			"accessType"
 		]
 	}';'
 }

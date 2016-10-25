@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Model\AccessControlRuleObject;
 
 /**
  * Builder class for a AccessControlRule object
- * version 20151020
+ * version 20151025
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -18,10 +18,11 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 	protected $owner					= NULL;
 	protected $index					= 0;
 	protected $directive				= NULL;
-	protected $entity					= NULL;
+	protected $entityType				= NULL;
 	protected $entityID					= NULL;
 	protected $targetType				= NULL;
 	protected $target					= NULL;
+	protected $accessType				= NULL;
 	
 	public static function buildFromJSON($json)
 	{
@@ -33,10 +34,11 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 				->owner($jsonObject->owner)
 				->index($jsonObject->index)
 				->directive($jsonObject->directive)
-				->entity($jsonObject->entity)
+				->entityType($jsonObject->entityType)
 				->entityID($jsonObject->entityID)
 				->targetType($jsonObject->targetType)
 				->target($jsonObject->target)
+				->accessType($jsonObject->accessType)
 				->build();
 	}
 	
@@ -73,14 +75,14 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 		return $this;
 	}
 	
-	public function getEntity()
+	public function getEntityType()
 	{
-		return $this->entity;
+		return $this->entityType;
 	}
 	
-	public function entity($entity)
+	public function entityType($entityType)
 	{
-		$this->entity = $entity;
+		$this->entityType = $entityType;
 		return $this;
 	}
 	
@@ -117,6 +119,17 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 		return $this;
 	}
 	
+	public function getAccessType()
+	{
+		return $this->accessType;
+	}
+	
+	public function accessType($accessType)
+	{
+		$this->accessType = $accessType;
+		return $this;
+	}
+	
 	public function build()
 	{
 		if($this->objectID == NULL)
@@ -139,14 +152,22 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 			&& $this->directive != AccessControlRuleObject::DIRECTIVE_ALLOW)
 			throw new IllegalModelStateException('Invalid directive');
 		
-		if($this->entity == NULL)
-			throw new IllegalModelStateException('Invalid entity');
-		
 		if($this->entityType != AccessControlRuleObject::ENTITY_TYPE_ALL 
-			&& $this->scope != AccessControlRuleObject::ENTITY_TYPE_FRIENDS 
-			&& $this->scope != AccessControlRuleObject::ENTITY_TYPE_GROUP 
-			&& $this->scope != AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL)
+			&& $this->entityType != AccessControlRuleObject::ENTITY_TYPE_FRIENDS 
+			&& $this->entityType != AccessControlRuleObject::ENTITY_TYPE_GROUP 
+			&& $this->entityType != AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL)
 			throw new IllegalModelStateException('Invalid entityType');
+		
+		if(($this->entityType == AccessControlRuleObject::ENTITY_TYPE_ALL 
+				|| $this->entityType == AccessControlRuleObject::ENTITY_TYPE_FRIENDS) 
+			&& $this->entityID != AccessControlRuleObject::WILDCARD)
+			throw new IllegalModelStateException('Invalid combination of entityType and entityID');
+		
+		if($this->entityType == AccessControlRuleObject::ENTITY_TYPE_GROUP && !UOID::isValid($this->entityID))
+			throw new IllegalModelStateException('entityType GROUP requires a valid UOID as entityID');
+		
+		if($this->entityType == AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL && !GID::isValid($this->entityID))
+			throw new IllegalModelStateException('entityType INDIVIDUAL requires a valid GlobalID as entityID');
 		
 		if($this->targetType != AccessControlRuleObject::TARGET_TYPE_INTERFACE 
 			&& $this->scope != AccessControlRuleObject::TARGET_TYPE_CONTENT)
@@ -154,6 +175,12 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 		
 		if($this->target == NULL)
 			throw new IllegalModelStateException('Invalid target');
+		
+		if($this->accessType != AccessControlRuleObject::ACCESS_TYPE_R 
+			&& $this->accessType != AccessControlRuleObject::ACCESS_TYPE_W 
+			&& $this->accessType != AccessControlRuleObject::ACCESS_TYPE_RW 
+			&& $this->accessType != AccessControlRuleObject::WILDCARD)
+			throw new IllegalModelStateException('Invalid accessType');
 		
 		return new AccessControlRuleObject($this);
 	}

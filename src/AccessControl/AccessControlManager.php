@@ -90,12 +90,14 @@ abstract class AccessControlManager
 	 * 
 	 * @return boolean
 	 */
-	public function hasInterfaceAccessPriviledges($gid, $interface)
+	public function hasInterfaceAccessPriviledges($gid, $interface, $accessMethod = '*')
 	{
 		if($interface == '')
 			$interface = '*';
 		
 		$grantAccess = false;
+		
+		// TODO implement checks for distiction for R/W/RW/*
 		
 		try
 		{
