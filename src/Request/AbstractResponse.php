@@ -9,10 +9,10 @@ use sgoendoer\Sonic\Model\ResponseObjectBuilder;
 
 /**
  * AbstractResponse
- * version 20160129
+ * @version 20160129
  *
- * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
+ * @author Sebastian Goendoer
+ * @copyright Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 abstract class AbstractResponse
 {
@@ -34,6 +34,7 @@ abstract class AbstractResponse
 				. $this->headers[SONIC_HEADER__PLATFORM_GID]
 				. $this->headers[SONIC_HEADER__SOURCE_GID]
 				. $this->headers[SONIC_HEADER__RANDOM]
+				. $this->headers[SONIC_HEADER__PAYLOAD_ENC]
 				. $this->body;
 	}
 	
@@ -67,6 +68,10 @@ abstract class AbstractResponse
 			throw new MalformedResponseHeaderException("Malformed response: Header " . SONIC_HEADER__SOURCE_GID . " missing");
 		else if(!array_key_exists(SONIC_HEADER__PLATFORM_GID, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed response: Header " . SONIC_HEADER__PLATFORM_GID . " missing");
+		if(!array_key_exists(SONIC_HEADER__PAYLOAD_ENC, $this->headers))
+			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__PAYLOAD_ENC . " missing");
+		if($this->headers[SONIC_HEADER__PAYLOAD_ENC] != 1 && $this->headers[SONIC_HEADER__PAYLOAD_ENC] != 0)
+			throw new MalformedRequestHeaderException("Malformed request: Invalid value for header " . SONIC_HEADER__PAYLOAD_ENC);
 		else return true;
 	}
 	
@@ -80,9 +85,7 @@ abstract class AbstractResponse
 		// TODO validate data and formats
 		if(!XSDDateTime::validateXSDDateTime($this->headers[SONIC_HEADER__DATE]))
 			throw new MalformedRequestHeaderException("Malformed response: Header " . SONIC_HEADER__DATE . " malformed: " . $this->headers[SONIC_HEADER__DATE]);
-		if(!XSDDateTime::validateXSDDateTime($this->headers[SONIC_HEADER__DATE]))
-			throw new MalformedRequestHeaderException("Malformed response: Header " . SONIC_HEADER__DATE . " malformed: " . $this->headers[SONIC_HEADER__DATE]);
-
+		
 		return true;
 	}
 	
@@ -107,7 +110,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonicExpectedGID header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getExpectedGID()
 	{
@@ -117,7 +120,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonicDate header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getHeaderDate()
 	{
@@ -127,7 +130,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonictargetAPI header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getHeaderTargetAPI()
 	{
@@ -137,7 +140,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonicRandom header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getHeaderRandom()
 	{
@@ -147,7 +150,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonicSignature header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getHeaderSignature()
 	{
@@ -157,7 +160,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonicPlatformGID header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getHeaderPlatformGID()
 	{
@@ -167,7 +170,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the value of the SonicSourceGID header
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getHeaderSourceGID()
 	{
@@ -175,9 +178,19 @@ abstract class AbstractResponse
 	}
 	
 	/**
+	 * returns the value of the 
+	 * 
+	 * @return int
+	 */
+	public function getHeaderPayloadEncryption()
+	{
+		return $this->headers[SONIC_HEADER__PAYLOAD_ENC];
+	}
+	
+	/**
 	 * returns an array of all headers
 	 * 
-	 * returns array
+	 * @return array
 	 */
 	public function getResponseHeaders()
 	{
@@ -187,27 +200,29 @@ abstract class AbstractResponse
 	/**
 	 * returns the body of the response
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getResponseBody()
 	{
+		if($this->body != '' && $this->getHeaderPayloadEncryption() == 1)
+			SocialRecordManager::retrieveSocialRecord($this->getHeaderSourceGID())->getAccountPublicKey();
 		return $this->body;
 	}
 	
 	/**
 	 * retrieves the request body as a ResponseObject 
 	 *
-	 * returns ResponseObject
+	 * @return ResponseObject
 	 */
 	public function getDecodedBody()
 	{
-		return ResponseObjectBuilder::buildFromJSON($this->body);
+		return ResponseObjectBuilder::buildFromJSON($this->getResponseBody());
 	}
 	
 	/**
 	 * retrieves the payload ("body") of the response as a string
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getPayload()
 	{
@@ -217,7 +232,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the HTTP status code of the response
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getResponseStatusCode()
 	{
@@ -227,7 +242,7 @@ abstract class AbstractResponse
 	/**
 	 * returns the status message of the response
 	 * 
-	 * returns string
+	 * @return string
 	 */
 	public function getResponseStatusMessage()
 	{

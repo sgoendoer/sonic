@@ -6,17 +6,18 @@ use sgoendoer\Sonic\Crypt\Random;
 use sgoendoer\Sonic\Crypt\Signature;
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Request\AbstractRequest;
+use sgoendoer\Sonic\Request\MalformedRequestException;
 
 /**
  * OutgoingRequest
- * version 20160111
+ * version 20161025
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class OutgoingRequest extends AbstractRequest
 {
-	public function __construct($expectedGID = NULL)
+	public function __construct()//$expectedGID = NULL)
 	{
 		$this->headers = array();
 		$this->headers[SONIC_HEADER__RANDOM] = Random::getRandom();
@@ -24,6 +25,7 @@ class OutgoingRequest extends AbstractRequest
 		$this->headers[SONIC_HEADER__TARGET_API] = SONIC_SDK__API_VERSION;
 		$this->headers[SONIC_HEADER__PLATFORM_GID] = Sonic::getPlatformGlobalID();
 		$this->headers[SONIC_HEADER__SOURCE_GID] = Sonic::getContextGlobalID();
+		$this->headers[SONIC_HEADER__PAYLOAD_ENC] = Configuration::getPayloadEncryption();
 	}
 	
 	public function send()
@@ -134,9 +136,12 @@ class OutgoingRequest extends AbstractRequest
 		$this->method = $method;
 	}
 	
-	public function setRequestBody($body)
+	public function setRequestBody($body = NULL)
 	{
-		$this->body = $body;
+		if($body != NULL && $this->getHeaderPayloadEncryption() == 1)
+			$this->body = Sonic::getContextAccountKeyPair()->encrypt($body);
+		else
+			$this->body = $body;
 	}
 	
 	public function setHeaderPlatformGID($gid)
@@ -159,9 +164,16 @@ class OutgoingRequest extends AbstractRequest
 		$this->headers[SONIC_HEADER__TARGET_API] = $api;
 	}
 	
-	Public function setHeaderAuthToken($token)
+	public function setHeaderAuthToken($token)
 	{
 		$this->headers[SONIC_HEADER__AUTH_TOKEN] = $token;
+	}
+	
+	public function setHeaderpayloadEncryption($payloadEncryption)
+	{
+		if($payloadEncryption != 1 && $payloadEncryption != 0)
+			throw MalformedRequestException("Malformed request: Invalid value for header " . SONIC_HEADER__PAYLOAD_ENC);
+		$this->headers[SONIC_HEADER__PAYLOAD_ENC] = $payloadEncryption;
 	}
 }
 

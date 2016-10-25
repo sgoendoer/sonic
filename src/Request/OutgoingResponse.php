@@ -1,6 +1,7 @@
 <?php namespace sgoendoer\Sonic\Request;
 
 use sgoendoer\Sonic\Sonic;
+use sgoendoer\Sonic\Config\Configuration;
 use sgoendoer\Sonic\Crypt\Random;
 use sgoendoer\Sonic\Crypt\Signature;
 use sgoendoer\Sonic\Date\XSDDateTime;
@@ -9,7 +10,7 @@ use sgoendoer\Sonic\Request\MalformedResponseException;
 
 /**
  * OutgoingResponse
- * version 20160509
+ * version 20161025
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -27,6 +28,7 @@ class OutgoingResponse extends AbstractResponse
 		$this->headers[SONIC_HEADER__TARGET_API]	= SONIC_SDK__API_VERSION;
 		$this->headers[SONIC_HEADER__PLATFORM_GID]	= Sonic::getPlatformGlobalID();
 		$this->headers[SONIC_HEADER__SOURCE_GID]	= Sonic::getContextGlobalID();
+		$this->headers[SONIC_HEADER__PAYLOAD_ENC]	= Configuration::getPayloadEncryption();
 		
 		$this->statusCode = 200;
 		$this->statusMessage = 'OK';
@@ -40,7 +42,7 @@ class OutgoingResponse extends AbstractResponse
 	public function send()
 	{
 		if(!$this->verify())
-			throw new \MalformesResponseException("Malformed response");
+			throw new MalformesResponseException("Malformed response");
 		else
 		{
 			http_response_code($this->statusCode);
@@ -108,6 +110,14 @@ class OutgoingResponse extends AbstractResponse
 	public function setHeaderTargetAPI($api)
 	{
 		$this->headers[SONIC_HEADER__TARGET_API] = $api;
+	}
+	
+	/**
+	 * sets the SonicPayloadEncryption header
+	 */
+	public function setHeaderPayloadEncryption($payloadEncryption = 0)
+	{
+		$this->headers[SONIC_HEADER__PAYLOAD_ENC] = $payloadEncryption;
 	}
 }
 

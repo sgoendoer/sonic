@@ -2,7 +2,7 @@
 
 /**
  * Configuration
- * version 20160201
+ * version 20161025
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -14,10 +14,11 @@ class Configuration
 	private static $apiPath				= '/sonic/';
 	private static $timezone			= 'Europe/Berlin';
 	private static $verbose				= 0; // 0: log nothing, 1: log errors, 2: log info, 3: log everything
-	private static $curlVerbose			= 0;
-	private static $requestTimeout		= 10;
-	private static $gslsTimeout			= 4;
+	private static $curlVerbose			= 0; // 0 or 1
+	private static $requestTimeout		= 10; // in seconds
+	private static $gslsTimeout			= 4; // in seconds
 	private static $logfile				= 'sonic.log';
+	private static $payloadEncryption	= 0; // 0 or 1
 	
 	private function __construct() {}
 	private function __clone() {}
@@ -37,6 +38,7 @@ class Configuration
 		if(array_key_exists('requestTimeout')) self::$requestTimeout = $config['requestTimeout'];
 		if(array_key_exists('gslsTimeout')) self::$gslsTimeout = $config['gslsTimeout'];
 		if(array_key_exists('logfile')) self::$logfile = $config['logfile'];
+		if(array_key_exists('payloadEncryption')) self::$payloadEncryption = $config['payloadEncryption'];
 	}
 	
 	public static function getPrimaryGSLSNode()
@@ -127,6 +129,16 @@ class Configuration
 	public static function setLogfile($logfile)
 	{
 		self::$logfile = $logfile;
+	}
+	
+	public static function getPayloadEncryption()
+	{
+		return self::$payloadEncryption;
+	}
+	
+	public static function setPayloadEncryption($payloadEncryption)
+	{
+		self::$payloadEncryption = $payloadEncryption;
 	}
 }
 

@@ -8,7 +8,7 @@ use sgoendoer\Sonic\Request\MalformedRequestHeaderException;
 
 /**
  * AbstractRequest
- * version 20160111
+ * version 20161025
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -31,6 +31,7 @@ abstract class AbstractRequest
 				. $this->headers[SONIC_HEADER__PLATFORM_GID]
 				. $this->headers[SONIC_HEADER__SOURCE_GID]
 				. $this->headers[SONIC_HEADER__RANDOM]
+				. $this->headers[SONIC_HEADER__PAYLOAD_ENC]
 				. $this->body;
 	}
 	
@@ -43,17 +44,21 @@ abstract class AbstractRequest
 	{
 		if(!array_key_exists(SONIC_HEADER__TARGET_API, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__TARGET_API . " missing");
-		else if(!array_key_exists(SONIC_HEADER__SOURCE_GID, $this->headers))
+		if(!array_key_exists(SONIC_HEADER__SOURCE_GID, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__SOURCE_GID . " missing");
-		else if(!array_key_exists(SONIC_HEADER__PLATFORM_GID, $this->headers))
+		if(!array_key_exists(SONIC_HEADER__PLATFORM_GID, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__PLATFORM_GID . " missing");
-		else if(!array_key_exists(SONIC_HEADER__DATE, $this->headers))
+		if(!array_key_exists(SONIC_HEADER__DATE, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__DATE . " missing");
-		else if(!array_key_exists(SONIC_HEADER__SIGNATURE, $this->headers))
+		if(!array_key_exists(SONIC_HEADER__SIGNATURE, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__SIGNATURE . " missing");
-		else if(!array_key_exists(SONIC_HEADER__RANDOM, $this->headers))
+		if(!array_key_exists(SONIC_HEADER__RANDOM, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__RANDOM . " missing");
-		else return true;
+		if(!array_key_exists(SONIC_HEADER__PAYLOAD_ENC, $this->headers))
+			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__PAYLOAD_ENC . " missing");
+		if($this->headers[SONIC_HEADER__PAYLOAD_ENC] != 1 && $this->headers[SONIC_HEADER__PAYLOAD_ENC] != 0)
+			throw new MalformedRequestHeaderException("Malformed request: Invalid value for header " . SONIC_HEADER__PAYLOAD_ENC);
+		return true;
 	}
 	
 	protected function verifyDataFormat()
@@ -109,6 +114,11 @@ abstract class AbstractRequest
 		return $this->headers[SONIC_HEADER__AUTH_TOKEN];
 	}
 	
+	public function getHeaderPayloadEncryption()
+	{
+		return $this->headers[SONIC_HEADER__PAYLOAD_ENC];
+	}
+	
 	public function getHeaders()
 	{
 		return $this->headers;
@@ -116,6 +126,8 @@ abstract class AbstractRequest
 	
 	public function getBody()
 	{
+		if($this->body != '' && $this->getHeaderPayloadEncryption() == 1)
+			SocialRecordManager::retrieveSocialRecord($this->getHeaderSourceGID())->getAccountPublicKey();
 		return $this->body;
 	}
 	
