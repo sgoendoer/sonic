@@ -11,6 +11,29 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 - cURL 7.20.0+
 - composer
 
+## Changelog
+
+#### 0.2.5
+- Added more unit tests
+- Added feature negotiation functionality
+- Various fixes and improvements
+
+#### 0.2.0
+- Added more unit tests
+- Added migration functionality
+- Added search functionality
+- Various fixes and improvements
+
+#### 0.1.9
+- Added unit tests
+- Added logging support
+- Code cleanup
+- Removed unused classes/functions
+- Various fixes and improvements
+
+#### 0.1.0
+- Initial release
+
 ## Installation
 
 Install via composer with
@@ -123,8 +146,8 @@ try {
 	$profile = ProfileObjectBuilder::buildFromJSON($response->getPayload());
 	
 	echo $profile->getJSONString() . "\n\n";
-} catch (\Exception $e)
-{}
+} catch (\Exception $e) {
+}
 ?>
 ```
 
