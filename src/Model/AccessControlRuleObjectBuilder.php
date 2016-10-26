@@ -178,7 +178,6 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 		
 		if($this->accessType != AccessControlRuleObject::ACCESS_TYPE_R 
 			&& $this->accessType != AccessControlRuleObject::ACCESS_TYPE_W 
-			&& $this->accessType != AccessControlRuleObject::ACCESS_TYPE_RW 
 			&& $this->accessType != AccessControlRuleObject::WILDCARD)
 			throw new IllegalModelStateException('Invalid accessType');
 		

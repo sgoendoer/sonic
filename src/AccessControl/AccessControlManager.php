@@ -69,17 +69,15 @@ abstract class AccessControlManager
 		{
 			$rules = $this->loadAccessControlRulesForUOID($gid, $uoid);
 			
-			$grantAccess = $this->executeAccessControlRules($gid, $rules);
+			return $this->executeAccessControlRules($gid, $rules);
 		}
 		catch (AccessControlManagerException $e)
 		{
 			if($this->baseDirectiveInterface == AccessControlManager::DIRECTIVE_DENY)
-				$grantAccess = false;
+				return false;
 			else
-				$grantAccess = true;
+				return true;
 		}
-		
-		return $grantAccess;
 	}
 	
 	/**
@@ -95,25 +93,39 @@ abstract class AccessControlManager
 		if($interface == '')
 			$interface = '*';
 		
-		$grantAccess = false;
-		
-		// TODO implement checks for distiction for R/W/RW/*
+		// TODO implement checks for distiction for R/W/*
 		
 		try
 		{
 			$rules = $this->loadAccessControlRulesForInterface($gid, $interface);
 			
-			$grantAccess = $this->executeAccessControlRules($gid, $rules);
+			// filter out rules with wrong access type
+			if($accessMethod == AccessControlRuleObject::ACCESS_TYPE_W)
+			{
+				foreach($rules as $id => $rule)
+				{
+					if($rule->getAccessType() == AccessControlRuleObject::ACCESS_TYPE_R)
+						unset($rules[$id]);
+				}
+			}
+			elseif($accessMethod == AccessControlRuleObject::ACCESS_TYPE_R)
+			{
+				foreach($rules as $id => $rule)
+				{
+					if($rule->getAccessType() == AccessControlRuleObject::ACCESS_TYPE_W)
+						unset($rules[$id]);
+				}
+			}
+			
+			return $this->executeAccessControlRules($gid, $rules);
 		}
 		catch (AccessControlManagerException $e)
 		{
 			if($this->baseDirectiveInterface == AccessControlManager::DIRECTIVE_DENY)
-				$grantAccess = false;
+				return false;
 			else
-				$grantAccess = true;
+				return true;
 		}
-		
-		return $grantAccess;
 	}
 	
 	private function executeAccessControlRules($gid, $rules)

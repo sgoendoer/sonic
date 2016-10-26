@@ -41,7 +41,6 @@ class AccessControlRuleObject extends Object
 	
 	const ACCESS_TYPE_READ				= 'R';
 	const ACCESS_TYPE_WRITE				= 'W';
-	const ACCESS_TYPE_READWRITE			= 'RW';
 	
 	const WILDCARD						= '*';
 	
