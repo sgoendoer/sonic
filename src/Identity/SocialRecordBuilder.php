@@ -19,6 +19,7 @@ use sgoendoer\Sonic\Identity\SocialRecordFormatException;
 class SocialRecordBuilder
 {
 	private $type				= NULL;
+	private $version			= NULL;
 	private $globalID			= NULL;	// global id
 	private $platformGID		= NULL;
 	private $displayName		= NULL;	// human readable name
@@ -50,6 +51,8 @@ class SocialRecordBuilder
 			throw new SocialRecordFormatException('SocialRecord: Property globalID missing!');
 		if(!property_exists($jsonObject, 'type'))
 			throw new SocialRecordFormatException('SocialRecord: Property type missing!');
+		if(!property_exists($jsonObject, 'version'))
+			throw new SocialRecordFormatException('SocialRecord: Property version missing!');
 		if(!property_exists($jsonObject, 'displayName'))
 			throw new SocialRecordFormatException('SocialRecord: Property displayName missing!');
 		if(!property_exists($jsonObject, 'profileLocation'))
@@ -76,6 +79,7 @@ class SocialRecordBuilder
 		
 		return (new SocialRecordBuilder())
 				->type($jsonObject->type)
+				->version($jsonObject->version)
 				->globalID($jsonObject->globalID)
 				->platformGID($jsonObject->platformGID)
 				->displayName($jsonObject->displayName)
@@ -99,6 +103,20 @@ class SocialRecordBuilder
 	public function type($type)
 	{
 		$this->type = $type;
+		
+		return $this;
+	}
+	
+	/**
+	 * Set the version
+	 * 
+	 * @param $version (String) The version of the SocialRecord
+	 * 
+	 * @return SocialRecordBuilder
+	 */
+	public function version($version)
+	{
+		$this->version = $version;
 		
 		return $this;
 	}
@@ -257,6 +275,16 @@ class SocialRecordBuilder
 	}
 	
 	/**
+	 * Get the value for the parameter version
+	 * 
+	 * @return The version (int)
+	 */
+	public function getVersion()
+	{
+		return $this->version;
+	}
+	
+	/**
 	 * Get the value for the parameter globalID
 	 * 
 	 * @return The globalID (String)
@@ -375,9 +403,13 @@ class SocialRecordBuilder
 			throw new SocialRecordFormatException('SocialRecord: accountPublicKey must be specified for instantiation');
 		if($this->type == NULL)
 			throw new SocialRecordFormatException('SocialRecord: type must be specified for instantiation');
+		if($this->version == NULL)
+			throw new SocialRecordFormatException('SocialRecord: version must be specified for instantiation');
 		
 		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER)
 			throw new SocialRecordFormatException('SocialRecord: Invalid type value [' . $this->type . ']');
+		if(!is_numeric($this->version))
+			throw new SocialRecordFormatException('SocialRecord: version must be an integer');
 		
 		if($this->salt == NULL)
 			$this->salt = Random::getRandom(SocialRecord::SALT_CHARS);

@@ -24,6 +24,7 @@ class SocialRecord
 	const SALT_CHARS			= 8;
 	
 	private $type				= NULL;
+	private $version			= NULL;
 	private $globalID			= NULL;	// global id
 	private $platformGID		= NULL;
 	private $displayName		= NULL;	// human readable name
@@ -38,6 +39,7 @@ class SocialRecord
 	public function __construct(SocialRecordBuilder $builder)
 	{
 		$this->setType($builder->getType());
+		$this->setVersion($builder->getVersion());
 		$this->setGlobalID($builder->getGlobalID());
 		$this->setPlatformGID($builder->getPlatformGID());
 		$this->setDisplayName($builder->getDisplayName());
@@ -71,6 +73,7 @@ class SocialRecord
 				. '"@context":"' .			SocialRecord::JSONLD_CONTEXT . '",'
 				. '"@type":"' .				SocialRecord::JSONLD_TYPE . '",'
 				. '"type":"' .				$this->type . '",'
+				. '"version":"' .			$this->version . '",'
 				. '"globalID":"' .			$this->globalID . '",'
 				. '"platformGID":"' .		$this->platformGID . '",'
 				. '"displayName":"' .		$this->displayName . '",'
@@ -115,6 +118,9 @@ class SocialRecord
 		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER)
 			throw new SocialRecordFormatException('invalid type value [' . $this->type . ']');
 		
+		if(!is_numeric($this->version))
+			throw new SocialRecordFormatException('invalid version value [' . $this->version . ']');
+		
 		if(!GID::isValid($this->globalID))
 			throw new SocialRecordFormatException('invalid globalID value');
 			
@@ -137,6 +143,13 @@ class SocialRecord
 	public function setType($type)
 	{
 		$this->type = $type;
+		
+		return $this;
+	}
+	
+	public function setVersion($version)
+	{
+		$this->version = $version;
 		
 		return $this;
 	}
@@ -212,6 +225,11 @@ class SocialRecord
 	public function getType()
 	{
 		return $this->type;
+	}
+	
+	public function getVersion()
+	{
+		return $this->version;
 	}
 	
 	public function getGlobalID()
