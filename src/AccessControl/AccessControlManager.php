@@ -248,6 +248,8 @@ abstract class AccessControlManager
 	 * AND 
 	 * (entity_id = '$gid' OR entity_id = '*')
 	 * AND
+	 * (access_type = 'R' OR access_type = '*')
+	 * AND
 	 * target = '$interface'
 	 * ORDER BY index ASC
 	 * 
