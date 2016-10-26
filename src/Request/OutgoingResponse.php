@@ -10,7 +10,7 @@ use sgoendoer\Sonic\Request\MalformedResponseException;
 
 /**
  * OutgoingResponse
- * version 20161025
+ * version 20161026
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -20,8 +20,13 @@ class OutgoingResponse extends AbstractResponse
 	/**
 	 * constructor for building a Sonic compliant HTTP response.
 	 */
-	public function __construct()
+	public function __construct($targetGID = NULL)
 	{
+		if(!GID::isValid($targetGID))
+			throw new MalformedRequestException('Invalid GlobalID: [' . $targetGID . ']');
+		else
+			$this->targetGID = $targetGID;
+		
 		$this->headers = array();
 		$this->headers[SONIC_HEADER__RANDOM]		= Random::getRandom();
 		$this->headers[SONIC_HEADER__DATE]			= XSDDateTime::getXSDDatetime();
@@ -75,9 +80,13 @@ class OutgoingResponse extends AbstractResponse
 	/**
 	 * sets the response's body
 	 */
-	public function setResponseBody($body)
+	public function setResponseBody($body = NULL)
 	{
-		$this->body = $body;
+		if($body != NULL && $body != '' && $this->getHeaderPayloadEncryption() == 1)
+			$this->body = (new PublicKey(SocialRecordManager::retrieveSocialRecord($this->targetedGID)->getAccountPublicKey()))
+						->encrypt($body);
+		else
+			$this->body = $body;
 	}
 	
 	/**

@@ -10,15 +10,20 @@ use sgoendoer\Sonic\Request\MalformedRequestException;
 
 /**
  * OutgoingRequest
- * version 20161025
+ * version 20161026
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class OutgoingRequest extends AbstractRequest
 {
-	public function __construct()//$expectedGID = NULL)
+	public function __construct($targetGID = NULL)//$expectedGID = NULL)
 	{
+		if(!GID::isValid($targetGID))
+			throw new MalformedRequestException('Invalid GlobalID: [' . $targetGID . ']');
+		else
+			$this->targetGID = $targetGID;
+		
 		$this->headers = array();
 		$this->headers[SONIC_HEADER__RANDOM] = Random::getRandom();
 		$this->headers[SONIC_HEADER__DATE] = XSDDateTime::getXSDDatetime();
@@ -138,8 +143,9 @@ class OutgoingRequest extends AbstractRequest
 	
 	public function setRequestBody($body = NULL)
 	{
-		if($body != NULL && $this->getHeaderPayloadEncryption() == 1)
-			$this->body = Sonic::getContextAccountKeyPair()->encrypt($body);
+		if($body != NULL && $body != '' && $this->getHeaderPayloadEncryption() == 1)
+			$this->body = (new PublicKey(SocialRecordManager::retrieveSocialRecord($this->targetedGID)->getAccountPublicKey()))
+						->encrypt($body);
 		else
 			$this->body = $body;
 	}
@@ -169,7 +175,7 @@ class OutgoingRequest extends AbstractRequest
 		$this->headers[SONIC_HEADER__AUTH_TOKEN] = $token;
 	}
 	
-	public function setHeaderpayloadEncryption($payloadEncryption)
+	public function setHeaderPayloadEncryption($payloadEncryption)
 	{
 		if($payloadEncryption != 1 && $payloadEncryption != 0)
 			throw MalformedRequestException("Malformed request: Invalid value for header " . SONIC_HEADER__PAYLOAD_ENC);

@@ -16,6 +16,7 @@ use sgoendoer\Sonic\Model\ResponseObjectBuilder;
  */
 abstract class AbstractResponse
 {
+	protected $targetedGID		= NULL;
 	protected $expectedGID		= NULL;
 	protected $statusCode		= NULL;
 	protected $statusMessage	= NULL;
@@ -178,7 +179,7 @@ abstract class AbstractResponse
 	}
 	
 	/**
-	 * returns the value of the 
+	 * returns the value of the SonicPayloadEncryptionH header
 	 * 
 	 * @return int
 	 */
@@ -200,13 +201,27 @@ abstract class AbstractResponse
 	/**
 	 * returns the body of the response
 	 * 
+	 * @deprecated Use getBody() instead
 	 * @return string
 	 */
-	public function getResponseBody()
+	public function getResponseBody($raw = false)
 	{
-		if($this->body != '' && $this->getHeaderPayloadEncryption() == 1)
-			SocialRecordManager::retrieveSocialRecord($this->getHeaderSourceGID())->getAccountPublicKey();
-		return $this->body;
+		return $this->getBody($raw);
+	}
+	
+	/**
+	 * returns the body of the response
+	 * 
+	 * @param $raw boolean If true, the contents - if encrypted - are returned encrypted. Default is false
+	 * 
+	 * @return string The body's contents
+	 */
+	public function getBody($raw = false)
+	{
+		if($this->body != '' && $this->getHeaderPayloadEncryption() == 1 && $raw == true)
+			return Sonic::getContextAccountKeyPair()->decrypt($this->body);
+		else
+			return $this->body;
 	}
 	
 	/**

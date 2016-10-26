@@ -27,8 +27,8 @@ abstract class AbstractRequestBuilder
 	{
 		if(!GID::isValid($targetGID))
 			throw new MalformedRequestException('Invalid GlobalID: [' . $targetGID . ']');
-		
-		$this->targetGID = $targetGID;
+		else
+			$this->targetGID = $targetGID;
 		
 		try
 		{
@@ -42,7 +42,7 @@ abstract class AbstractRequestBuilder
 	
 	protected function sendHttpGETRequest($host, $path, $headers = NULL)
 	{
-		$this->request = new OutgoingRequest();
+		$this->request = new OutgoingRequest($this->targetGID);
 		
 		$this->request->setServer($host);
 		$this->request->setPath($path);
@@ -53,7 +53,7 @@ abstract class AbstractRequestBuilder
 	
 	protected function sendHttpPOSTRequest($host, $path, $body = NULL, $headers = NULL)
 	{
-		$this->request = new OutgoingRequest();
+		$this->request = new OutgoingRequest($this->targetGID);
 		
 		$this->request->setServer($host);
 		$this->request->setPath($path);
@@ -65,7 +65,7 @@ abstract class AbstractRequestBuilder
 	
 	protected function sendHttpPUTRequest($host, $path, $body = NULL, $headers = NULL)
 	{
-		$this->request = new OutgoingRequest();
+		$this->request = new OutgoingRequest($this->targetGID);
 		
 		$this->request->setServer($host);
 		$this->request->setPath($path);
@@ -77,7 +77,7 @@ abstract class AbstractRequestBuilder
 	
 	protected function sendHttpDELETERequest($host, $path, $headers = NULL)
 	{
-		$this->request = new OutgoingRequest();
+		$this->request = new OutgoingRequest($this->targetGID);
 		
 		$this->request->setServer($host);
 		$this->request->setPath($path);

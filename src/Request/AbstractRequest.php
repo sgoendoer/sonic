@@ -8,19 +8,23 @@ use sgoendoer\Sonic\Request\MalformedRequestHeaderException;
 
 /**
  * AbstractRequest
- * version 20161025
+ * version 20161026
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 abstract class AbstractRequest
 {
+	protected $targetGID		= NULL;
 	protected $method			= NULL; // scheme, i.e. http or https
 	protected $server			= NULL; // profile location, i.e. the domain and path to the api
 	protected $port				= NULL; // unused as of now
 	protected $path				= NULL; // path of the url without apiRoot and domain
 	protected $headers			= NULL;
 	protected $body				= NULL;
+	
+	public function __construct()
+	{}
 	
 	public function getStringForRequestSignature()
 	{
@@ -56,8 +60,6 @@ abstract class AbstractRequest
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__RANDOM . " missing");
 		if(!array_key_exists(SONIC_HEADER__PAYLOAD_ENC, $this->headers))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__PAYLOAD_ENC . " missing");
-		if($this->headers[SONIC_HEADER__PAYLOAD_ENC] != 1 && $this->headers[SONIC_HEADER__PAYLOAD_ENC] != 0)
-			throw new MalformedRequestHeaderException("Malformed request: Invalid value for header " . SONIC_HEADER__PAYLOAD_ENC);
 		return true;
 	}
 	
@@ -66,6 +68,8 @@ abstract class AbstractRequest
 		// TODO validate data and formats
 		if(!XSDDateTime::validateXSDDateTime($this->headers[SONIC_HEADER__DATE]))
 			throw new MalformedRequestHeaderException("Malformed request: Header " . SONIC_HEADER__DATE . " malformed: " . $this->headers[SONIC_HEADER__DATE]);
+		if($this->headers[SONIC_HEADER__PAYLOAD_ENC] != 1 && $this->headers[SONIC_HEADER__PAYLOAD_ENC] != 0)
+			throw new MalformedRequestHeaderException("Malformed request: Invalid value for header " . SONIC_HEADER__PAYLOAD_ENC);
 		
 		return true;
 	}
@@ -124,11 +128,19 @@ abstract class AbstractRequest
 		return $this->headers;
 	}
 	
-	public function getBody()
+	/**
+	 * returns the request's body
+	 * 
+	 * @param $raw boolean If true, the contents - if encrypted - are returned encrypted. Default is false
+	 * 
+	 * @return string The body's contents
+	 */
+	public function getBody($raw = false)
 	{
-		if($this->body != '' && $this->getHeaderPayloadEncryption() == 1)
-			SocialRecordManager::retrieveSocialRecord($this->getHeaderSourceGID())->getAccountPublicKey();
-		return $this->body;
+		if($this->body != '' && $this->getHeaderPayloadEncryption() == 1 && $raw == true)
+			return Sonic::getContextAccountKeyPair()->decrypt($this->body);
+		else
+			return $this->body;
 	}
 	
 	public function getMethod()

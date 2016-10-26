@@ -12,6 +12,9 @@ use sgoendoer\Sonic\Request\AbstractRequest;
  */
 class IncomingRequest extends AbstractRequest
 {
+	/**
+	 * constructor that reads all data from the incoming HTTP request
+	 */ 
 	public function __construct()
 	{
 		$this->server = $_SERVER['SERVER_NAME']; // <- domain
@@ -29,6 +32,8 @@ class IncomingRequest extends AbstractRequest
 	
 	/**
 	 * extracts the GID from the path
+	 * 
+	 * @return string returns the targeted GlobalID
 	 */
 	public function getTargetedGID()
 	{
