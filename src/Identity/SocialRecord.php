@@ -8,10 +8,10 @@ use sgoendoer\json\JSONObject;
 
 /**
  * SocialRecord class
- * version 20160513
+ * @version 20160513
  *
- * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
+ * @author Sebastian Goendoer
+ * @copyright Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SocialRecord
 {

@@ -11,10 +11,10 @@ use sgoendoer\Sonic\Identity\SocialRecordFormatException;
 
 /**
  * SocialRecordBuilder
- * version 20160513
+ * @version 20160513
  *
- * author: Sebastian Goendoer
- * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
+ * @author Sebastian Goendoer
+ * @copyright Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class SocialRecordBuilder
 {
