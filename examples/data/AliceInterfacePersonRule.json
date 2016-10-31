@@ -1,0 +1,13 @@
+{
+	"@context":		"http://sonic-project.net/",
+	"@type":		"AccessControlRule",
+	"objectID":		"4802C8DE6UZZ5BICQI830A8P8BW3YB5EBPGXWNRH1EP7H838V7:3cab7c314abf4134",
+	"owner":		"4802C8DE6UZZ5BICQI830A8P8BW3YB5EBPGXWNRH1EP7H838V7",
+	"index":		"0",
+	"directive":	"DENY",
+	"entityType":	"ALL",
+	"entityID":		"*",
+	"targetType":	"INTERFCAE",
+	"target":		"person",
+	"accessType":	"RW"
+}
