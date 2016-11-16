@@ -14,8 +14,16 @@ class PersonAPIExample
 		// $response->getPayload(); <-- the actual object data
 		// $response->getResponseBody(); <-- the complete response body
 		
-		// return the Person object from the responses payload
-		return PersonObjectBuilder::buildFromJSON($response->getPayload());
+		if($response->getResponseStatusCode() != 200)
+		{
+			// in case the request returned something else thatn a 200
+			throw new \Exception('Request failed with status code ' . $response->getResponseStatusCode());
+		}
+		else
+		{
+			// return the Person object from the responses payload
+			return PersonObjectBuilder::buildFromJSON($response->getPayload());
+		}
 	}
 }
 
