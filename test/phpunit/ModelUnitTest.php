@@ -106,7 +106,7 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 		Sonic::setContext(Sonic::CONTEXT_USER);
 	}
 	
-	// ACCESSCONTROLRULE /////////////////////////////////////////////////////////////////////////////////////////////////////////
+	// ACCESSCONTROLRULE ///////////////////////////////////////////////////////////////////////////////////////////////
 	
 	public function testAccessControlRule()
 	{
@@ -124,6 +124,21 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 					
 		$this->assertTrue($rule->validate());
 		$this->assertEquals($rule, AccessControlRuleObjectBuilder::buildFromJSON($rule->getJSONString()));
+	}
+	
+	// ACCESSCONTROLGROUP //////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testAccessControlGroup()
+	{
+		$group = (new AccessControlGroupObjectBuilder())
+					->objectID(UOID::createUOID())
+					->owner(Sonic::getUserGlobalID())
+					->displayName('testgroupname')
+					->members(array('28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF'))
+					->build();
+					
+		$this->assertTrue($group->validate());
+		$this->assertEquals($group, AccessControlGroupObjectBuilder::buildFromJSON($group->getJSONString()));
 	}
 	
 	// PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////
