@@ -66,7 +66,7 @@ class AccessControlManagerExample extends AccessControlManager
 	 * 
 	 * @return boolean True if user $gid is a friend, else false
 	 */
-	abstract public function isAFriend($gid1, $gid2)
+	public function isAFriend($gid1, $gid2)
 	{
 		if($gid1 == '4802C8DE6UZZ5BICQI830A8P8BW3YB5EBPGXWNRH1EP7H838V7' && $gid2 == '28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF') return true;
 	}

@@ -12,13 +12,13 @@ try
 	// importing SocialRecord objects to work with
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	// Load SocialRecords from files to instatiaze the Sonic framework
-	$srp = SocialRecordManager::importSocialRecord(file_get_contents(__DIR__ . 'data/SRPlatform.json'));
+	// load SocialRecords from files to instatiaze the Sonic framework
+	$srp = SocialRecordManager::importSocialRecord(file_get_contents(__DIR__ . '/data/SRPlatform.json'));
 	$platformSocialRecord = $srp['socialRecord'];
 	$platformAccountKeyPair = $srp['accountKeyPair'];
 	$platformPersonalKeyPair = $srp['personalKeyPair'];
 	
-	$sra = SocialRecordManager::importSocialRecord(file_get_contents(__DIR__ . 'data/SRAlice.json'));
+	$sra = SocialRecordManager::importSocialRecord(file_get_contents(__DIR__ . '/data/SRAlice.json'));
 	$userSocialRecord = $sra['socialRecord'];
 	$userAccountKeyPair = $sra['accountKeyPair'];
 	$userPersonalKeyPair = $sra['personalKeyPair'];

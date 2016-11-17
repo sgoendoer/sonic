@@ -3,8 +3,15 @@
 require_once(__DIR__ . '/../vendor/autoload.php');
 
 use sgoendoer\Sonic\Sonic;
+use sgoendoer\Sonic\Configuration\Configuration;
 use sgoendoer\Sonic\Identity\EntityAuthData;
 use sgoendoer\Sonic\Identity\SocialRecordManager;
+use sgoendoer\Sonic\AccessControl\AccessControlManager;
+
+use sgoendoer\Sonic\examples\SocialRecordCachingExample;
+use sgoendoer\Sonic\examples\UniqueIDManagerExample;
+use sgoendoer\Sonic\examples\PersonAPIExample;
+use sgoendoer\Sonic\examples\LikeAPIExample;
 
 try
 {
@@ -51,9 +58,6 @@ try
 	// setting up managers
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-	// setting a AccessPermissionManager
-	$sonic->setAccessControlManager(new AccessControlManagerExample(AccessControlManager::DIRECTIVE_ALLOW, AccessControlManager::DIRECTIVE_DENY));
-	
 	// setting up SocialRecordCaching
 	$sonic->setSocialRecordCaching(new SocialRecordCacheExample());
 	
@@ -65,9 +69,13 @@ try
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	$globalIDBob = '28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF';
+	$someObjectIDOfBob = '28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF:e86d00b02bffd141';
 	
-	// doing a GET request
-	PersonAPIExample::performGETPersonRequest($globalIDBob);
+	// doing a GET request for resource PERSON
+	$personObject = PersonAPIExample::performGETPersonRequest($globalIDBob);
+	
+	// doing a POST request for resource LIKE
+	LikeAPIExample::performPOSTLikeRequest($globalIDBob, $someObjectIDOfBob);
 }
 catch(\Exception $e)
 {

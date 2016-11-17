@@ -1,5 +1,10 @@
 <?php namespace sgoendoer\Sonic\examples;
 
+use sgoendoer\Sonic\Sonic;
+use sgoendoer\Sonic\API\PersonRequestBuilder;
+use sgoendoer\Sonic\Model\PersonObject;
+use sgoendoer\Sonic\Model\PersonObjectBuilder;
+
 class PersonAPIExample
 {
 	public static function performGETPersonRequest($targetedGID)
