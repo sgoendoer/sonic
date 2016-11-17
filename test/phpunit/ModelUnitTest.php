@@ -46,6 +46,9 @@ use sgoendoer\Sonic\Model\ResponseObjectBuilder;
 use sgoendoer\Sonic\Model\SearchQueryObjectBuilder;
 use sgoendoer\Sonic\Model\SearchResultObjectBuilder;
 use sgoendoer\Sonic\Model\SearchResultCollectionObjectBuilder;
+use sgoendoer\Sonic\Model\AccessControlRuleObjectBuilder;
+use sgoendoer\Sonic\Model\AccessControlRuleObject;
+use sgoendoer\Sonic\Model\AccessControlGroupObjectBuilder;
 
 use sgoendoer\esquery\ESQueryBuilder;
 use sgoendoer\json\JSONObject;
@@ -101,6 +104,26 @@ class ModelUnitTest extends PHPUnit_Framework_TestCase
 		
 		Sonic::setUserAuthData(new EntityAuthData($this->aliceSocialRecord, $this->aliceAccountKeyPair));
 		Sonic::setContext(Sonic::CONTEXT_USER);
+	}
+	
+	// ACCESSCONTROLRULE /////////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testAccessControlRule()
+	{
+		$rule = (new AccessControlRuleObjectBuilder())
+					->objectID(UOID::createUOID())
+					->owner(Sonic::getUserGlobalID())
+					->index(0)
+					->directive(AccessControlRuleObject::DIRECTIVE_ALLOW)
+					->entityType(AccessControlRuleObject::ENTITY_TYPE_ALL)
+					->entityID(AccessControlRuleObject::WILDCARD)
+					->targetType(AccessControlRuleObject::TARGET_TYPE_INTERFACE)
+					->target('person')
+					->accessType(AccessControlRuleObject::ACCESS_TYPE_WRITE)
+					->build();
+					
+		$this->assertTrue($rule->validate());
+		$this->assertEquals($rule, AccessControlRuleObjectBuilder::buildFromJSON($rule->getJSONString()));
 	}
 	
 	// PROFILE /////////////////////////////////////////////////////////////////////////////////////////////////////////
