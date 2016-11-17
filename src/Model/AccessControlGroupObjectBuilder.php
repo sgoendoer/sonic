@@ -29,14 +29,14 @@ class AccessControlGroupObjectBuilder extends ObjectBuilder
 				->owner($jsonObject->owner)
 				->displayName($jsonObject->displayName);
 				
-				$members = array();
-				foreach($jsonObject->members as $member)
-					$members[] = $member;
-				
-				asort($members);
-				$builder->members($members);
-				
-				$builder->build();
+		$members = array();
+		foreach($jsonObject->members as $member)
+			$members[] = $member;
+		
+		asort($members);
+		$builder->members($members);
+		
+		return $builder->build();
 	}
 	
 	public function getOwner()
