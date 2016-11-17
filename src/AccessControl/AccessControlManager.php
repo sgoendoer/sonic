@@ -3,6 +3,7 @@
 use sgoendoer\Sonic\AccessControl\AccessControlGroupManager;
 use sgoendoer\Sonic\AccessControl\AccessControlException;
 use sgoendoer\Sonic\AccessControl\AccessControlManagerException;
+use sgoendoer\Sonic\Identity\UOID;
 use sgoendoer\Sonic\Model\AccessControlRuleObject;
 
 /**
@@ -100,19 +101,19 @@ abstract class AccessControlManager
 			$rules = $this->loadAccessControlRulesForInterface($gid, $interface);
 			
 			// filter out rules with wrong access type
-			if($accessMethod == AccessControlRuleObject::ACCESS_TYPE_W)
+			if($accessMethod == AccessControlRuleObject::ACCESS_TYPE_WRITE)
 			{
 				foreach($rules as $id => $rule)
 				{
-					if($rule->getAccessType() == AccessControlRuleObject::ACCESS_TYPE_R)
+					if($rule->getAccessType() == AccessControlRuleObject::ACCESS_TYPE_READ)
 						unset($rules[$id]);
 				}
 			}
-			elseif($accessMethod == AccessControlRuleObject::ACCESS_TYPE_R)
+			elseif($accessMethod == AccessControlRuleObject::ACCESS_TYPE_READ)
 			{
 				foreach($rules as $id => $rule)
 				{
-					if($rule->getAccessType() == AccessControlRuleObject::ACCESS_TYPE_W)
+					if($rule->getAccessType() == AccessControlRuleObject::ACCESS_TYPE_WRITE)
 						unset($rules[$id]);
 				}
 			}
