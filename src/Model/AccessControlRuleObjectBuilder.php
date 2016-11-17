@@ -169,15 +169,15 @@ class AccessControlRuleObjectBuilder extends ObjectBuilder
 		if($this->entityType == AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL && !GID::isValid($this->entityID))
 			throw new IllegalModelStateException('entityType INDIVIDUAL requires a valid GlobalID as entityID');
 		
-		if($this->targetType != AccessControlRuleObject::TARGET_TYPE_INTERFACE 
-			&& $this->scope != AccessControlRuleObject::TARGET_TYPE_CONTENT)
+		if($this->targetType != AccessControlRuleObject::TARGET_TYPE_INTERFACE
+            && $this->targetType != AccessControlRuleObject::TARGET_TYPE_CONTENT)
 			throw new IllegalModelStateException('Invalid targetType');
 		
 		if($this->target == NULL)
 			throw new IllegalModelStateException('Invalid target');
 		
-		if($this->accessType != AccessControlRuleObject::ACCESS_TYPE_R 
-			&& $this->accessType != AccessControlRuleObject::ACCESS_TYPE_W 
+		if($this->accessType != AccessControlRuleObject::ACCESS_TYPE_READ
+			&& $this->accessType != AccessControlRuleObject::ACCESS_TYPE_WRITE
 			&& $this->accessType != AccessControlRuleObject::WILDCARD)
 			throw new IllegalModelStateException('Invalid accessType');
 		

@@ -26,7 +26,7 @@ class AccessControlManagerExample extends AccessControlManager
 							->owner(Sonic::getContextGlobalID())
 							->index(1)
 							->directive(AccessControlRuleObject::DIRECTIVE_ALLOW)
-							->scope(AccessControlRuleObject::SCOPE_INDIVIDUAL)
+							->entityType(AccessControlRuleObject::ENTITY_TYPE_INDIVIDUAL)
 							->entityID('28B6TE8T9NUO202C5NZIUTNQSP88E70B8JAWH4FQ58OJOB8LIF') // use Bob's GID
 							->targetType(AccessControlRuleObject::TARGET_TYPE_CONTENT)
 							->target('4802C8DE6UZZ5BICQI830A8P8BW3YB5EBPGXWNRH1EP7H838V7:a9ddbc2102bf86d1') // Alice's person object

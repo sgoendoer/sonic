@@ -60,8 +60,8 @@ class AccessControlRuleObject extends Object
 		$this->owner = $builder->getOwner();
 		$this->index = $builder->getIndex();
 		$this->directive = $builder->getDirective();
-		$this->entityType = $builder->getScope();
-		$this->entityID = $builder->entityID();
+		$this->entityType = $builder->getEntityType();
+		$this->entityID = $builder->getEntityID();
 		$this->targetType = $builder->getTargetType();
 		$this->target = $builder->getTarget();
 		$this->accessType = $builder->getAccessType();
@@ -200,5 +200,7 @@ class AccessControlRuleObject extends Object
 			"target",
 			"accessType"
 		]
-	}';'
+	}';
 }
+
+?>
