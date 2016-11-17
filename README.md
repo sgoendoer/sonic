@@ -13,6 +13,12 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 
 ## Changelog
 
+#### 0.3.0
+- Added more unit tests
+- Added Access Control functionality
+- Added code examples
+- Various fixes and improvements
+
 #### 0.2.5
 - Added more unit tests
 - Added feature negotiation functionality
