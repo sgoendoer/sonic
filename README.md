@@ -52,7 +52,7 @@ or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-	"sgoendoer/sonic": "0.2.5"
+	"sgoendoer/sonic": "0.3.0"
 }
 ```
 
@@ -152,8 +152,7 @@ try {
 	$profile = ProfileObjectBuilder::buildFromJSON($response->getPayload());
 	
 	echo $profile->getJSONString() . "\n\n";
-} catch (\Exception $e) {
-}
+} catch (\Exception $e) {}
 ?>
 ```
 
@@ -163,6 +162,13 @@ try {
 - [Sonic architecture](docs/Architecture.md)
 - [User identification](docs/UserIdentification.md)
 - [Sonic content model](docs/ContentModel.md)
+- [Sonic access control](docs/AccessControl.md)
+
+## Code examples
+
+- [Instantiating the Sonic SDK](examples/SonicClientBasicExample.php)
+- [Sending requests to a Sonic platform](examples/SonicClientBasicExample.php)
+- [Handling Sonic requests on a Sonic platform](examples/SonicServerExample.php)
 
 ## Submitting bugs and feature requests
 
