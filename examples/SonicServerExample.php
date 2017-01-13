@@ -106,6 +106,7 @@ try
 	// request handling
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
+	// parse the request to be handled
 	$request = new IncomingRequest();
 	
 	$globalIDAlice = '4802C8DE6UZZ5BICQI830A8P8BW3YB5EBPGXWNRH1EP7H838V7';

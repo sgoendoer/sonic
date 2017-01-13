@@ -130,7 +130,7 @@ class SignatureObject extends BasicObject
 				"id": "http://jsonschema.net/sonic/signature/timeSigned",
 				"type": "string"
 			},
-			"datetime":
+			"random":
 			{
 				"id": "http://jsonschema.net/sonic/signature/random",
 				"type": "string"
