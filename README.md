@@ -170,6 +170,8 @@ try {
 - [Sending requests to a Sonic platform](examples/SonicClientBasicExample.php)
 - [Handling Sonic requests on a Sonic platform](examples/SonicServerExample.php)
 
+More examples including explanation of the code can be found [here](docs/Examples.md)
+
 ## Submitting bugs and feature requests
 
 Bugs and feature request are tracked on [GitHub](https://github.com/sgoendoer/sonic/issues)
