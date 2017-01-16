@@ -13,3 +13,7 @@ The SonicClientExample.php demonstrates the use of the Sonic SDK for consuming a
 The code first reads the SocialRecord examples from the data folder before initializing the Sonic class.
 
 For simplicity, only two requests (GET PROFILE and POST LIKE) are performed by the code.
+
+# CreateSocialRecordExample
+
+Simple example how to use SocialRecordBuilder and SocialRecordManager to create, upload, and retrieve Social Records: [CreateNewSocialRecordExample.php] (../examples/CreateNewSocialRecordExample.php)
