@@ -18,17 +18,17 @@ use sgoendoer\Sonic\Identity\SocialRecordFormatException;
  */
 class SocialRecordBuilder
 {
-	private $type				= NULL;
+	private $type				= NULL; // type of the social record
 	private $globalID			= NULL;	// global id
-	private $platformGID		= NULL;
+	private $platformGID		= NULL; // the global id of the platform
 	private $displayName		= NULL;	// human readable name
 	private $profileLocation	= NULL;	// URL
 	private $personalPublicKey	= NULL; // PEM PHP compatible format!!!
 	private $accountPublicKey	= NULL; // PEM PHP compatible format!!!
 	private $salt				= NULL;	// length MUST be 8 chars
 	private $datetime			= NULL;	// XSD datetime format e.g. 2015-01-01T11:11:11Z
-	private $active				= NULL;
-	private $keyRevocationList	= NULL;
+	private $active				= NULL; // active flag
+	private $keyRevocationList	= NULL; // list of revoked keys
 	
 	public function __construct()
 	{}
@@ -391,7 +391,7 @@ class SocialRecordBuilder
 		if($this->platformGID == NULL && $this->type == SocialRecord::TYPE_PLATFORM)
 			$this->platformGID = $this->globalID;
 		if($this->platformGID == NULL)
-			throw new SocialRecordFormatException('SocialRecord: platformID must be specified for instantiation');
+			throw new SocialRecordFormatException('SocialRecord: platformGID must be specified for instantiation');
 		if(!GID::isValid($this->platformGID))
 			throw new SocialRecordFormatException('SocialRecord: Invalid platformGID value [' . $this->platformGID . ']');
 		

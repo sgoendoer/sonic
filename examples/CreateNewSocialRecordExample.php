@@ -11,22 +11,46 @@ use sgoendoer\Sonic\Identity\SocialRecordManager;
 
 try
 {
+	//////////////////////////////////////////////////////////////////////////////
+	// create a new SocialRecord for a platform
+	//////////////////////////////////////////////////////////////////////////////
+	
+	// create new keypairs
+	$personalKeyPairPlatform = new KeyPair();
+	$accountKeyPairPlatform = new KeyPair();
+	
+	// use SocialRecordBuilder to create new SocialRecord object
+	$socialRecordPlatform = (new SocialRecordBuilder())
+		->type(SocialRecord::TYPE_PLATFORM)
+		->salt(Random::getRandom())
+		->accountPublicKey($accountKeyPairPlatform->getPublicKey())
+		->personalPublicKey($personalKeyPairPlatform->getPublicKey())
+		->displayName('Platform A')
+		->profileLocation('http://sonic-project.net/sonic/')
+		->build();
+	
+	echo "Your new platform SocialRecord is:\n----------\n" . $socialRecordPlatform . "\n----------\n";
+	
+	//////////////////////////////////////////////////////////////////////////////
+	// create a new SocialRecord for a user Alice
+	//////////////////////////////////////////////////////////////////////////////
+	
 	// create new keypairs
 	$personalKeyPair = new KeyPair();
 	$accountKeyPair = new KeyPair();
 	
 	// use SocialRecordBuilder to create new SocialRecord object
 	$socialRecord = (new SocialRecordBuilder())
-		->type(SocialRecord::TYPE_USER) // alternative: SocialRecord::TYPE_PLATFORM
+		->type(SocialRecord::TYPE_USER)
 		->salt(Random::getRandom())
-		->platformGID('2UZCAI2GM45T160MDN44OIQ8GKN5GGCKO96LC9ZOQCAEVAURA8') // using an example PlatformGID
+		->platformGID($socialRecordPlatform->getGlobalID()) // using the platform SocialRecord's GlobalID
 		->accountPublicKey($accountKeyPair->getPublicKey())
 		->personalPublicKey($personalKeyPair->getPublicKey())
 		->displayName('Alice')
-		->profileLocation('http://sonic-project.net/user/alice/')
+		->profileLocation('http://sonic-project.net/sonic/alice/')
 		->build();
 	
-	echo "Your new SocialRecord is:\n----------\n" . $socialRecord . "\n----------\n";
+	echo "Your new user SocialRecord is:\n----------\n" . $socialRecord . "\n----------\n";
 	
 	// export the Social Record instance with keys to a JSONObject
 	$exportedFull = SocialRecordManager::exportSocialRecord($socialRecord, $accountKeyPair, $personalKeyPair);
