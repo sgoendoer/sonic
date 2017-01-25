@@ -18,7 +18,8 @@ try
 	// use SocialRecordBuilder to create new SocialRecord object
 	$socialRecord = (new SocialRecordBuilder())
 		->type(SocialRecord::TYPE_USER) // alternative: SocialRecord::TYPE_PLATFORM
-		->salt(Random::getRandom)
+		->salt(Random::getRandom())
+		->platformGID('2UZCAI2GM45T160MDN44OIQ8GKN5GGCKO96LC9ZOQCAEVAURA8') // using an example PlatformGID
 		->accountPublicKey($accountKeyPair->getPublicKey())
 		->personalPublicKey($personalKeyPair->getPublicKey())
 		->displayName('Alice')
