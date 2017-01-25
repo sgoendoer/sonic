@@ -4,7 +4,7 @@ use sgoendoer\Sonic\Model\Object;
 
 /**
  * Represents a AccessControlRule object
- * version 20161117
+ * version 20161019
  * 
  * syntax: 	The $owner of content (grants|denies) [$directive] (everybody|his friends|a group|an individual) [$scope] 
  * 		identified by the $entityID read access to content identified by $targetID. Rules with a lower $index will
@@ -162,7 +162,7 @@ class AccessControlRuleObject extends Object
 				. '"@type":"'		. AccessControlRuleObject::JSONLD_TYPE . '",'
 				. '"objectID":"'	. $this->objectID . '",'
 				. '"owner":"'		. $this->owner . '",'
-				. '"index":'		. $this->index . ','
+				. '"index":"'		. $this->index . '",'
 				. '"directive":"'	. $this->directive . '",'
 				. '"entityType":"'	. $this->entityType . '",'
 				. '"entityID":"'	. $this->entityID . '",'
@@ -181,7 +181,7 @@ class AccessControlRuleObject extends Object
 		{
 			"objectID": {"type": "string"},
 			"owner": {"type": "string"},
-			"index": {"type": "integer"},
+			"index": {"type": "int"},
 			"directive": {"type": "string"},
 			"entityType": {"type": "string"},
 			"entityID": {"type": "string"},
