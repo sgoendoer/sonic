@@ -18,12 +18,15 @@ try
 	// use SocialRecordBuilder to create new SocialRecord object
 	$socialRecord = (new SocialRecordBuilder())
 		->type(SocialRecord::TYPE_USER) // alternative: SocialRecord::TYPE_PLATFORM
-		->salt(Random::getRandom)
+		->salt(Random::getRandom())
+		->platformGID('2UZCAI2GM45T160MDN44OIQ8GKN5GGCKO96LC9ZOQCAEVAURA8') // using an example PlatformGID
 		->accountPublicKey($accountKeyPair->getPublicKey())
 		->personalPublicKey($personalKeyPair->getPublicKey())
 		->displayName('Alice')
 		->profileLocation('http://sonic-project.net/user/alice/')
 		->build();
+	
+	echo "Your new SocialRecord is:\n----------\n" . $socialRecord . "\n----------\n";
 	
 	// export the Social Record instance with keys to a JSONObject
 	$exportedFull = SocialRecordManager::exportSocialRecord($socialRecord, $accountKeyPair, $personalKeyPair);
@@ -38,11 +41,10 @@ try
 	SocialRecordManager::pushToGSLS($entityAuthData);
 	
 	// retrieve SocialRecord from GSLS while ignoring local caches
-	SocialRecordManager::retrieveSocialRecord($sociaLRecord->getGlobalID(), true);
+	$retrievedSocialRecord = SocialRecordManager::retrieveSocialRecord($socialRecord->getGlobalID(), true);
 }
 catch (\Exception $e)
 {
 	echo "There has been an error: " . $e->getMessage() . "\n\n" . $e->getTraceAsString();
 }
-
 ?>
