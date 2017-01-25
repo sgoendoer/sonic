@@ -9,7 +9,7 @@ use sgoendoer\Sonic\SonicRuntimeException;
 
 /**
  * Abstract AccessControlManager
- * version 20161021
+ * version 20170125
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -90,7 +90,7 @@ abstract class AccessControlManager
 	 *
 	 * @return boolean
 	 */
-	public function hasInterfaceAccessPriviledges($owner,$gid, $interface, $accessMethod = '*')
+	public function hasInterfaceAccessPriviledges($owner, $gid, $interface, $accessMethod = '*')
 	{
 		if($interface == '')
 			$interface = '*';
@@ -99,7 +99,7 @@ abstract class AccessControlManager
 
 		try
 		{
-			$rules = $this->loadAccessControlRulesForInterface($owner,$gid, $interface);
+			$rules = $this->loadAccessControlRulesForInterface($owner, $gid, $interface);
 
 			// filter out rules with wrong access type
 			if($accessMethod == AccessControlRuleObject::ACCESS_TYPE_WRITE)
