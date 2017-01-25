@@ -26,6 +26,8 @@ try
 		->profileLocation('http://sonic-project.net/user/alice/')
 		->build();
 	
+	echo "Your new SocialRecord is:\n----------\n" . $socialRecord . "\n----------\n";
+	
 	// export the Social Record instance with keys to a JSONObject
 	$exportedFull = SocialRecordManager::exportSocialRecord($socialRecord, $accountKeyPair, $personalKeyPair);
 	
@@ -39,11 +41,10 @@ try
 	SocialRecordManager::pushToGSLS($entityAuthData);
 	
 	// retrieve SocialRecord from GSLS while ignoring local caches
-	SocialRecordManager::retrieveSocialRecord($sociaLRecord->getGlobalID(), true);
+	$retrievedSocialRecord = SocialRecordManager::retrieveSocialRecord($socialRecord->getGlobalID(), true);
 }
 catch (\Exception $e)
 {
 	echo "There has been an error: " . $e->getMessage() . "\n\n" . $e->getTraceAsString();
 }
-
 ?>
