@@ -2,6 +2,8 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
+use PHPUnit\Framework\TestCase;
+
 use sgoendoer\Sonic\Crypt\KeyPair;
 use sgoendoer\Sonic\Crypt\PublicKey;
 use sgoendoer\Sonic\Crypt\PrivateKey;
@@ -10,7 +12,7 @@ use sgoendoer\Sonic\Crypt\Signature;
 
 date_default_timezone_set('Europe/Berlin');
 
-class CryptUnitTest extends PHPUnit_Framework_TestCase
+class CryptUnitTest extends TestCase
 {
 	public $keypair1 = NULL;
 	public $private1 = NULL;

@@ -2,6 +2,8 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
+use PHPUnit\Framework\TestCase;
+
 use sgoendoer\Sonic\Sonic;
 
 use sgoendoer\Sonic\AccessControl\AccessControlManager;
@@ -26,7 +28,7 @@ use sgoendoer\Sonic\Identity\KeyRevocationCertificate;
 use sgoendoer\Sonic\Identity\KeyRevocationCertificateBuilder;
 use sgoendoer\Sonic\Identity\ISocialRecordCaching;
 
-class AccessControlUnitTest extends PHPUnit_Framework_TestCase
+class AccessControlUnitTest extends TestCase
 {
 	public $acm = NULL;
 	
@@ -58,7 +60,7 @@ class AccessControlManagerStub extends AccessControlManager
 		return array();
 	}
 	
-	protected function loadAccessControlRulesForInterface($gid, $interface)
+	protected function loadAccessControlRulesForInterface($owner, $gid, $interface)
 	{
 		return array();
 	}

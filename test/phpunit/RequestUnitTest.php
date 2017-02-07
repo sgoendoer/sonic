@@ -2,11 +2,13 @@
 
 require_once(__DIR__ . '/../../vendor/autoload.php');
 
+use PHPUnit\Framework\TestCase;
+
 use sgoendoer\Sonic\Request\URL;
 
 date_default_timezone_set('Europe/Berlin');
 
-class RequestUnitTest extends PHPUnit_Framework_TestCase
+class RequestUnitTest extends TestCase
 {
 	public function testURL()
 	{
