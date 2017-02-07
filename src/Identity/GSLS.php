@@ -229,6 +229,8 @@ class GSLS
 	 */
 	public static function createJWT(SocialRecord $sr, $personalPrivateKey)
 	{
+		$signer = new Sha512();
+		
 		return (new Builder())
 			->set('socialRecord', base64_encode($sr->getJSONString()))
 			->sign($signer, $personalPrivateKey)
