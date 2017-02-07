@@ -223,6 +223,17 @@ class GSLS
 			return $result;
 		}
 	}
+	
+	/**
+	 * creates a signed JWT
+	 */
+	public static function createJWT(SocialRecord $sr, $personalPrivateKey)
+	{
+		return (new Builder())
+			->set('socialRecord', base64_encode($sr->getJSONString()))
+			->sign($signer, $personalPrivateKey)
+			->getToken();
+	}
 }
 
 ?>
