@@ -52,6 +52,8 @@ use sgoendoer\Sonic\Model\AccessControlRuleObjectBuilder;
 use sgoendoer\Sonic\Model\AccessControlRuleObject;
 use sgoendoer\Sonic\Model\AccessControlGroupObjectBuilder;
 
+use sgoendoer\Sonic\Model\ObjectFactory;
+
 use sgoendoer\esquery\ESQueryBuilder;
 use sgoendoer\json\JSONObject;
 
@@ -98,6 +100,22 @@ class ModelUnitTest extends TestCase
 		$this->bobSocialRecord = $this->bobSR['socialRecord'];
 		$this->bobAccountKeyPair = $this->bobSR['accountKeyPair'];
 		$this->bobPersonalKeyPair = $this->bobSR['personalKeyPair'];
+		
+		// pushing SocialRecords to GSLS for testing purposes
+		SocialRecordManager::pushToGSLS(new EntityAuthData(
+										$this->platformSocialRecord,
+										$this->platformAccountKeyPair,
+										$this->platformPersonalKeyPair));
+
+		SocialRecordManager::pushToGSLS(new EntityAuthData(
+										$this->aliceSocialRecord,
+										$this->aliceAccountKeyPair,
+										$this->alicePersonalKeyPair));
+		
+		SocialRecordManager::pushToGSLS(new EntityAuthData(
+										$this->bobSocialRecord,
+										$this->bobAccountKeyPair,
+										$this->bobPersonalKeyPair));
 		
 		$this->sonic = Sonic::initInstance(new EntityAuthData(
 										$this->platformSocialRecord,
@@ -396,6 +414,21 @@ class ModelUnitTest extends TestCase
 			->build();
 		
 		$this->assertEquals($response, ResponseObjectBuilder::buildFromJSON($response->getJSONString()));
+	}
+	
+	// OBJECT FACTORY //////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	public function testObjectFactory()
+	{
+		$person = (new PersonObjectBuilder())
+			->objectID(UOID::createUOID())
+			->globalID(Sonic::getContextGlobalID())
+			->displayName($this->aliceSocialRecord->getDisplayName())
+			->build();
+		
+		$object = ObjectFactory::init($person->getJSONObject());
+		
+		$this->assertEquals($person->getJSONString(), $object->getJSONString());
 	}
 }
 
