@@ -16,12 +16,15 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 {
 	const RESOURCE_NAME_LINK = 'LINK';
 	
-	public function createGETLink()
+	public function createGETLink($linkUOID = NULL)
 	{
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
+		if($linkUOID != NULL)
+			$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkUOID);
+		else
+			$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
 		$this->request->setRequestMethod('GET');
 		
 		return $this;
