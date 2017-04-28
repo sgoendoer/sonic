@@ -376,7 +376,7 @@ class SocialRecordBuilder
 		if($this->type == NULL)
 			throw new SocialRecordFormatException('SocialRecord: type must be specified for instantiation');
 		
-		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER)
+		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER && $this->type != SocialRecord::TYPE_PAGE)
 			throw new SocialRecordFormatException('SocialRecord: Invalid type value [' . $this->type . ']');
 		
 		if($this->salt == NULL)
