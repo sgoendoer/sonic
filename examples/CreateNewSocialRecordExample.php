@@ -64,6 +64,8 @@ try
 	// the data stored in the GSLS is the SocialRecord formatted as a signed JWT. In case you need to access it, you can do it via
 	$rawJWT = $entityAuthData->getJWT();
 	
+	echo "The JWT for your user SocialRecord is:\n----------\n" . $rawJWT . "\n----------\n";
+	
 	// upload to GSLS
 	SocialRecordManager::pushToGSLS($entityAuthData);
 	
