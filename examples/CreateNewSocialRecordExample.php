@@ -58,8 +58,11 @@ try
 	// export only the public part (no keys)
 	$exportedPublic = SocialRecordManager::exportSocialRecord($socialRecord);
 	
-	// in order to upload the SocialRecord to the GSLS, it needs to be passed as a EntityAuthData object
+	// in order to upload the SocialRecord to the GSLS, it needs to be passed as a EntityAuthData object. EntityAuthData objects are containers for data and keypairs.
 	$entityAuthData = new EntityAuthData($socialRecord, $accountKeyPair, $personalKeyPair);
+	
+	// the data stored in the GSLS is the SocialRecord formatted as a signed JWT. In case you need to access it, you can do it via
+	$rawJWT = $entityAuthData->getJWT();
 	
 	// upload to GSLS
 	SocialRecordManager::pushToGSLS($entityAuthData);
