@@ -8,7 +8,7 @@ use sgoendoer\json\JSONObject;
 
 /**
  * SocialRecord class
- * @version 20160513
+ * @version 20170428
  *
  * @author Sebastian Goendoer
  * @copyright Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
@@ -20,6 +20,7 @@ class SocialRecord
 	
 	const TYPE_PLATFORM			= 'platform';
 	const TYPE_USER				= 'user';
+	const TYPE_PAGE				= 'page';
 	
 	const SALT_CHARS			= 8;
 	
@@ -112,7 +113,7 @@ class SocialRecord
 	public function verify()
 	{
 		// TODO check structure
-		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER)
+		if($this->type != SocialRecord::TYPE_PLATFORM && $this->type != SocialRecord::TYPE_USER && $this->type != SocialRecord::TYPE_PAGE)
 			throw new SocialRecordFormatException('invalid type value [' . $this->type . ']');
 		
 		if(!GID::isValid($this->globalID))
