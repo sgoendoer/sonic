@@ -25,7 +25,7 @@ use sgoendoer\Sonic\Model\Object;
 class AccessControlRuleObject extends Object
 {
 	const JSONLD_CONTEXT				= 'http://sonic-project.net/';
-	const JSONLD_TYPE					= 'AccessControlRule';
+	const JSONLD_TYPE					= 'accesscontrolrule';
 	
 	const DIRECTIVE_DENY				= 'DENY';
 	const DIRECTIVE_ALLOW				= 'ALLOW';
