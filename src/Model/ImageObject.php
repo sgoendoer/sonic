@@ -24,8 +24,6 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 	protected $title					= NULL;
 	protected $description				= NULL;
 	protected $imageThumbnailData		= NULL;
-	protected $imageThumbnailWidth		= NULL;
-	protected $imageThumbnailHeight		= NULL;
 	protected $imageData				= NULL;
 	protected $imageWidth				= NULL;
 	protected $imageHeight				= NULL;
@@ -41,8 +39,6 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 		$this->title = $builder->getTitle();
 		$this->description = $builder->getDescription();
 		$this->imageThumbnailData = $builder->getImageThumbnailData();
-		$this->imageThumbnailWidth = $builder->getImageThumbnailWidth();
-		$this->imageThumbnailHeight = $builder->getImageThumbnailHeight();
 		$this->imageData = $builder->getImageData();
 		$this->imageWidth = $builder->getImageWidth();
 		$this->imageHeight = $builder->getImageHeight();
@@ -76,18 +72,6 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 	public function setImageThumbnailData($imageThumbnailData)
 	{
 		$this->imageThumbnailData = $imageThumbnailData;
-		return $this;
-	}
-	
-	public function setImageThumbnailWidth($imageThumbnailWidth)
-	{
-		$this->imageThumbnailWidth = $imageThumbnailWidth;
-		return $this;
-	}
-	
-	public function setImageThumbnailHeight($imageThumbnailHeight)
-	{
-		$this->imageThumbnailHeight = $imageThumbnailHeight;
 		return $this;
 	}
 	
@@ -140,24 +124,14 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 		return $this->imageThumbnailData;
 	}
 	
-	public function getImageThumbnailWidth()
+	public function getImageData()
 	{
-		return $this->imageThumbnailWidth;
+		return $this->imageData;
 	}
 	
 	public function getImageWidth()
 	{
 		return $this->imageWidth;
-	}
-	
-	public function getImageThumbnailHeight()
-	{
-		return $this->imageThumbnailHeight;
-	}
-	
-	public function getImageData()
-	{
-		return $this->imageData;
 	}
 	
 	public function getImageHeight()
@@ -183,9 +157,7 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 		
 		if($this->imageThumbnailData != NULL) 
 		{
-			$json .= '"imageThumbnailData":"' . $this->imageThumbnailData . '",' 
-				. '"imageThumbnailWidth":"' . $this->imageThumbnailWidth . '",' 
-				. '"imageThumbnailHeight":"' . $this->imageThumbnailHeight . '",'; 
+			$json .= '"imageThumbnailData":"' . $this->imageThumbnailData . '",'; 
 		}
 		
 		$json .= '"imageData":"' . $this->imageData . '",' 
@@ -209,8 +181,6 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 			"title": { "type": "string" },
 			"description": { "type": "string" },
 			"imageThumbnailData": { "type": "string" },
-			"imageThumbnailWidth": { "type": "integer" },
-			"imageThumbnailHeight": { "type": "integer" },
 			"imageData": { "type": "string" },
 			"imageWidth": { "type": "integer" },
 			"imageHeight": { "type": "integer" },
