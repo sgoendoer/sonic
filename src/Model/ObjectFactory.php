@@ -41,7 +41,7 @@ class ObjectFactory
 	
 	/**
 	 * Parses the JSONObject and creates a matching Sonic object
-	 * 
+	 *
 	 * @param JSONObbject $json The JSONObject to parse
 	 * @return BasicObject
 	 * @throws ModelFormatException on malformed object content
@@ -56,10 +56,6 @@ class ObjectFactory
 		{
 			switch(strtolower($json->get("@type")))
 			{
-				case "person":
-					$object = PersonObjectBuilder::buildFromJSON($json->__toString());
-				break;
-				
 				case "comment":
 					$object = CommentObjectBuilder::buildFromJSON($json->__toString());
 				break;
@@ -135,7 +131,7 @@ class ObjectFactory
 				// feature
 				// migration
 				
-				case "stream-item":
+				case "activity":
 					$object = StreamItemObjectBuilder::buildFromJSON($json->__toString());
 				break;
 				
