@@ -12,7 +12,7 @@ use sgoendoer\Sonic\Model\AccessControlGroupObjectBuilder;
 class AccessControlGroupObject extends Object
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
-	const JSONLD_TYPE = 'accessControlGroup';
+	const JSONLD_TYPE = 'accesscontrolgroup';
 	
 	protected $owner			= NULL;
 	protected $displayName		= NULL;

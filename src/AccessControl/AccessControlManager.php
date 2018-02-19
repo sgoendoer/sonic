@@ -5,6 +5,7 @@ use sgoendoer\Sonic\AccessControl\AccessControlException;
 use sgoendoer\Sonic\AccessControl\AccessControlManagerException;
 use sgoendoer\Sonic\Identity\UOID;
 use sgoendoer\Sonic\Model\AccessControlRuleObject;
+use sgoendoer\Sonic\Model\AccessControlPolicyObject;
 use sgoendoer\Sonic\SonicRuntimeException;
 
 /**

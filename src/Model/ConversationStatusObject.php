@@ -17,9 +17,12 @@ class ConversationStatusObject extends ReferencingRemoteObject
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
 	const JSONLD_TYPE = 'conversation-status';
 	
+	const STATUS_TOPIC = 'TOPIC';
 	const STATUS_INVITED = 'INVITED';
 	const STATUS_JOINED = 'JOINED';
+	const STATUS_ADDED = 'ADDED';
 	const STATUS_LEFT = 'LEFT';
+	const STATUS_REMOVED = 'REMOVED';
 	const STATUS_DECLINED = 'DECLINED';
 	
 	protected $author = NULL;
