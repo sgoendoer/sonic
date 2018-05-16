@@ -35,9 +35,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Creates a SocialRecord object from a JSON String
-	 * 
+	 *
 	 * @param $json (String) The serialized SocialRecord
-	 * 
+	 *
 	 * @return SocialRecord
 	 */
 	public static function buildFromJSON($json)
@@ -91,9 +91,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the type
-	 * 
+	 *
 	 * @param $type (String) The type of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function type($type)
@@ -105,9 +105,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the GlobalID
-	 * 
+	 *
 	 * @param $gid (String) The GlobalID of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function globalID($gid)
@@ -119,9 +119,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the platformGID
-	 * 
+	 *
 	 * @param $pid (String) The PlatformGID of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function platformGID($pid)
@@ -133,9 +133,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the display name
-	 * 
+	 *
 	 * @param $displayName (String) The display name of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function displayName($displayName)
@@ -147,9 +147,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the profile location
-	 * 
+	 *
 	 * @param $profileLocation (String) The profile location of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function profileLocation($profileLocation)
@@ -161,9 +161,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the personalPublicKey
-	 * 
+	 *
 	 * @param $personalPublicKey (String) The personalPublicKey of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function personalPublicKey($personalPublicKey)
@@ -175,9 +175,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the accountPublicKey
-	 * 
+	 *
 	 * @param $accountPublicKey (String) The accountPublicKey of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function accountPublicKey($accountPublicKey)
@@ -189,9 +189,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the salt
-	 * 
+	 *
 	 * @param $salt (String) The salt of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function salt($salt)
@@ -203,9 +203,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the active flag
-	 * 
+	 *
 	 * @param $active (Integer) The active status of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function active($active)
@@ -217,9 +217,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the key revocation list
-	 * 
+	 *
 	 * @param $keyRevocationList (String) The key revocation list of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function keyRevocationList($krl = NULL)
@@ -234,9 +234,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Set the datetime
-	 * 
+	 *
 	 * @param $datetime (String) The datetime of the SocialRecord
-	 * 
+	 *
 	 * @return SocialRecordBuilder
 	 */
 	public function datetime($date)
@@ -248,7 +248,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter type
-	 * 
+	 *
 	 * @return The type (String)
 	 */
 	public function getType()
@@ -258,7 +258,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter globalID
-	 * 
+	 *
 	 * @return The globalID (String)
 	 */
 	public function getGlobalID()
@@ -268,7 +268,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter PlatformGID
-	 * 
+	 *
 	 * @return The platformGID (String)
 	 */
 	public function getPlatformGID()
@@ -278,7 +278,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter displayName
-	 * 
+	 *
 	 * @return The displayName (String)
 	 */
 	public function getDisplayName()
@@ -288,7 +288,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter profileLocation
-	 * 
+	 *
 	 * @return The profileLocation (String)
 	 */
 	public function getProfileLocation()
@@ -298,7 +298,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter personalPublicKey
-	 * 
+	 *
 	 * @return The personalPublicKey (String)
 	 */
 	public function getPersonalPublicKey()
@@ -308,7 +308,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter accountPublicKey
-	 * 
+	 *
 	 * @return The accountPublicKey (String)
 	 */
 	public function getAccountPublicKey()
@@ -318,7 +318,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter salt
-	 * 
+	 *
 	 * @return The salt (String)
 	 */
 	public function getSalt()
@@ -328,7 +328,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter datetime
-	 * 
+	 *
 	 * @return The datetime (String)
 	 */
 	public function getDatetime()
@@ -338,7 +338,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter active
-	 * 
+	 *
 	 * @return The active flag (Integer)
 	 */
 	public function getActive()
@@ -348,7 +348,7 @@ class SocialRecordBuilder
 	
 	/**
 	 * Get the value for the parameter keyRevocationList
-	 * 
+	 *
 	 * @return The keyRevocationList (array)
 	 */
 	public function getKeyRevocationList()
@@ -358,9 +358,9 @@ class SocialRecordBuilder
 	
 	/**
 	 * Builder method that creates the actual SocialRecord object
-	 * 
+	 *
 	 * @throws SocialRecordFormatException
-	 * 
+	 *
 	 * @return The SocialRecord (SocialRecord)
 	 */
 	public function build()
@@ -380,7 +380,7 @@ class SocialRecordBuilder
 			throw new SocialRecordFormatException('SocialRecord: Invalid type value [' . $this->type . ']');
 		
 		if($this->salt == NULL)
-			$this->salt = Random::getRandom(SocialRecord::SALT_CHARS);
+			$this->salt = Random::getRandom(SocialRecord::SALT_CHARS/2);
 		if($this->datetime == NULL)
 			$this->datetime = XSDDateTime::getXSDDateTime();
 		if($this->globalID == NULL)

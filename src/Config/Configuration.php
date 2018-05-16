@@ -2,15 +2,15 @@
 
 /**
  * Configuration
- * @version 20160201
+ * @version 20180516
  *
  * @author Sebastian Goendoer
  * @copyright Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class Configuration
 {
-	private static $primaryGSLSNode		= '130.149.22.135:4002';
-	private static $secondaryGSLSNode	= '130.149.22.133:4002';
+	private static $primaryGSLSNode		= '130.149.22.220:4002';
+	private static $secondaryGSLSNode	= '130.149.22.227:4002';
 	private static $apiPath				= '/sonic/';
 	private static $timezone			= 'Europe/Berlin';
 	private static $verbose				= 0; // 0: log nothing, 1: log errors, 2: log info, 3: log everything
@@ -24,7 +24,7 @@ class Configuration
 	
 	/**
 	 * Sets configuration values
-	 * 
+	 *
 	 * @param $config Array The configuration value
 	 */
 	public static function setConfiguration($config)
@@ -54,7 +54,7 @@ class Configuration
 	
 	/**
 	 * Sets the primary GSLS node's IP address
-	 * 
+	 *
 	 * @param $ipAddress String The IP Address
 	 */
 	public static function setPrimaryGSLSNode($ipAddress)
@@ -72,7 +72,7 @@ class Configuration
 	
 	/**
 	 * Sets the secondary GSLS node's IP address
-	 * 
+	 *
 	 * @param $ipAddress String The IP Address
 	 */
 	public static function setSecondaryGSLSNode($ipAddress)
@@ -90,7 +90,7 @@ class Configuration
 	
 	/**
 	 * Sets the API path
-	 * 
+	 *
 	 * @param $apiPath String The API path
 	 */
 	public static function setApiPath($path)
@@ -108,7 +108,7 @@ class Configuration
 	
 	/**
 	 * Sets the timezone
-	 * 
+	 *
 	 * @param $tz String The timezone
 	 */
 	public static function setTimezone($tz)
@@ -126,7 +126,7 @@ class Configuration
 	
 	/**
 	 * Sets the verbose value
-	 * 
+	 *
 	 * @param $verbose int The verbose value
 	 */
 	public static function setVerbose($verbose)
@@ -144,7 +144,7 @@ class Configuration
 	
 	/**
 	 * Sets the CURL verbose value
-	 * 
+	 *
 	 * @param $curlVerbose int The CURL verbose value
 	 */
 	public static function setCurlVerbose($curlVerbose)
@@ -162,7 +162,7 @@ class Configuration
 	
 	/**
 	 * Sets the request timeout
-	 * 
+	 *
 	 * @param $requestTimeout int The request timeout
 	 */
 	public static function setRequestTimeout($requestTimeout)
@@ -180,7 +180,7 @@ class Configuration
 	
 	/**
 	 * Sets the GSLS timeout
-	 * 
+	 *
 	 * @param $gslsTimeout int The GSLS timeout
 	 */
 	public static function setGSLSTimeout($gslsTimeout)
@@ -198,7 +198,7 @@ class Configuration
 	
 	/**
 	 * Sets the logfile path
-	 * 
+	 *
 	 * @param $logfile String The logfile path
 	 */
 	public static function setLogfile($logfile)

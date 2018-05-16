@@ -89,8 +89,8 @@ class PersonObject extends Object
 		$json =  '{'
 			. '"@context":"' . PersonObject::JSONLD_CONTEXT . '",'
 			. '"@type":"' . PersonObject::JSONLD_TYPE . '",'
-			. '"objectID":"' . $this->objectID . '",' 
-			. '"globalID":"' . $this->globalID . '",' 
+			. '"objectID":"' . $this->objectID . '",'
+			. '"globalID":"' . $this->globalID . '",'
 			. '"displayName":"' . $this->displayName . '"';
 		
 		if($this->profilePictureThumbnail != NULL) $json .= ',"profilePictureThumbnail":"' . $this->profilePictureThumbnail . '"';

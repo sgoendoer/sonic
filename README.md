@@ -13,6 +13,11 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 
 ## Changelog
 
+#### 0.5.0
+- Reworked migration
+  Added image feature
+  Improvement and fixes
+
 #### 0.3.0
 - Added Access Control functionality
 - Added code examples
@@ -49,7 +54,7 @@ or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-	"sgoendoer/sonic": "0.3.0"
+	"sgoendoer/sonic": "0.5.0"
 }
 ```
 
@@ -98,8 +103,8 @@ use sgoendoer\Sonic\Identity\SocialRecord;
 use sgoendoer\Sonic\Identity\SocialRecordManager;
 
 try {
-	// Sonic requires the \Sonic\Identity\SocialRecord of the Sonic platform for 
-	// initialization. Here, we import one from a String resource using 
+	// Sonic requires the \Sonic\Identity\SocialRecord of the Sonic platform for
+	// initialization. Here, we import one from a String resource using
 	// \Sonic\Identity\SocialRecordManager
 	
 	$platformSR = '{"socialRecord":{"@context": --truncated-- }';
@@ -124,7 +129,7 @@ try {
 	Configuration::setTimezone('Europe/Berlin');
 	Configuration::setVerbose(1);
 	
-	// Now, we can initialize the Sonic SDK. The SDK's context will be set to "platform" 
+	// Now, we can initialize the Sonic SDK. The SDK's context will be set to "platform"
 	// automatically
 	
 	$sonic = Sonic::initInstance(new EntityAuthData(

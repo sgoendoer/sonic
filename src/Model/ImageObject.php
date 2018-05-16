@@ -144,25 +144,32 @@ class ImageObject extends Object implements ILikeableObject, ICommentableObject,
 		return $this->imageCodec;
 	}
 	
+	public function encodeFileToDataURI($imageFilePath)
+	{
+		$imageDataBase64 = base64_encode(file_get_contents($imageFilePath));
+		$imageDataURI = "data:image/" . $this->imageCodec . ";base64," . $imageDataBase64;
+		return $imageDataURI;
+	}
+	
 	public function getJSONString()
 	{
 		$json = '{'
 			. '"@context":"' . ImageObject::JSONLD_CONTEXT . '",'
 			. '"@type":"' . ImageObject::JSONLD_TYPE . '",'
-			. '"objectID":"' . $this->objectID . '",' 
-			. '"owner":"' . $this->owner . '",' 
+			. '"objectID":"' . $this->objectID . '",'
+			. '"owner":"' . $this->owner . '",'
 			. '"datetime":"' . $this->datetime . '",'
-			. '"title":"' . $this->title . '",' 
+			. '"title":"' . $this->title . '",'
 			. '"description":"' . $this->description . '",';
 		
-		if($this->imageThumbnailData != NULL) 
+		if($this->imageThumbnailData != NULL)
 		{
-			$json .= '"imageThumbnailData":"' . $this->imageThumbnailData . '",'; 
+			$json .= '"imageThumbnailData":"' . $this->imageThumbnailData . '",';
 		}
 		
-		$json .= '"imageData":"' . $this->imageData . '",' 
-			. '"imageWidth":"' . $this->imageWidth . '",' 
-			. '"imageHeight":"' . $this->imageHeight . '",' 
+		$json .= '"imageData":"' . $this->imageData . '",'
+			. '"imageWidth":"' . $this->imageWidth . '",'
+			. '"imageHeight":"' . $this->imageHeight . '",'
 			. '"imageCodec":"' . $this->imageCodec . '"';
 		
 		$json .= '}';
