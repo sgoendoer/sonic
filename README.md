@@ -14,9 +14,13 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 ## Changelog
 
 #### 0.5.0
-- Reworked migration
-  Added image feature
-  Improvement and fixes
+- Reworked resource migration
+- Reworked resource feature
+- Reworked resource link
+- Renamed resource stream to activity
+- Marked resource person deprecated
+- Added resource image
+- Improvement and fixes
 
 #### 0.3.0
 - Added Access Control functionality
