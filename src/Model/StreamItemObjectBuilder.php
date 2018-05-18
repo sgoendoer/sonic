@@ -3,7 +3,7 @@
 use sgoendoer\Sonic\Identity\UOID;
 use sgoendoer\Sonic\Identity\GID;
 use sgoendoer\Sonic\Model\SignatureObject;
-use sgoendoer\Sonic\Model\StreamItemObject;
+use sgoendoer\Sonic\Model\ActivityObject;
 use sgoendoer\Sonic\Model\RemoteObjectBuilder;
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\IllegalModelStateException;
@@ -11,13 +11,13 @@ use sgoendoer\Sonic\Model\IllegalModelStateException;
 use sgoendoer\json\JSONObject;
 
 /**
- * Builder class for a SREAM ITEM object
- * version 20151021
+ * Builder class for a ACTIVITY object
+ * version 20180110
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
-class StreamItemObjectBuilder extends RemoteObjectBuilder
+class ActivityObjectBuilder extends RemoteObjectBuilder
 {
 	protected $owner = NULL;
 	protected $author = NULL;
@@ -34,7 +34,7 @@ class StreamItemObjectBuilder extends RemoteObjectBuilder
 		
 		$signature = SignatureObject::createFromJSON(json_encode($jsonObject->signature));
 		
-		return (new StreamItemObjectBuilder())
+		return (new ActivityObjectBuilder())
 				->objectID($jsonObject->objectID)
 				->owner($jsonObject->owner)
 				->author($jsonObject->author)
@@ -107,7 +107,7 @@ class StreamItemObjectBuilder extends RemoteObjectBuilder
 		if(!XSDDateTime::validateXSDDateTime($this->datetime))
 			throw new IllegalModelStateException('Invalid datetime');
 		
-		$streamItem = new StreamItemObject($this);
+		$streamItem = new ActivityObject($this);
 		
 		if($streamItem->getSignature() == NULL)
 			$streamItem->signObject();

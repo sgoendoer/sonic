@@ -4,36 +4,35 @@ use sgoendoer\Sonic\Request\OutgoingRequest;
 use sgoendoer\Sonic\Api\AbstractRequestBuilder;
 
 /**
- * Creates LINK requests
- * version 20160404
+ * Creates MIGRATION requests
+ * version 20180110
  *
- * author: Senan Sharhan, Sebastian Goendoer
+ * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
 class MigrationRequestBuilder extends AbstractRequestBuilder
 {
 	const RESOURCE_NAME_MIGRATION = 'MIGRATION';
 	
-	public function createGETMigration($authToken)
+	public function createPOSTMigration($migrationObject)
 	{
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
 		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_MIGRATION);
-		$this->request->setRequestMethod('GET');
-		$this->request->setHeaderAuthToken($authToken);
-		
+		$this->request->setRequestMethod('POST');
+		$this->request->setRequestBody($migrationObject->getJSONString());
+				
 		return $this;
 	}
 	
-	public function createDELETEUser($authToken)
+	public function createDELETEMigration($migrationUOID)
 	{
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_MIGRATION);
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_MIGRATION . '/' . $migrationUOID);
 		$this->request->setRequestMethod('DELETE');
-		$this->request->setHeaderAuthToken($authToken);
 		
 		return $this;
 	}

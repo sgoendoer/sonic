@@ -2,29 +2,29 @@
 
 use sgoendoer\Sonic\Date\XSDDateTime;
 use sgoendoer\Sonic\Model\RemoteObject;
-use sgoendoer\Sonic\Model\StreamItemObjectBuilder;
+use sgoendoer\Sonic\Model\ActivityObjectBuilder;
 use sgoendoer\Sonic\Model\IAccessRestrictableObject;
 
 use sgoendoer\json\JSONObject;
 
 /**
- * Represents a STREAM ITEM object
- * version 20160413
+ * Represents a ACTIVITY object
+ * version 20180110
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
  */
-class StreamItemObject extends RemoteObject implements IAccessRestrictableObject
+class ActivityObject extends RemoteObject implements IAccessRestrictableObject
 {
 	const JSONLD_CONTEXT = 'http://sonic-project.net/';
-	const JSONLD_TYPE = 'stream-item';
+	const JSONLD_TYPE = 'activity';
 	
 	protected $owner = NULL;
 	protected $author = NULL;
 	protected $datetime = NULL;
 	protected $activity = NULL;
 	
-	public function __construct(StreamItemObjectBuilder $builder)
+	public function __construct(ActivityObjectBuilder $builder)
 	{
 		parent::__construct($builder->getObjectID());
 		
@@ -89,8 +89,8 @@ class StreamItemObject extends RemoteObject implements IAccessRestrictableObject
 	public function getJSONString()
 	{
 		$json =  '{'
-			. '"@context":"' . StreamItemObject::JSONLD_CONTEXT . '",'
-			. '"@type":"' . StreamItemObject::JSONLD_TYPE . '",'
+			. '"@context":"' . ActivityObject::JSONLD_CONTEXT . '",'
+			. '"@type":"' . ActivityObject::JSONLD_TYPE . '",'
 			. '"objectID":"' . $this->objectID . '",'
 			. '"owner":"' . $this->owner . '",'
 			. '"author":"' . $this->author . '",'
@@ -113,38 +113,38 @@ class StreamItemObject extends RemoteObject implements IAccessRestrictableObject
 	
 	const SCHEMA = '{
 		"$schema": "http://json-schema.org/draft-04/schema#",
-		"id": "http://jsonschema.net/sonic/stream",
+		"id": "http://jsonschema.net/sonic/activity",
 		"type": "object",
 		"properties":
 		{
 			"objectID":
 			{
-				"id": "http://jsonschema.net/sonic/stream/objectID",
+				"id": "http://jsonschema.net/sonic/activity/objectID",
 				"type": "string"
 			},
 			"owner":
 			{
-				"id": "http://jsonschema.net/sonic/stream/owner",
+				"id": "http://jsonschema.net/sonic/activity/owner",
 				"type": "string"
 			},
 			"author":
 			{
-				"id": "http://jsonschema.net/sonic/stream/author",
+				"id": "http://jsonschema.net/sonic/activity/author",
 				"type": "string"
 			},
 			"datetime":
 			{
-				"id": "http://jsonschema.net/sonic/conversationMessage/datetime",
+				"id": "http://jsonschema.net/sonic/activity/datetime",
 				"type": "string"
 			},
 			"activity":
 			{
-				"id": "http://jsonschema.net/sonic/stream/activity",
+				"id": "http://jsonschema.net/sonic/activity/activity",
 				"type": "object"
 			},
 			"signature":
 			{
-				"id": "http://jsonschema.net/sonic/conversationMessage/signature",
+				"id": "http://jsonschema.net/sonic/activity/signature",
 				"type": "object"
 			}
 		},

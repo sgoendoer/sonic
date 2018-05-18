@@ -12,6 +12,7 @@ use sgoendoer\Sonic\Model\IllegalModelStateException;
  *
  * author: Sebastian Goendoer
  * copyright: Sebastian Goendoer <sebastian [dot] goendoer [at] gmail [dot] com>
+ * @deprecated
  */
 class PersonObjectBuilder extends ObjectBuilder
 {
