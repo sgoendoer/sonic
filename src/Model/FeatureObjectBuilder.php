@@ -13,10 +13,10 @@ use sgoendoer\Sonic\Model\FeatureObject;
  */
 class FeatureObjectBuilder extends ObjectBuilder
 {
-	protected $featureNamespace = NULL;
+	protected $namespace = NULL;
 	protected $name = NULL;
 	protected $version = NULL;
-	protected $compatibilityVersion = NULL;
+	protected $compatVersion = NULL;
 	protected $apiPath = NULL;
 	
 	public function __construct()
@@ -44,7 +44,7 @@ class FeatureObjectBuilder extends ObjectBuilder
 			->featureNamespace($json->namespace)
 			->name($json->name)
 			->version($json->version)
-			->compatibilityVersion($json->compatibilityVersion)
+			->compatVersion($json->compatVersion)
 			->apiPath($json->apiPath);
 		
 		return $builder->build();
@@ -83,14 +83,14 @@ class FeatureObjectBuilder extends ObjectBuilder
 		return $this;
 	}
 	
-	public function getCompatibilityVersion()
+	public function getCompatVersion()
 	{
-		return $this->compatibilityVersion;
+		return $this->compatVersion;
 	}
 	
-	public function compatibilityVersion($compatibilityVersion)
+	public function compatVersion($compatVersion)
 	{
-		$this->compatibilityVersion = $compatibilityVersion;
+		$this->compatVersion = $compatVersion;
 		return $this;
 	}
 	

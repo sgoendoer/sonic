@@ -19,7 +19,7 @@ class FeatureObject extends Object
 	protected $namespace = NULL;
 	protected $name = NULL;
 	protected $version = NULL;
-	protected $compatibilityVersion = NULL;
+	protected $compatVersion = NULL;
 	protected $apiPath = NULL;
 	
 	public function __construct(FeatureObjectBuilder $builder)
@@ -29,7 +29,7 @@ class FeatureObject extends Object
 		$this->namespace = $builder->getFeatureNamespace();
 		$this->name = $builder->getName();
 		$this->version = $builder->getVersion();
-		$this->compatibilityVersion = $builder->getCompatibilityVersion();
+		$this->compatVersion = $builder->getCompatVersion();
 		$this->apiPath = $builder->getApiPath();
 	}
 	
@@ -66,14 +66,14 @@ class FeatureObject extends Object
 		return $this;
 	}
 	
-	public function getCompatibilityVersion()
+	public function getCompatVersion()
 	{
-		return $this->compatibility_version;
+		return $this->compatVersion;
 	}
 	
-	public function setCompatibilityVersion($compatibility_version)
+	public function setCompatVersion($compatVersion)
 	{
-		$this->compatibility_version = $compatibility_version;
+		$this->compatVersion = $compatVersion;
 		return $this;
 	}
 	
@@ -97,7 +97,7 @@ class FeatureObject extends Object
 			. '"namespace": "' . $this->namespace . '",'
 			. '"name": "' . $this->name . '",'
 			. '"version": "' . $this->version . '",'
-			. '"compatibilityVersion": "' . $this->compatibilityVersion . '",'
+			. '"compatVersion": "' . $this->compatVersion . '",'
 			. '"apiPath": "' . $this->apiPath . '"'
 			. '}';
 		return $json;
@@ -109,7 +109,7 @@ class FeatureObject extends Object
 		. $this->namespace
 		. $this->name
 		. $this->version
-		. $this->compatibilityVersion
+		. $this->compatVersion
 		. $this->api_path;
 	}
 	
@@ -139,9 +139,9 @@ class FeatureObject extends Object
 				"id": "http://jsonschema.net/feature/version",
 				"type": "string"
 			},
-			"compatibilityVersion":
+			"compatVersion":
 			{
-				"id": "http://jsonschema.net/feature/compatibilityVersion",
+				"id": "http://jsonschema.net/feature/compatVersion",
 				"type": "string"
 			},
 			"apiPath":
@@ -155,7 +155,7 @@ class FeatureObject extends Object
 			"namespace",
 			"name",
 			"version",
-			"compatibilityVersion",
+			"compatVersion",
 			"apiPath"
 		]
 	}';

@@ -15,6 +15,8 @@ use sgoendoer\Sonic\Model\LinkResponseObject;
 class LinkRequestBuilder extends AbstractRequestBuilder
 {
 	const RESOURCE_NAME_LINK = 'LINK';
+	const RESOURCE_NAME_REQUEST = 'REQUEST';
+	const RESOURCE_NAME_RESPONSE = 'RESPONSE';
 	
 	public function createGETLink($linkUOID = NULL)
 	{
@@ -30,24 +32,24 @@ class LinkRequestBuilder extends AbstractRequestBuilder
 		return $this;
 	}
 	
-	public function createPOSTLink(LinkRequestObject $linkRequest)
+	public function createPOSTLinkRequest(LinkRequestObject $linkRequest)
 	{
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK);
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkRequest->getObjectID() . '/' . self::RESOURCE_NAME_REQUEST);
 		$this->request->setRequestMethod('POST');
 		$this->request->setRequestBody($linkRequest->getJSONString());
 		
 		return $this;
 	}
 	
-	public function createPUTLink(LinkResponseObject $linkResponse)
+	public function createPOSTLinkResponse(LinkResponseObject $linkResponse)
 	{
 		$this->request = new OutgoingRequest();
 		
 		$this->request->setServer($this->getDomainFromProfileLocation($this->targetSocialRecord->getProfileLocation()));
-		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkResponse->getTargetID());
+		$this->request->setPath($this->getPathFromProfileLocation($this->targetSocialRecord->getProfileLocation()) . $this->targetSocialRecord->getGlobalID() . '/' . self::RESOURCE_NAME_LINK . '/' . $linkResponse->getTargetID() . '/' . self::RESOURCE_NAME_RESPONSE);
 		$this->request->setRequestMethod('PUT');
 		$this->request->setRequestBody($linkResponse->getJSONString());
 		
