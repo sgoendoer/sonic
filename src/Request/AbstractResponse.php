@@ -24,7 +24,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns string for response signature
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getStringForResponseSignature()
@@ -39,7 +39,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * verifies response header and body format/content
-	 * 
+	 *
 	 * @throws MalformedRequestHeaderException on error
 	 * @return true on success
 	 */
@@ -50,7 +50,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * verifies the format and content of the response headers
-	 * 
+	 *
 	 * @throws MalformedRequestHeaderException on corrupt or missing headers
 	 */
 	protected function verifyHeaders()
@@ -72,7 +72,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * verifies the format and content of the response
-	 * 
+	 *
 	 * @throws MalformedRequestHeaderException on corrupt data
 	 */
 	protected function verifyDataFormat()
@@ -106,7 +106,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonicExpectedGID header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getExpectedGID()
@@ -116,7 +116,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonicDate header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getHeaderDate()
@@ -126,7 +126,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonictargetAPI header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getHeaderTargetAPI()
@@ -136,7 +136,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonicRandom header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getHeaderRandom()
@@ -146,7 +146,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonicSignature header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getHeaderSignature()
@@ -156,7 +156,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonicPlatformGID header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getHeaderPlatformGID()
@@ -166,7 +166,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the value of the SonicSourceGID header
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getHeaderSourceGID()
@@ -176,7 +176,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns an array of all headers
-	 * 
+	 *
 	 * returns array
 	 */
 	public function getResponseHeaders()
@@ -186,7 +186,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the body of the response
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getResponseBody()
@@ -195,7 +195,7 @@ abstract class AbstractResponse
 	}
 	
 	/**
-	 * retrieves the request body as a ResponseObject 
+	 * retrieves the request body as a ResponseObject
 	 *
 	 * returns ResponseObject
 	 */
@@ -206,7 +206,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * retrieves the payload ("body") of the response as a string
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getPayload()
@@ -216,7 +216,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the HTTP status code of the response
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getResponseStatusCode()
@@ -226,7 +226,7 @@ abstract class AbstractResponse
 	
 	/**
 	 * returns the status message of the response
-	 * 
+	 *
 	 * returns string
 	 */
 	public function getResponseStatusMessage()

@@ -13,6 +13,8 @@ The Sonic SDK provides a complete toolset to ease the integration of the Sonic p
 
 ## Changelog
 
+#### 0.5.1
+
 #### 0.5.0
 - Reworked resource migration
 - Reworked resource feature
@@ -58,7 +60,7 @@ or configure your ```composer.json``` like this:
 
 ```json
 "require": {
-	"sgoendoer/sonic": "0.5.0"
+	"sgoendoer/sonic": "0.5.1"
 }
 ```
 
